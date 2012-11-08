@@ -9,7 +9,7 @@ public class Test extends Activity{
 		super.onCreate(savedInstanceState);
 		
 		TextView textview = new TextView(this);
-		textview.setText("Ich bin ein Test");
+		textview.setText("Ich bin ein toller Test");
 		setContentView(textview);
 	}
 	
