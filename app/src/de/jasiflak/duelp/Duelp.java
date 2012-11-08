@@ -14,32 +14,35 @@ public class Duelp extends TabActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_tab_layout);
         
         Resources res = getResources();        
         TabHost tabhost = getTabHost();        
         TabHost.TabSpec spec;
         Intent intent;
         
-        intent = new Intent().setClass(this,Test.class);        
-        spec = tabhost.newTabSpec("hallotab1").setIndicator("HalloTab1",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        intent = new Intent().setClass(this,Lernplan.class);        
+        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
-        intent = new Intent().setClass(this,Bla.class);        
-        spec = tabhost.newTabSpec("hallotab2").setIndicator("HalloTab2",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        intent = new Intent().setClass(this,Termine.class);        
+        spec = tabhost.newTabSpec("tab2").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
-        intent = new Intent().setClass(this,Blub.class);        
-        spec = tabhost.newTabSpec("hallotab3").setIndicator("HalloTab3",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        intent = new Intent().setClass(this,Faecher.class);        
+        spec = tabhost.newTabSpec("tab3").setIndicator("Fächer",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        tabhost.addTab(spec);
+        
+        
+        intent = new Intent().setClass(this,Orte.class);        
+        spec = tabhost.newTabSpec("tab3").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
         
-        tabhost.setCurrentTab(1);
-        
-        
+        tabhost.setCurrentTab(0);        
     }
 
     @Override
