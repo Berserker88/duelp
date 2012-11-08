@@ -32,12 +32,12 @@ public class Duelp extends TabActivity {
         
         
         intent = new Intent().setClass(this,Faecher.class);        
-        spec = tabhost.newTabSpec("tab3").setIndicator("FÃ¤cher",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        spec = tabhost.newTabSpec("tab3").setIndicator("Fächer",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
         intent = new Intent().setClass(this,Orte.class);        
-        spec = tabhost.newTabSpec("tab3").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        spec = tabhost.newTabSpec("tab3").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
         tabhost.addTab(spec);
         
         
