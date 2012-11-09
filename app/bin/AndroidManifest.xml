@@ -25,6 +25,7 @@
         <activity android:name=".Termine" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Faecher" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
+        
     </application>
 
 </manifest>
