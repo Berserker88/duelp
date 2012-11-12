@@ -19,5 +19,7 @@ public class Termine extends Activity{
 		// limit the range of the calendar
 		calendar.setMinDate(minDate.getTime());
 		calendar.setMaxDate(maxDate.getTime());
+		
+		
 	}
 }
