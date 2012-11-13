@@ -17,19 +17,20 @@ public class Lernplan extends Activity
 		setContentView(R.layout.lernplan_layout);
 
 		
-		//erstellen einer Liste
+		//Instanziieren einer Liste, erstellen einer Liste
 		List<String> valueList = new ArrayList<String>();
 		
-		//
-		for (int i = 1; i <= 10; i++)
+		//befüllen der Liste
+		for (int i = 1; i <= 100; i++)
 		{
 			valueList.add(i+".Termin");
 		}
 		
+		//generieren eines „ListAdapter“ für die „ListView“
 		ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 		
+		//ListView aus layout holen und ihr den Adapter übergeben
 	    final ListView lv = (ListView)findViewById(R.id.listView1);
-
 	    lv.setAdapter(adapter);
 	}
 	
