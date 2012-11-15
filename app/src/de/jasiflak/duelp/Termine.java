@@ -2,34 +2,30 @@ package de.jasiflak.duelp;
 
 
 import java.util.Calendar;
-import java.util.Locale;
-
-
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-
 import android.os.Handler;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.OnGestureListener;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.GridView;
-
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class Termine extends Activity{
+public class Termine extends Activity {
 
 	public static final boolean NEXT = true;
 	public static final boolean PREV = false;
 	
+	
 	private Calendar mCalendar;
 	private CalendarAdapter mAdapter;
 	private Handler handler;
-	
+	private GestureDetector mSwipeScanner;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,10 +38,29 @@ public class Termine extends Activity{
         mAdapter = new CalendarAdapter(this, mCalendar);
         GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
         gv_calendar.setAdapter(mAdapter);
+        gv_calendar.setOnTouchListener(new OnSwipeTouchListener() {
+            public void onSwipeTop() {
+            	Log.i("info", "hoch");
+            }
+            public void onSwipeRight() {
+            	Log.i("info", "rechts");
+            	updateMonth(PREV);
+            	refreshCalendar();
+            }
+            public void onSwipeLeft() {
+            	Log.i("info", "links");
+            	updateMonth(NEXT);
+            	refreshCalendar();
+            }
+            public void onSwipeBottom() {
+            	Log.i("info", "runter");
+            }
+        });
         
         GridView gv_weekdays = (GridView) findViewById(R.id.gv_weekdays);
         String[] days = getResources().getStringArray(R.array.strArr_weekdays);
         gv_weekdays.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days));
+        gv_weekdays.setEnabled(false);
         
         handler = new Handler();
 	    handler.post(calendarUpdater);
@@ -71,7 +86,7 @@ public class Termine extends Activity{
 				refreshCalendar();
 			}
 		});
-        
+       
         Log.i("debug", "ENDE Termine/onCreate");
 	}
 	
@@ -116,5 +131,5 @@ public class Termine extends Activity{
 			Log.i("debug", "ENDE Termine/runnable");
 		}
 	};
-		
+
 }
