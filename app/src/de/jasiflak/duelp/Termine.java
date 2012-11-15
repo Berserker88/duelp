@@ -1,11 +1,14 @@
 package de.jasiflak.duelp;
 
+
 import java.util.Calendar;
 import java.util.Locale;
+
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
@@ -14,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.GridView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -99,6 +103,7 @@ public class Termine extends Activity{
 			else
 				mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
 		}
+
 	}
 	
 	
