@@ -6,10 +6,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnGestureListener;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -25,7 +21,7 @@ public class Termine extends Activity {
 	private Calendar mCalendar;
 	private CalendarAdapter mAdapter;
 	private Handler handler;
-	private GestureDetector mSwipeScanner;
+	private OnSwipeTouchListener mSwipeListener;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,11 +30,7 @@ public class Termine extends Activity {
         setContentView(R.layout.termine_layout);
         
         mCalendar = Calendar.getInstance();
-        
-        mAdapter = new CalendarAdapter(this, mCalendar);
-        GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
-        gv_calendar.setAdapter(mAdapter);
-        gv_calendar.setOnTouchListener(new OnSwipeTouchListener() {
+        mSwipeListener = new OnSwipeTouchListener() {
             public void onSwipeTop() {
             	Log.i("info", "hoch");
             }
@@ -55,18 +47,24 @@ public class Termine extends Activity {
             public void onSwipeBottom() {
             	Log.i("info", "runter");
             }
-        });
+        };
+        
+        mAdapter = new CalendarAdapter(this, mCalendar);
+        GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
+        gv_calendar.setAdapter(mAdapter);
+        gv_calendar.setOnTouchListener(mSwipeListener);
         
         GridView gv_weekdays = (GridView) findViewById(R.id.gv_weekdays);
         String[] days = getResources().getStringArray(R.array.strArr_weekdays);
         gv_weekdays.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days));
-        gv_weekdays.setEnabled(false);
+        gv_weekdays.setOnTouchListener(mSwipeListener);
         
         handler = new Handler();
 	    handler.post(calendarUpdater);
         
         TextView title = (TextView) findViewById(R.id.calendar_title);
         title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
+        title.setOnTouchListener(mSwipeListener);
         
         TextView next = (TextView) findViewById(R.id.next);
         next.setOnClickListener(new OnClickListener() {

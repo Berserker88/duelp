@@ -17,7 +17,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
     private final class GestureListener extends SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 40;
+        private static final int SWIPE_THRESHOLD = 175;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
         @Override
@@ -30,34 +30,37 @@ public class OnSwipeTouchListener implements OnTouchListener {
         	if (e1 == null || e2 == null)
         		return false;
         	
-        	boolean result = false;
             try {
-                float diffY = e2.getY() - e1.getY();
+            	Log.i("gesture", "-" + "FLING" + "-\n");
+            	Log.i("gesture", "e1: ("+e1.getX()+"|"+e1.getY()+")\ne2: ("+e2.getX()+"|"+e2.getY()+")\nvelocityX: "+velocityX+"\nvelocityY: "+velocityY+"\n");
+            	float diffY = e2.getY() - e1.getY();
                 float diffX = e2.getX() - e1.getX();
+                Log.i("gesture", "diffX= "+diffX+"\n");
+                Log.i("gesture", "diffY= "+diffY+"\n");
                 if (Math.abs(diffX) > Math.abs(diffY)) {
                     if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffX > 0) {
-                            onSwipeRight();
-                            result = true;
+                        	Log.i("gesture", "nach rechts geswiped");
+                        	onSwipeRight();
                         } else {
-                            onSwipeLeft();
-                            result = true;
+                        	Log.i("gesture", "nach links geswiped");
+                        	onSwipeLeft();
                         }
                     }
                 } else {
                     if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                         if (diffY > 0) {
-                            onSwipeBottom();
+                        	Log.i("gesture", "nach unten geswiped");
                         } else {
-                            onSwipeTop();
+                        	Log.i("gesture", "nach oben geswiped");
                         }
                     }
                 }
             } catch (Exception exception) {
                 exception.printStackTrace();
-                result = false;
+                return false;
             }
-            return result;
+            return true;
         }
     }
 
