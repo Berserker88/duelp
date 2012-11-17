@@ -21,15 +21,13 @@
 				android:id="@+id/previous" 
 			    android:layout_height="50dp"
 			    android:layout_width="wrap_content"
-			    android:layout_centerHorizontal="true"
 			    android:padding="5dp"
 			    android:paddingLeft="5dp"
 			    android:textSize="16pt"
 			    android:textStyle="bold"
 			    android:gravity="center"
 			    android:text="@string/prev_month" 
-			    android:clickable="true"   
-			    />
+			    android:clickable="true" />
 			
 		</LinearLayout>
 	
@@ -48,14 +46,12 @@
 		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:layout_width="fill_parent"
 		    android:layout_height="wrap_content"
-		    android:gravity="right"
-		    android:layout_toRightOf="@+id/title" >
+		    android:gravity="right" >
 			
 			<TextView  
 				android:id="@+id/next" 
 			    android:layout_height="wrap_content"
 			    android:layout_width="50dp"
-			    android:layout_centerHorizontal="true"
 			    android:padding="5dp"
 			    android:paddingLeft="5dp"
 			    android:textSize="16pt"

@@ -6,6 +6,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="prev_month">&lt;&lt;</string>
     <string name="next_month">&gt;&gt;</string>
+    <string name="content_home">Hier geht es bei mir zu Hause</string>
+    <string name="content_busy">Hier kann ich nicht</string>
     
     
     <color name="text_color">#31D1F1</color>

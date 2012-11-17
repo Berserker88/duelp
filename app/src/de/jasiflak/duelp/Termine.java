@@ -8,15 +8,17 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
 public class Termine extends Activity {
 
-	public static final boolean NEXT = true;
-	public static final boolean PREV = false;
-	
+	public static final int NEXT = 1;
+	public static final int PREV = 2;
 	
 	private Calendar mCalendar;
 	private CalendarAdapter mAdapter;
@@ -25,11 +27,15 @@ public class Termine extends Activity {
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
-		Log.i("debug", "START Termine/onCreate");
+		// Konstruktor-Aufruf der Basisklasse
 		super.onCreate(savedInstanceState);
+		
+		// Verknüpfung mit dem Layout
         setContentView(R.layout.termine_layout);
         
+        // mCalendar = aktueller Kalendar
         mCalendar = Calendar.getInstance();
+        // Implementation der Funktionen für meinen OnSwipeListener
         mSwipeListener = new OnSwipeTouchListener() {
             public void onSwipeTop() {
             	Log.i("info", "hoch");
@@ -49,30 +55,49 @@ public class Termine extends Activity {
             }
         };
         
+        // Erstellen des Adapters für den Kalendar
         mAdapter = new CalendarAdapter(this, mCalendar);
+        
+        // Zuweisungen für das GridView des Kalendars
         GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
         gv_calendar.setAdapter(mAdapter);
         gv_calendar.setOnTouchListener(mSwipeListener);
+        gv_calendar.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
+				mAdapter.changeItemState(position, CalendarAdapter.BUSY);
+				refreshCalendar();
+			}
+        });
+        gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parentView, View clickedView, int position, long id) {
+				mAdapter.changeItemState(position, CalendarAdapter.HOME);
+				refreshCalendar();
+				return true;
+			}
+		});
         
+        // Zuweisungen für das GridView der Namen der Wochentage
         GridView gv_weekdays = (GridView) findViewById(R.id.gv_weekdays);
         String[] days = getResources().getStringArray(R.array.strArr_weekdays);
         gv_weekdays.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days));
         gv_weekdays.setOnTouchListener(mSwipeListener);
         
+        // Registrierung des Handlers
         handler = new Handler();
 	    handler.post(calendarUpdater);
         
+	    // Initialisierung der TextViews
         TextView title = (TextView) findViewById(R.id.calendar_title);
         title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
         title.setOnTouchListener(mSwipeListener);
-        
         TextView next = (TextView) findViewById(R.id.next);
         next.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				updateMonth(NEXT);
 				refreshCalendar();
-				
 			}
 		});
         
@@ -84,12 +109,13 @@ public class Termine extends Activity {
 				refreshCalendar();
 			}
 		});
-       
-        Log.i("debug", "ENDE Termine/onCreate");
 	}
 	
-	
+	/**
+	 * responsible for calling the Handler runnable
+	 */
 	public void refreshCalendar() {
+		// aktualisiere den angezeigten Monat
 		TextView title = (TextView) findViewById(R.id.calendar_title);
 		
 		mAdapter.refreshDaysOfMonth();			
@@ -99,7 +125,11 @@ public class Termine extends Activity {
 	}
 
 	
-	public void updateMonth(boolean direction) {
+	/**
+	 * updates the Month in Calendar corresponding to direction
+	 * @param direction either 1 for next month or 2 for previous month
+	 */
+	public void updateMonth(int direction) {
 		if(direction == NEXT) {
 			if(mCalendar.get(Calendar.MONTH) == mCalendar.getActualMaximum(Calendar.MONTH)) {
 				mCalendar.set(Calendar.YEAR, mCalendar.get(Calendar.YEAR)+1);
@@ -116,17 +146,15 @@ public class Termine extends Activity {
 			else
 				mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
 		}
-
 	}
 	
-	
+	/**
+	 * the Handler that notifies the adapter to reload
+	 */
 	public Runnable calendarUpdater = new Runnable() {
-		
 		@Override
 		public void run() {
-			Log.i("debug", "START Termine/runnable");
 			mAdapter.notifyDataSetChanged();
-			Log.i("debug", "ENDE Termine/runnable");
 		}
 	};
 

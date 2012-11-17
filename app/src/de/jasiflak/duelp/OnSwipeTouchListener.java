@@ -7,63 +7,86 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+
+
 public class OnSwipeTouchListener implements OnTouchListener {
 
     private final GestureDetector gestureDetector = new GestureDetector(new GestureListener());
 
     public boolean onTouch(final View v, final MotionEvent event) {
-        return gestureDetector.onTouchEvent(event);
+    	
+    	return gestureDetector.onTouchEvent(event);
     }
 
+    
+    
+//##############################  START INNER CLASS  ######################################
     private final class GestureListener extends SimpleOnGestureListener {
 
-        private static final int SWIPE_THRESHOLD = 175;
+        private static final int SWIPE_THRESHOLD = 100;
         private static final int SWIPE_VELOCITY_THRESHOLD = 100;
 
+        
         @Override
         public boolean onDown(MotionEvent e) {
-            return true;
+        	// rufe onDown der Superklasse auf, da dies nicht interessiert
+        	return super.onDown(e);
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        	// um Problemen vorzubeugen
         	if (e1 == null || e2 == null)
         		return false;
-        	
-            try {
-            	Log.i("gesture", "-" + "FLING" + "-\n");
-            	Log.i("gesture", "e1: ("+e1.getX()+"|"+e1.getY()+")\ne2: ("+e2.getX()+"|"+e2.getY()+")\nvelocityX: "+velocityX+"\nvelocityY: "+velocityY+"\n");
-            	float diffY = e2.getY() - e1.getY();
-                float diffX = e2.getX() - e1.getX();
-                Log.i("gesture", "diffX= "+diffX+"\n");
-                Log.i("gesture", "diffY= "+diffY+"\n");
-                if (Math.abs(diffX) > Math.abs(diffY)) {
-                    if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffX > 0) {
-                        	Log.i("gesture", "nach rechts geswiped");
-                        	onSwipeRight();
-                        } else {
-                        	Log.i("gesture", "nach links geswiped");
-                        	onSwipeLeft();
-                        }
+
+        	// berechne zurückgelegte Strecken
+        	float diffY = e2.getY() - e1.getY();
+            float diffX = e2.getX() - e1.getX();
+            
+            // wenn horizontale bewegung erfolgte
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+            	// wenn horizontal geswiped wurde
+                if (Math.abs(diffX) > SWIPE_THRESHOLD && Math.abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                	// wenn nach rechts geswiped wurde
+                    if (diffX > 0) {
+                    	Log.i("gesture", "nach rechts geswiped");
+                    	onSwipeRight();
+                    } 
+                    // wenn nach links geswiped wurde
+                    else {
+                    	Log.i("gesture", "nach links geswiped");
+                    	onSwipeLeft();
                     }
-                } else {
-                    if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
-                        if (diffY > 0) {
-                        	Log.i("gesture", "nach unten geswiped");
-                        } else {
-                        	Log.i("gesture", "nach oben geswiped");
-                        }
-                    }
+                    return true;
                 }
-            } catch (Exception exception) {
-                exception.printStackTrace();
-                return false;
+                // sonst rufe onFling der Superklasse auf, da das Event nicht interessiert
+                else
+                	return super.onFling(e1, e2, velocityX, velocityY);
+            } 
+            else {
+            	// wenn vertical geswiped wurde
+                if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                	// wenn nach unten geswiped wurde
+                    if (diffY > 0) {
+                    	Log.i("gesture", "nach unten geswiped");
+                    	onSwipeBottom();
+                    } 
+                    // wenn nach oben geswiped wurde
+                    else {
+                    	Log.i("gesture", "nach oben geswiped");
+                    	onSwipeTop();
+                    }
+                    return true;
+                }
+            	// sonst rufe onFling der Superklasse auf, da das Event nicht interessiert
+                else
+                	return super.onFling(e1, e2, velocityX, velocityY);
             }
-            return true;
         }
     }
+//######################################  END INNER CLASS  ###################################
 
+    // Methoden die bei Referenz implementiert werden müssen
     public void onSwipeRight() {
     }
 
