@@ -30,12 +30,12 @@ public class Termine extends Activity {
 		// Konstruktor-Aufruf der Basisklasse
 		super.onCreate(savedInstanceState);
 		
-		// Verknüpfung mit dem Layout
+		// VerknÃ¼pfung mit dem Layout
         setContentView(R.layout.termine_layout);
         
         // mCalendar = aktueller Kalendar
         mCalendar = Calendar.getInstance();
-        // Implementation der Funktionen für meinen OnSwipeListener
+        // Implementation der Funktionen fÃ¼r meinen OnSwipeListener
         mSwipeListener = new OnSwipeTouchListener() {
             public void onSwipeTop() {
             	Log.i("info", "hoch");
@@ -55,10 +55,10 @@ public class Termine extends Activity {
             }
         };
         
-        // Erstellen des Adapters für den Kalendar
+        // Erstellen des Adapters fÃ¼r den Kalendar
         mAdapter = new CalendarAdapter(this, mCalendar);
         
-        // Zuweisungen für das GridView des Kalendars
+        // Zuweisungen fÃ¼r das GridView des Kalendars
         GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
         gv_calendar.setAdapter(mAdapter);
         gv_calendar.setOnTouchListener(mSwipeListener);
@@ -78,7 +78,7 @@ public class Termine extends Activity {
 			}
 		});
         
-        // Zuweisungen für das GridView der Namen der Wochentage
+        // Zuweisungen fÃ¼r das GridView der Namen der Wochentage
         GridView gv_weekdays = (GridView) findViewById(R.id.gv_weekdays);
         String[] days = getResources().getStringArray(R.array.strArr_weekdays);
         gv_weekdays.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days));

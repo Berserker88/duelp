@@ -122,7 +122,7 @@ public class CalendarAdapter extends BaseAdapter {
 		int maxNumberOfDays = mCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 		int numberOfEmptyDays = calculateNumberOfEmptyDays();
 
-		// Fülle mDaysOfMonth entsprechend des aktuell gewählten monats
+		// FÃ¼lle mDaysOfMonth entsprechend des aktuell gewÃ¤hlten monats
 		for (int i = numberOfEmptyDays; i > 0; i--)
 			mDaysOfMonth.add("");
 		for (int i = 1; i <= maxNumberOfDays; i++)
@@ -170,7 +170,7 @@ public class CalendarAdapter extends BaseAdapter {
 		}
 
 
-		// die views deaktivieren, um die Swipefunktionalität beizubehalten (bessere Swipe-Performance)
+		// die views deaktivieren, um die SwipefunktionalitÃ¤t beizubehalten (bessere Swipe-Performance)
 		singleDayView.setEnabled(false);
 
 		// Markiere aktuelles Datum
@@ -181,7 +181,7 @@ public class CalendarAdapter extends BaseAdapter {
 		else
 			singleDayView.setBackgroundResource(R.drawable.termine_background);
 
-		// hole den TextView für den Tag des Monats
+		// hole den TextView fÃ¤r den Tag des Monats
 		dayNumberView = (TextView) singleDayView.findViewById(R.id.day_of_month);
 		dayNumberView.setText(mDaysOfMonth.get(position));
 
