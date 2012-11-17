@@ -10,7 +10,6 @@
     <string name="content_busy">Hier kann ich nicht</string>
     
     
-    <color name="text_color">#31D1F1</color>
 	<color name="white">#ffffff</color>
 	<string name="open">Open</string>
 	<string-array name="strArr_weekdays">

@@ -166,7 +166,7 @@ public class CalendarAdapter extends BaseAdapter {
 		// initialisieren des Tag-Views, wenn er noch nicht existiert
 		if (singleDayView == null) {
 			LayoutInflater inflated = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			singleDayView = inflated.inflate(R.layout.termine_calendar_item, null);
+			singleDayView = inflated.inflate(R.layout.termine_calendar_day_layout, null);
 		}
 
 
@@ -175,10 +175,11 @@ public class CalendarAdapter extends BaseAdapter {
 
 		// Markiere aktuelles Datum
 		if (!mDaysOfMonth.get(position).equals("") && compareDates(mCalendar, mDaysOfMonth.get(position), mActualDate))
-			singleDayView.setBackgroundResource(R.drawable.item_background_focused);
-		else 
-			singleDayView.setBackgroundResource(R.drawable.item_background);
-		
+			singleDayView.setBackgroundResource(R.drawable.termine_background_actual);
+		else if(!mDaysOfMonth.get(position).equals(""))
+			singleDayView.setBackgroundResource(R.drawable.termine_calendar_day_background);
+		else
+			singleDayView.setBackgroundResource(R.drawable.termine_background);
 
 		// hole den TextView für den Tag des Monats
 		dayNumberView = (TextView) singleDayView.findViewById(R.id.day_of_month);

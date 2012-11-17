@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:padding="8dp"
     android:orientation="vertical"
-    android:background="@drawable/list_item_background" >
+    android:background="@drawable/termine_calendar_day_background" >
     
 	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/day_of_month"
@@ -12,13 +12,13 @@
 	    android:layout_height="wrap_content"
 	    android:textSize="14sp"
 	    android:textStyle="bold"
-	    android:textColor="@color/text_color" />
+	    android:textColor="@color/white" />
 	
 	<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
 		android:id="@+id/date_icon1"
 	    android:layout_width="match_parent"
 	    android:layout_height="20dp"
-		android:src="@drawable/icon" 
+		android:src="@drawable/termine_ic_busy" 
 		android:visibility="invisible"
 		android:contentDescription="@string/content_busy" />
 	
@@ -26,7 +26,7 @@
 		android:id="@+id/date_icon2"
 	    android:layout_width="match_parent"
 	    android:layout_height="20dp"
-		android:src="@drawable/ic_launcher" 
+		android:src="@drawable/termine_ic_home" 
 		android:visibility="invisible"
 		android:contentDescription="@string/content_home" />
 	

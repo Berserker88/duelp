@@ -16,28 +16,28 @@ public class Duelp extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_layout);
         
-        Resources res = getResources();        
-        TabHost tabhost = getTabHost();        
+        Resources res = getResources();  
+        TabHost tabhost = getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
         
-        intent = new Intent().setClass(this,Lernplan.class);        
+        intent = new Intent().setClass(this,Lernplan.class);   
         spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
         intent = new Intent().setClass(this,Termine.class);        
-        spec = tabhost.newTabSpec("tab2").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        spec = tabhost.newTabSpec("tab2").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs_termine)).setContent(intent);
         tabhost.addTab(spec);
         
         
-        intent = new Intent().setClass(this,Faecher.class);        
-        spec = tabhost.newTabSpec("tab3").setIndicator("Fï¿½cher",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
+        intent = new Intent().setClass(this,Faecher.class);
+        spec = tabhost.newTabSpec("tab3").setIndicator("Fächer",res.getDrawable(R.drawable.ic_tabs)).setContent(intent);
         tabhost.addTab(spec);
         
         
-        intent = new Intent().setClass(this,Orte.class);        
-        spec = tabhost.newTabSpec("tab3").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
+        intent = new Intent().setClass(this,Orte.class);
+        spec = tabhost.newTabSpec("tab4").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
         tabhost.addTab(spec);
         
         
