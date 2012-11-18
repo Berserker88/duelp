@@ -15,7 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class KalendarAdapter extends BaseAdapter {
+public class TermineKalendarAdapter extends BaseAdapter {
 
 	public static final int NOTHING = 0x00;
 	public static final int BUSY = 0x01;
@@ -28,7 +28,7 @@ public class KalendarAdapter extends BaseAdapter {
 	private HashMap<Date, Integer> mDateItem;
 	private Context mContext;
 
-	public KalendarAdapter(Context c, Calendar calendar) {
+	public TermineKalendarAdapter(Context c, Calendar calendar) {
 		mCalendar = calendar;
 		mActualDate = Calendar.getInstance();
 		mContext = c;

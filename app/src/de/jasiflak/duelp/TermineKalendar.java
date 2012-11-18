@@ -21,7 +21,7 @@ public class TermineKalendar extends Activity {
 	public static final int PREV = 2;
 	
 	private Calendar mCalendar;
-	private KalendarAdapter mAdapter;
+	private TermineKalendarAdapter mAdapter;
 	private Handler handler;
 	private OnSwipeTouchListener mSwipeListener;
 	
@@ -56,7 +56,7 @@ public class TermineKalendar extends Activity {
         };
         
         // Erstellen des Adapters für den Kalendar
-        mAdapter = new KalendarAdapter(this, mCalendar);
+        mAdapter = new TermineKalendarAdapter(this, mCalendar);
         
         // Zuweisungen für das GridView des Kalendars
         GridView gv_calendar = (GridView) findViewById(R.id.gv_kalendar);
@@ -65,14 +65,14 @@ public class TermineKalendar extends Activity {
         gv_calendar.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, KalendarAdapter.BUSY);
+				mAdapter.changeItemState(position, TermineKalendarAdapter.BUSY);
 				refreshCalendar();
 			}
         });
         gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, KalendarAdapter.HOME);
+				mAdapter.changeItemState(position, TermineKalendarAdapter.HOME);
 				refreshCalendar();
 				return true;
 			}
