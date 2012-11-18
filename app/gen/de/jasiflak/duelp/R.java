@@ -27,9 +27,9 @@ public final class R {
         public static final int termine_background_actual=0x7f020007;
         public static final int termine_background_focused=0x7f020008;
         public static final int termine_background_header=0x7f020009;
-        public static final int termine_calendar_day_background=0x7f02000a;
-        public static final int termine_ic_busy=0x7f02000b;
-        public static final int termine_ic_home=0x7f02000c;
+        public static final int termine_ic_busy=0x7f02000a;
+        public static final int termine_ic_home=0x7f02000b;
+        public static final int termine_kalendar_dynamicbackground=0x7f02000c;
     }
     public static final class id {
         public static final int calendar_title=0x7f090006;

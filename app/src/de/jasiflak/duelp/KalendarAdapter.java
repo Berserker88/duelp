@@ -177,7 +177,7 @@ public class KalendarAdapter extends BaseAdapter {
 		if (!mDaysOfMonth.get(position).equals("") && compareDates(mCalendar, mDaysOfMonth.get(position), mActualDate))
 			singleDayView.setBackgroundResource(R.drawable.termine_background_actual);
 		else if(!mDaysOfMonth.get(position).equals(""))
-			singleDayView.setBackgroundResource(R.drawable.termine_calendar_day_background);
+			singleDayView.setBackgroundResource(R.drawable.termine_kalendar_dynamicbackground);
 		else
 			singleDayView.setBackgroundResource(R.drawable.termine_background);
 
