@@ -23,6 +23,7 @@
         </activity>
         <activity android:name=".Lernplan" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".TermineKalendar" android:label="@string/title_activity_main" ></activity>
+        <activity android:name=".TermineListe" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Faecher" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
     </application>

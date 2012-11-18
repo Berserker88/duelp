@@ -3,6 +3,7 @@ package de.jasiflak.duelp;
 
 import java.util.Calendar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TermineKalendar extends Activity {
@@ -24,6 +26,7 @@ public class TermineKalendar extends Activity {
 	private TermineKalendarAdapter mAdapter;
 	private Handler handler;
 	private OnSwipeTouchListener mSwipeListener;
+	private Intent mTermineListeIntent;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -92,6 +95,17 @@ public class TermineKalendar extends Activity {
         TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
         title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
         title.setOnTouchListener(mSwipeListener);
+        
+        mTermineListeIntent = new Intent().setClass(this, TermineListe.class);
+        
+        ImageView iv_showAsList = (ImageView) findViewById(R.id.iv_kalendar_liste);
+        iv_showAsList.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.i("info", "start!!!!");
+				startActivity(mTermineListeIntent);
+			}
+		});
         
         
 //        TextView next = (TextView) findViewById(R.id.next);
