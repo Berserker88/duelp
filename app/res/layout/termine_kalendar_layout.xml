@@ -10,22 +10,29 @@
 		android:id="@+id/header"
 	    android:orientation="horizontal"
 	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="50dp"
 		android:background="@drawable/termine_background_header" >
 	    
 		
 		<TextView
 		    android:id="@+id/tv_kalendar_title"
 		    android:layout_width="wrap_content"
-		    android:layout_height="50dp"
+		    android:layout_height="fill_parent"
 		    android:layout_centerHorizontal="true"
-		    android:layout_toRightOf="@+id/previous"
 		    android:gravity="center"
 		    android:padding="5dp"
 		    android:paddingLeft="5dp"
 		    android:textSize="14pt"
 		    android:textStyle="bold"
 		    android:textColor="@color/white" />
+
+		<ImageView
+		    android:id="@+id/iv_kalendar_liste"
+		    android:layout_width="wrap_content"
+		    android:layout_height="fill_parent"
+		    android:layout_alignParentRight="true"
+		    android:src="@drawable/termine_ic_list"
+		    android:contentDescription="@string/content_termine_list" />
 			
 	</RelativeLayout>
 	
