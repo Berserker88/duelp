@@ -15,13 +15,13 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.TextView;
 
-public class Termine extends Activity {
+public class TermineKalendar extends Activity {
 
 	public static final int NEXT = 1;
 	public static final int PREV = 2;
 	
 	private Calendar mCalendar;
-	private CalendarAdapter mAdapter;
+	private KalendarAdapter mAdapter;
 	private Handler handler;
 	private OnSwipeTouchListener mSwipeListener;
 	
@@ -31,7 +31,7 @@ public class Termine extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		// Verknüpfung mit dem Layout
-        setContentView(R.layout.termine_layout);
+        setContentView(R.layout.termine_kalendar_layout);
         
         // mCalendar = aktueller Kalendar
         mCalendar = Calendar.getInstance();
@@ -56,7 +56,7 @@ public class Termine extends Activity {
         };
         
         // Erstellen des Adapters für den Kalendar
-        mAdapter = new CalendarAdapter(this, mCalendar);
+        mAdapter = new KalendarAdapter(this, mCalendar);
         
         // Zuweisungen für das GridView des Kalendars
         GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
@@ -65,14 +65,14 @@ public class Termine extends Activity {
         gv_calendar.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, CalendarAdapter.BUSY);
+				mAdapter.changeItemState(position, KalendarAdapter.BUSY);
 				refreshCalendar();
 			}
         });
         gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, CalendarAdapter.HOME);
+				mAdapter.changeItemState(position, KalendarAdapter.HOME);
 				refreshCalendar();
 				return true;
 			}

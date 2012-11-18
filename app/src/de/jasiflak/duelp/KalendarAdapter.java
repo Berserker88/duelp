@@ -15,7 +15,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class CalendarAdapter extends BaseAdapter {
+public class KalendarAdapter extends BaseAdapter {
 
 	public static final int NOTHING = 0x00;
 	public static final int BUSY = 0x01;
@@ -28,7 +28,7 @@ public class CalendarAdapter extends BaseAdapter {
 	private HashMap<Date, Integer> mDateItem;
 	private Context mContext;
 
-	public CalendarAdapter(Context c, Calendar calendar) {
+	public KalendarAdapter(Context c, Calendar calendar) {
 		mCalendar = calendar;
 		mActualDate = Calendar.getInstance();
 		mContext = c;
@@ -166,7 +166,7 @@ public class CalendarAdapter extends BaseAdapter {
 		// initialisieren des Tag-Views, wenn er noch nicht existiert
 		if (singleDayView == null) {
 			LayoutInflater inflated = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			singleDayView = inflated.inflate(R.layout.termine_calendar_day_layout, null);
+			singleDayView = inflated.inflate(R.layout.termine_kalendar_item, null);
 		}
 
 

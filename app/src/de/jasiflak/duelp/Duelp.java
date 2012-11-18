@@ -26,7 +26,7 @@ public class Duelp extends TabActivity {
         tabhost.addTab(spec);
         
         
-        intent = new Intent().setClass(this,Termine.class);        
+        intent = new Intent().setClass(this,TermineKalendar.class);        
         spec = tabhost.newTabSpec("tab2").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs_termine)).setContent(intent);
         tabhost.addTab(spec);
         
