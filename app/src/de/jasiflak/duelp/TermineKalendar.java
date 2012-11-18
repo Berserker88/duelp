@@ -59,7 +59,7 @@ public class TermineKalendar extends Activity {
         mAdapter = new KalendarAdapter(this, mCalendar);
         
         // Zuweisungen für das GridView des Kalendars
-        GridView gv_calendar = (GridView) findViewById(R.id.gv_singleDays);
+        GridView gv_calendar = (GridView) findViewById(R.id.gv_kalendar);
         gv_calendar.setAdapter(mAdapter);
         gv_calendar.setOnTouchListener(mSwipeListener);
         gv_calendar.setOnItemClickListener(new OnItemClickListener() {
@@ -79,7 +79,7 @@ public class TermineKalendar extends Activity {
 		});
         
         // Zuweisungen für das GridView der Namen der Wochentage
-        GridView gv_weekdays = (GridView) findViewById(R.id.gv_weekdays);
+        GridView gv_weekdays = (GridView) findViewById(R.id.gv_kalendar_wochentage);
         String[] days = getResources().getStringArray(R.array.strArr_weekdays);
         gv_weekdays.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, days));
         gv_weekdays.setOnTouchListener(mSwipeListener);
@@ -89,26 +89,29 @@ public class TermineKalendar extends Activity {
 	    handler.post(calendarUpdater);
         
 	    // Initialisierung der TextViews
-        TextView title = (TextView) findViewById(R.id.calendar_title);
+        TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
         title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
         title.setOnTouchListener(mSwipeListener);
-        TextView next = (TextView) findViewById(R.id.next);
-        next.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				updateMonth(NEXT);
-				refreshCalendar();
-			}
-		});
         
-        TextView prev = (TextView) findViewById(R.id.previous);
-        prev.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				updateMonth(PREV);
-				refreshCalendar();
-			}
-		});
+        
+//        TextView next = (TextView) findViewById(R.id.next);
+//        next.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				updateMonth(NEXT);
+//				refreshCalendar();
+//			}
+//		});
+//        
+//        TextView prev = (TextView) findViewById(R.id.previous);
+//        prev.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				updateMonth(PREV);
+//				refreshCalendar();
+//			}
+//		});
+        
 	}
 	
 	/**
@@ -116,7 +119,7 @@ public class TermineKalendar extends Activity {
 	 */
 	public void refreshCalendar() {
 		// aktualisiere den angezeigten Monat
-		TextView title = (TextView) findViewById(R.id.calendar_title);
+		TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
 		
 		mAdapter.refreshDaysOfMonth();			
 		handler.post(calendarUpdater);				

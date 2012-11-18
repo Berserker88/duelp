@@ -13,27 +13,9 @@
 	    android:layout_height="wrap_content"
 		android:background="@drawable/termine_background_header" >
 	    
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:gravity="left" >
-	
-			<TextView  
-				android:id="@+id/previous" 
-			    android:layout_height="50dp"
-			    android:layout_width="wrap_content"
-			    android:padding="5dp"
-			    android:paddingLeft="5dp"
-			    android:textSize="16pt"
-			    android:textStyle="bold"
-			    android:gravity="center"
-			    android:text="@string/prev_month" 
-			    android:clickable="true"
-			    android:textColor="@color/white" />
-		</LinearLayout>
-	
+		
 		<TextView
-		    android:id="@+id/calendar_title"
+		    android:id="@+id/tv_kalendar_title"
 		    android:layout_width="wrap_content"
 		    android:layout_height="50dp"
 		    android:layout_centerHorizontal="true"
@@ -44,30 +26,11 @@
 		    android:textSize="14pt"
 		    android:textStyle="bold"
 		    android:textColor="@color/white" />
-		
-		<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
-		    android:gravity="right" >
 			
-			<TextView  
-				android:id="@+id/next" 
-			    android:layout_height="wrap_content"
-			    android:layout_width="50dp"
-			    android:padding="5dp"
-			    android:paddingLeft="5dp"
-			    android:textSize="16pt"
-			    android:textStyle="bold"
-			    android:gravity="center"
-			    android:text="@string/next_month"
-			    android:clickable="true"
-			    android:textColor="@color/white" />
-		</LinearLayout>
-	
 	</RelativeLayout>
 	
 	<GridView xmlns:android="http://schemas.android.com/apk/res/android" 
-	    android:id="@+id/gv_weekdays"
+	    android:id="@+id/gv_kalendar_wochentage"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="wrap_content"
 	    android:numColumns="7"
@@ -76,7 +39,7 @@
 	    android:listSelector="#00000000" />
 	
 	<GridView xmlns:android="http://schemas.android.com/apk/res/android" 
-	    android:id="@+id/gv_singleDays"
+	    android:id="@+id/gv_kalendar"
 	    android:layout_width="fill_parent" 
 	    android:layout_height="fill_parent"
 	    android:numColumns="7"

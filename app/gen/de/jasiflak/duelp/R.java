@@ -32,17 +32,16 @@ public final class R {
         public static final int termine_kalendar_dynamicbackground=0x7f02000c;
     }
     public static final class id {
-        public static final int calendar_title=0x7f090006;
-        public static final int date_icon1=0x7f090002;
-        public static final int date_icon2=0x7f090003;
-        public static final int day_of_month=0x7f090001;
         public static final int editText1=0x7f090000;
-        public static final int gv_singleDays=0x7f090009;
-        public static final int gv_weekdays=0x7f090008;
+        public static final int gv_kalendar=0x7f090008;
+        public static final int gv_kalendar_wochentage=0x7f090007;
         public static final int header=0x7f090004;
-        public static final int menu_settings=0x7f09000a;
-        public static final int next=0x7f090007;
-        public static final int previous=0x7f090005;
+        public static final int iv_icon1=0x7f090002;
+        public static final int iv_icon2=0x7f090003;
+        public static final int menu_settings=0x7f090009;
+        public static final int previous=0x7f090006;
+        public static final int tv_kalendar_title=0x7f090005;
+        public static final int tv_tagNummer=0x7f090001;
     }
     public static final class layout {
         public static final int faecher_layout=0x7f030000;

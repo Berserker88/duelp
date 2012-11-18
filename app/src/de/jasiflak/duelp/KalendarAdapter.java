@@ -182,12 +182,12 @@ public class KalendarAdapter extends BaseAdapter {
 			singleDayView.setBackgroundResource(R.drawable.termine_background);
 
 		// hole den TextView fär den Tag des Monats
-		dayNumberView = (TextView) singleDayView.findViewById(R.id.day_of_month);
+		dayNumberView = (TextView) singleDayView.findViewById(R.id.tv_tagNummer);
 		dayNumberView.setText(mDaysOfMonth.get(position));
 
 		// wenn es ein existierender Tag ist, gucke ob hier ein Icon hinmuss
-		ImageView iconView1 = (ImageView) singleDayView.findViewById(R.id.date_icon1);
-		ImageView iconView2 = (ImageView) singleDayView.findViewById(R.id.date_icon2);
+		ImageView iconView1 = (ImageView) singleDayView.findViewById(R.id.iv_icon1);
+		ImageView iconView2 = (ImageView) singleDayView.findViewById(R.id.iv_icon2);
 		
 		if (mDaysOfMonth.get(position).equals(""))
 			setIconVisibility(iconView1, iconView2, NOTHING);

@@ -7,7 +7,7 @@
     android:background="@drawable/termine_kalendar_dynamicbackground" >
     
 	<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/day_of_month"
+		android:id="@+id/tv_tagNummer"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:textSize="14sp"
@@ -15,7 +15,7 @@
 	    android:textColor="@color/white" />
 	
 	<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/date_icon1"
+		android:id="@+id/iv_icon1"
 	    android:layout_width="match_parent"
 	    android:layout_height="20dp"
 		android:src="@drawable/termine_ic_busy" 
@@ -23,7 +23,7 @@
 		android:contentDescription="@string/content_busy" />
 	
 	<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-		android:id="@+id/date_icon2"
+		android:id="@+id/iv_icon2"
 	    android:layout_width="match_parent"
 	    android:layout_height="20dp"
 		android:src="@drawable/termine_ic_home" 
