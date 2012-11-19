@@ -2,11 +2,11 @@ package de.jasiflak.duelp;
 
 
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
-
-import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,12 +107,18 @@ public class TermineKalendar extends Activity {
         iv_showAsList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.i("info", "start!!!!");
-				Gson gsonDumper = new Gson();
-				HashMap<Date,Integer> map = mAdapter.getDateItems();
+//				HashMap<GregorianCalendar, Integer> map = mAdapter.getDateItems();
+//				HashMap<Long, Integer> gsonMap = new HashMap<Long, Integer>();
+//				
+//				for(Map.Entry<GregorianCalendar, Integer> entry : map.entrySet())
+//					gsonMap.put(entry.getKey().getTimeInMillis(), entry.getValue());
+//				
+//				Gson gson = new Gson();
+//				mTermineListeIntent.putExtra("listItems", gson.toJson(gsonMap));
 				
-				mTermineListeIntent.putExtra("listItems", gsonDumper.toJson(mAdapter.getDateItems()));
-				Log.i("info", "Dumped Map: " + gsonDumper.toJson(map));
+				TermineListe.dateItems = mAdapter.getDateItems();
+				
+//				Log.i("info", "Dumped Map: " + gson.toJson(mAdapter.getDateItems()));
 				startActivity(mTermineListeIntent);
 			}
 		});
@@ -145,8 +151,8 @@ public class TermineKalendar extends Activity {
 		// aktualisiere den angezeigten Monat
 		TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
 		
-		mAdapter.refreshDaysOfMonth();			
-		handler.post(calendarUpdater);				
+		mAdapter.refreshDaysOfMonth();
+		handler.post(calendarUpdater);
 		
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
 	}

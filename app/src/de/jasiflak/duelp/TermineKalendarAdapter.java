@@ -1,12 +1,12 @@
 package de.jasiflak.duelp;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,20 +25,20 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private Calendar mCalendar;
 	private Calendar mActualDate;
 	private ArrayList<String> mDaysOfMonth;
-	private HashMap<Date, Integer> mDateItem;
+	private HashMap<GregorianCalendar, Integer> mDateItem;
 	private Context mContext;
 
 	public TermineKalendarAdapter(Context c, Calendar calendar) {
 		mCalendar = calendar;
-		mActualDate = Calendar.getInstance();
+		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
-		mDateItem = new HashMap<Date, Integer>();
+		mDateItem = new HashMap<GregorianCalendar, Integer>();
 		refreshDaysOfMonth();
 	}
 
 	
-	public HashMap<Date, Integer> getDateItems() {
+	public HashMap<GregorianCalendar, Integer> getDateItems() {
 		return mDateItem;
 	}
 	
@@ -52,7 +52,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		if(mDaysOfMonth.get(position).equals(""))
 			return;
 		
-		Date date = new Date(mCalendar.get(Calendar.YEAR) - 1900, mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
+		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItem.get(date) == null)
 			mDateItem.put(date, state);
 		else {
@@ -196,7 +196,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		if (mDaysOfMonth.get(position).equals(""))
 			setIconVisibility(iconView1, iconView2, NOTHING);
 		else {
-			Date d = new Date(mCalendar.get(Calendar.YEAR) - 1900, mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
+			GregorianCalendar d = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 			if(mDateItem.get(d) != null)
 				setIconVisibility(iconView1, iconView2, mDateItem.get(d));
 			else
