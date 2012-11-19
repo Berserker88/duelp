@@ -38,6 +38,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	}
 
 	
+	public HashMap<Date, Integer> getDateItems() {
+		return mDateItem;
+	}
+	
 	/**
 	 * changes the itemstate in the mDateItem-HashMap
 	 * @param position the position in mDaysOfMonth to be updated

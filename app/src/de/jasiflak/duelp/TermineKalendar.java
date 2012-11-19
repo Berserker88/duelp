@@ -2,6 +2,11 @@ package de.jasiflak.duelp;
 
 
 import java.util.Calendar;
+import java.util.Date;
+
+import com.google.gson.Gson;
+
+import java.util.HashMap;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,6 +108,11 @@ public class TermineKalendar extends Activity {
 			@Override
 			public void onClick(View v) {
 				Log.i("info", "start!!!!");
+				Gson gsonDumper = new Gson();
+				HashMap<Date,Integer> map = mAdapter.getDateItems();
+				
+				mTermineListeIntent.putExtra("listItems", gsonDumper.toJson(mAdapter.getDateItems()));
+				Log.i("info", "Dumped Map: " + gsonDumper.toJson(map));
 				startActivity(mTermineListeIntent);
 			}
 		});
