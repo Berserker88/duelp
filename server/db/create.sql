@@ -1,7 +1,17 @@
-﻿/*DUELP Datenbank*/
-/*C:\Users\forall\Desktop\duelp\duelp\server\db\create.sql*/
-BEGIN;
+/*DUELP Datenbank*/
 
+/*DIRS*/
+
+/*Mac*/
+/* /Users/Jannis/Desktop/duelp/server/db/create.sql */
+
+/*B315*/
+/*C:\Users\forall\Desktop\duelp\duelp\server\db\create.sql*/
+
+
+
+BEGIN;
+/
 
 /*CLEAN UP*/
 DROP TABLE users;
@@ -42,7 +52,6 @@ CREATE TABLE orte (id INT NOT NULL AUTO_INCREMENT,user_id INT,plz CHAR(5),ort VA
 
 
 /*TEST DATA*/
-
 INSERT INTO users (name ,password) VALUES('peter','dermeter');
 
 
