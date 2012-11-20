@@ -6,7 +6,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-
+import de.duelp.backend.MySQLAccess;
 // POJO, no interface no extends
 
 /**
@@ -37,14 +37,18 @@ public class DuelpServer
 	// This method is called if request is HTML
 	@GET
 	@Produces( MediaType.TEXT_HTML )
-	public String sayHtmlHello()
+	public String sayHtmlHello() throws Exception
 	{
-		return "<html> "
+		
+		MySQLAccess dao = new MySQLAccess(); 
+		return dao.readDataBase();
+	
+		/*return "<html> "
 			+ "<title>" + "Hello Jersey" + "</title>"
 			+ "<body><h1>"
 			+ "Hello Jersey in HTML"
 			+ "</body></h1>"
-			+ "</html> ";
+			+ "</html> ";*/
 	}
 
 	// This method is called if request is XML

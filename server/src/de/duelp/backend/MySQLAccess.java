@@ -7,28 +7,48 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Date;
 
+
 public class MySQLAccess {
+
+	//Constants
+  final String kSQLUser = "sqluser";
+  final String kSQLPW = "sqluserpw";
+  final String kDBName= "feedback";
+  
+	
   private Connection connect = null;
   private Statement statement = null;
   private PreparedStatement preparedStatement = null;
   private ResultSet resultSet = null;
 
-  public void readDataBase() throws Exception {
+  @SuppressWarnings("deprecation")
+public String readDataBase() throws Exception {
     try {
       // This will load the MySQL driver, each DB has its own driver
       Class.forName("com.mysql.jdbc.Driver");
       // Setup the connection with the DB
       connect = DriverManager
-          .getConnection("jdbc:mysql://localhost/feedback?"
-              + "user=sqluser&password=sqluserpw");
+          .getConnection("jdbc:mysql://localhost/"+kDBName+"?"
+              + "user=" + kSQLUser + "&password=" + kSQLPW);
 
       // Statements allow to issue SQL queries to the database
       statement = connect.createStatement();
+      
       // Result set get the result of the SQL query
       resultSet = statement
-          .executeQuery("select * from FEEDBACK.COMMENTS");
+          .executeQuery("SELECT * FROM"+kDBName+".users");
       writeResultSet(resultSet);
+      
+      String r = new String();
+	  r.concat("The columns in the table are: ");
+	  r.concat("Table: " + resultSet.getMetaData().getTableName(1));
+	  for  (int i = 1; i<= resultSet.getMetaData().getColumnCount(); i++){
+		  r.concat("Column " +i  + " "+ resultSet.getMetaData().getColumnName(i));
+	    }
+	  return r;
+      
 
+      /*
       // PreparedStatements can use variables and are more efficient
       preparedStatement = connect
           .prepareStatement("insert into  FEEDBACK.COMMENTS values (default, ?, ?, ?, ? , ?, ?)");
@@ -55,7 +75,7 @@ public class MySQLAccess {
       
       resultSet = statement
       .executeQuery("select * from FEEDBACK.COMMENTS");
-      writeMetaData(resultSet);
+      writeMetaData(resultSet);*/
       
     } catch (Exception e) {
       throw e;
@@ -64,7 +84,7 @@ public class MySQLAccess {
     }
 
   }
-
+  
   private void writeMetaData(ResultSet resultSet) throws SQLException {
     //   Now get some metadata from the database
     // Result set get the result of the SQL query

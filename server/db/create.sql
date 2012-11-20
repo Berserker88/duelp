@@ -9,9 +9,17 @@
 /*C:\Users\forall\Desktop\duelp\duelp\server\db\create.sql*/
 
 
+/*DATABASE AND USER*/
+/*
+CREATE DATABASE duelp_db;
+USE duelp_db;
+CREATE USER duelp IDENTIFIED BY 'duelp123'; 
+GRANT USAGE ON *.* TO duelp@localhost IDENTIFIED BY 'duelp'; 
+GRANT ALL privileges ON feedback.* TO duelp@localhost;*/
+
+
 
 BEGIN;
-/
 
 /*CLEAN UP*/
 DROP TABLE users;
