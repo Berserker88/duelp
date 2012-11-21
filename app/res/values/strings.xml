@@ -8,6 +8,7 @@
     <string name="next_month">&gt;&gt;</string>
     <string name="content_home">Hier geht es bei mir zu Hause</string>
     <string name="content_busy">Hier kann ich nicht</string>
+    <string name="content_trash">Eintrag löschen</string>
     <string name="content_termine_list">Zeige Termine als Liste</string>
     <string name="back">Zurück</string>
 

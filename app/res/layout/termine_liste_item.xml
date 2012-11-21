@@ -1,38 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+    android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="horizontal" >
 
-    <TextView
-        android:id="@+id/tv_list_item_date"
-        android:layout_width="fill_parent"
-        android:layout_height="30dp"
-        android:textSize="11pt" />
-    
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	    android:layout_width="fill_parent"
-	    android:layout_height="20dp"
-	    android:orientation="horizontal" >
-        
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:id="@+id/iv_list_item_busy"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_weight="1"
+    android:background="@drawable/termine_list_border" >
+
+		<TextView
+		    android:id="@+id/tv_list_item_date"
 		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:src="@drawable/termine_ic_busy"
-		    android:contentDescription="@string/content_busy"
-		    android:layout_weight="1"
-		    android:visibility="invisible" />
-        
-        <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-		    android:id="@+id/iv_list_item_home"
+		    android:layout_height="30dp"
+		    android:textSize="11pt" />
+
+		<LinearLayout
+		    xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:layout_width="fill_parent"
-		    android:layout_height="fill_parent"
-		    android:src="@drawable/termine_ic_home"
-		    android:contentDescription="@string/content_home"
-		    android:layout_weight="1"
-		    android:visibility="invisible" />
-        
-    </LinearLayout>
+		    android:layout_height="20dp"
+		    android:orientation="horizontal" >
+
+		    <ImageView
+		        xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:id="@+id/iv_list_item_busy"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:layout_weight="1"
+		        android:layout_marginLeft="40dp"
+		        android:contentDescription="@string/content_busy"
+		        android:src="@drawable/termine_ic_busy"
+		        android:visibility="invisible" />
+
+		    <ImageView
+		        xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:id="@+id/iv_list_item_home"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:layout_weight="1"
+		        android:layout_marginRight="40dp"
+		        android:contentDescription="@string/content_home"
+		        android:src="@drawable/termine_ic_home"
+		        android:visibility="invisible" />
+		</LinearLayout>
+
+		</LinearLayout>
+		<ImageView
+		        xmlns:android="http://schemas.android.com/apk/res/android"
+		        android:id="@+id/iv_list_item_delete"
+		        android:layout_width="100dp"
+		        android:layout_height="50dp"
+		        android:layout_weight="1"
+		        android:padding="5dp"
+		        android:contentDescription="@string/content_trash"
+		        android:src="@drawable/termine_ic_trash" />
 
 </LinearLayout>

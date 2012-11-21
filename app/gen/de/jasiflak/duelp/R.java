@@ -30,7 +30,9 @@ public final class R {
         public static final int termine_ic_busy=0x7f02000a;
         public static final int termine_ic_home=0x7f02000b;
         public static final int termine_ic_list=0x7f02000c;
-        public static final int termine_kalendar_dynamicbackground=0x7f02000d;
+        public static final int termine_ic_trash=0x7f02000d;
+        public static final int termine_kalendar_dynamicbackground=0x7f02000e;
+        public static final int termine_list_border=0x7f02000f;
     }
     public static final class id {
         public static final int editText1=0x7f090000;
@@ -41,11 +43,12 @@ public final class R {
         public static final int iv_icon2=0x7f090003;
         public static final int iv_kalendar_liste=0x7f090006;
         public static final int iv_list_item_busy=0x7f09000a;
+        public static final int iv_list_item_delete=0x7f09000c;
         public static final int iv_list_item_home=0x7f09000b;
-        public static final int lv_calendar_entries=0x7f09000d;
-        public static final int menu_settings=0x7f09000e;
+        public static final int lv_calendar_entries=0x7f09000e;
+        public static final int menu_settings=0x7f09000f;
         public static final int tv_kalendar_title=0x7f090005;
-        public static final int tv_list_back=0x7f09000c;
+        public static final int tv_list_back=0x7f09000d;
         public static final int tv_list_item_date=0x7f090009;
         public static final int tv_tagNummer=0x7f090001;
     }
@@ -64,14 +67,15 @@ public final class R {
     }
     public static final class string {
         public static final int app_name=0x7f040000;
-        public static final int back=0x7f040009;
+        public static final int back=0x7f04000a;
         public static final int content_busy=0x7f040007;
         public static final int content_home=0x7f040006;
-        public static final int content_termine_list=0x7f040008;
+        public static final int content_termine_list=0x7f040009;
+        public static final int content_trash=0x7f040008;
         public static final int hello_world=0x7f040001;
         public static final int menu_settings=0x7f040002;
         public static final int next_month=0x7f040005;
-        public static final int open=0x7f04000a;
+        public static final int open=0x7f04000b;
         public static final int prev_month=0x7f040004;
         public static final int title_activity_main=0x7f040003;
     }
