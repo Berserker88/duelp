@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal" >
 
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -15,12 +16,14 @@
 		    android:id="@+id/tv_list_item_date"
 		    android:layout_width="fill_parent"
 		    android:layout_height="30dp"
-		    android:textSize="11pt" />
+		    android:paddingLeft="10dp"
+		    android:textStyle="bold"
+		    android:textSize="14pt" />
 
 		<LinearLayout
 		    xmlns:android="http://schemas.android.com/apk/res/android"
 		    android:layout_width="fill_parent"
-		    android:layout_height="20dp"
+		    android:layout_height="30dp"
 		    android:orientation="horizontal" >
 
 		    <ImageView
@@ -29,6 +32,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:layout_weight="1"
+		        android:padding="5dp"
 		        android:layout_marginLeft="40dp"
 		        android:contentDescription="@string/content_busy"
 		        android:src="@drawable/termine_ic_busy"
@@ -40,6 +44,7 @@
 		        android:layout_width="fill_parent"
 		        android:layout_height="fill_parent"
 		        android:layout_weight="1"
+		        android:padding="5dp"
 		        android:layout_marginRight="40dp"
 		        android:contentDescription="@string/content_home"
 		        android:src="@drawable/termine_ic_home"
@@ -50,11 +55,13 @@
 		<ImageView
 		        xmlns:android="http://schemas.android.com/apk/res/android"
 		        android:id="@+id/iv_list_item_delete"
-		        android:layout_width="100dp"
-		        android:layout_height="50dp"
+		        android:layout_width="150dp"
+		        android:layout_height="60dp"
 		        android:layout_weight="1"
 		        android:padding="5dp"
 		        android:contentDescription="@string/content_trash"
-		        android:src="@drawable/termine_ic_trash" />
+		        android:src="@drawable/termine_ic_trash"
+		        android:clickable="true"
+		        android:background="@drawable/termine_list_trashselector" />
 
 </LinearLayout>

@@ -2,11 +2,10 @@ package de.jasiflak.duelp;
 
 
 import java.util.Calendar;
-import java.util.Date;
-
-import com.google.gson.Gson;
-
+import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -107,13 +106,19 @@ public class TermineKalendar extends Activity {
         iv_showAsList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Log.i("info", "start!!!!");
-				Gson gsonDumper = new Gson();
-				HashMap<Date,Integer> map = mAdapter.getDateItems();
+//				HashMap<GregorianCalendar, Integer> map = mAdapter.getDateItems();
+//				HashMap<Long, Integer> gsonMap = new HashMap<Long, Integer>();
+//				
+//				for(Map.Entry<GregorianCalendar, Integer> entry : map.entrySet())
+//					gsonMap.put(entry.getKey().getTimeInMillis(), entry.getValue());
+//				
+//				Gson gson = new Gson();
+//				mTermineListeIntent.putExtra("listItems", gson.toJson(gsonMap));
 				
-				mTermineListeIntent.putExtra("listItems", gsonDumper.toJson(mAdapter.getDateItems()));
-				Log.i("info", "Dumped Map: " + gsonDumper.toJson(map));
-				startActivity(mTermineListeIntent);
+//				TermineKalendarAdapter.mDateItems = mAdapter.getDateItems();
+				
+//				Log.i("info", "Dumped Map: " + gson.toJson(mAdapter.getDateItems()));
+				startActivityForResult(mTermineListeIntent, 1);
 			}
 		});
         
@@ -138,6 +143,14 @@ public class TermineKalendar extends Activity {
         
 	}
 	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		refreshCalendar();
+	}
+	
+	
+	
 	/**
 	 * responsible for calling the Handler runnable
 	 */
@@ -145,8 +158,8 @@ public class TermineKalendar extends Activity {
 		// aktualisiere den angezeigten Monat
 		TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
 		
-		mAdapter.refreshDaysOfMonth();			
-		handler.post(calendarUpdater);				
+		mAdapter.refreshDaysOfMonth();
+		handler.post(calendarUpdater);
 		
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
 	}
@@ -174,6 +187,7 @@ public class TermineKalendar extends Activity {
 				mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
 		}
 	}
+	
 	
 	/**
 	 * the Handler that notifies the adapter to reload
