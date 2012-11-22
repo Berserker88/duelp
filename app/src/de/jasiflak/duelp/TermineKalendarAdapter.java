@@ -1,12 +1,12 @@
 package de.jasiflak.duelp;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +15,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class KalendarAdapter extends BaseAdapter {
+public class TermineKalendarAdapter extends BaseAdapter {
 
+	public static HashMap<GregorianCalendar, Integer> mDateItems = new HashMap<GregorianCalendar, Integer>();
+	
 	public static final int NOTHING = 0x00;
 	public static final int BUSY = 0x01;
 	public static final int HOME = 0x10;
@@ -25,21 +27,24 @@ public class KalendarAdapter extends BaseAdapter {
 	private Calendar mCalendar;
 	private Calendar mActualDate;
 	private ArrayList<String> mDaysOfMonth;
-	private HashMap<Date, Integer> mDateItem;
 	private Context mContext;
 
-	public KalendarAdapter(Context c, Calendar calendar) {
+	public TermineKalendarAdapter(Context c, Calendar calendar) {
 		mCalendar = calendar;
-		mActualDate = Calendar.getInstance();
+		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
-		mDateItem = new HashMap<Date, Integer>();
+		mDateItems = new HashMap<GregorianCalendar, Integer>();
 		refreshDaysOfMonth();
 	}
 
 	
+	public HashMap<GregorianCalendar, Integer> getDateItems() {
+		return mDateItems;
+	}
+	
 	/**
-	 * changes the itemstate in the mDateItem-HashMap
+	 * changes the itemstate in the mDateItems-HashMap
 	 * @param position the position in mDaysOfMonth to be updated
 	 * @param state the requested state to change
 	 */
@@ -48,14 +53,14 @@ public class KalendarAdapter extends BaseAdapter {
 		if(mDaysOfMonth.get(position).equals(""))
 			return;
 		
-		Date date = new Date(mCalendar.get(Calendar.YEAR) - 1900, mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
-		if (mDateItem.get(date) == null)
-			mDateItem.put(date, state);
+		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
+		if (mDateItems.get(date) == null)
+			mDateItems.put(date, state);
 		else {
-			int newState = mDateItem.get(date) ^ state;
-			mDateItem.remove(date);
+			int newState = mDateItems.get(date) ^ state;
+			mDateItems.remove(date);
 			if (newState != NOTHING)
-				mDateItem.put(date, newState);
+				mDateItems.put(date, newState);
 		}
 	}
 
@@ -192,9 +197,9 @@ public class KalendarAdapter extends BaseAdapter {
 		if (mDaysOfMonth.get(position).equals(""))
 			setIconVisibility(iconView1, iconView2, NOTHING);
 		else {
-			Date d = new Date(mCalendar.get(Calendar.YEAR) - 1900, mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
-			if(mDateItem.get(d) != null)
-				setIconVisibility(iconView1, iconView2, mDateItem.get(d));
+			GregorianCalendar d = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
+			if(mDateItems.get(d) != null)
+				setIconVisibility(iconView1, iconView2, mDateItems.get(d));
 			else
 				setIconVisibility(iconView1, iconView2, NOTHING);
 		}

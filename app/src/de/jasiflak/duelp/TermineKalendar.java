@@ -2,7 +2,12 @@ package de.jasiflak.duelp;
 
 
 import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,6 +18,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class TermineKalendar extends Activity {
@@ -21,9 +27,10 @@ public class TermineKalendar extends Activity {
 	public static final int PREV = 2;
 	
 	private Calendar mCalendar;
-	private KalendarAdapter mAdapter;
+	private TermineKalendarAdapter mAdapter;
 	private Handler handler;
 	private OnSwipeTouchListener mSwipeListener;
+	private Intent mTermineListeIntent;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class TermineKalendar extends Activity {
         };
         
         // Erstellen des Adapters für den Kalendar
-        mAdapter = new KalendarAdapter(this, mCalendar);
+        mAdapter = new TermineKalendarAdapter(this, mCalendar);
         
         // Zuweisungen für das GridView des Kalendars
         GridView gv_calendar = (GridView) findViewById(R.id.gv_kalendar);
@@ -65,14 +72,14 @@ public class TermineKalendar extends Activity {
         gv_calendar.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, KalendarAdapter.BUSY);
+				mAdapter.changeItemState(position, TermineKalendarAdapter.BUSY);
 				refreshCalendar();
 			}
         });
         gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parentView, View clickedView, int position, long id) {
-				mAdapter.changeItemState(position, KalendarAdapter.HOME);
+				mAdapter.changeItemState(position, TermineKalendarAdapter.HOME);
 				refreshCalendar();
 				return true;
 			}
@@ -93,26 +100,30 @@ public class TermineKalendar extends Activity {
         title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
         title.setOnTouchListener(mSwipeListener);
         
+        mTermineListeIntent = new Intent().setClass(this, TermineListe.class);
         
-//        TextView next = (TextView) findViewById(R.id.next);
-//        next.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				updateMonth(NEXT);
-//				refreshCalendar();
-//			}
-//		});
-//        
-//        TextView prev = (TextView) findViewById(R.id.previous);
-//        prev.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				updateMonth(PREV);
-//				refreshCalendar();
-//			}
-//		});
-        
+        ImageView iv_showAsList = (ImageView) findViewById(R.id.iv_kalendar_liste);
+        iv_showAsList.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startActivityForResult(mTermineListeIntent, 1);
+			}
+		});        
 	}
+	
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK) {
+			int month = data.getIntExtra("month", mCalendar.get(Calendar.MONTH));
+			int year = data.getIntExtra("year", mCalendar.get(Calendar.YEAR));
+			mCalendar.set(Calendar.MONTH, month);
+			mCalendar.set(Calendar.YEAR, year);
+		}
+		refreshCalendar();
+	}
+	
+	
 	
 	/**
 	 * responsible for calling the Handler runnable
@@ -121,8 +132,8 @@ public class TermineKalendar extends Activity {
 		// aktualisiere den angezeigten Monat
 		TextView title = (TextView) findViewById(R.id.tv_kalendar_title);
 		
-		mAdapter.refreshDaysOfMonth();			
-		handler.post(calendarUpdater);				
+		mAdapter.refreshDaysOfMonth();
+		handler.post(calendarUpdater);
 		
 		title.setText(android.text.format.DateFormat.format("MMMM yyyy", mCalendar));
 	}
@@ -150,6 +161,7 @@ public class TermineKalendar extends Activity {
 				mCalendar.set(Calendar.MONTH, mCalendar.get(Calendar.MONTH)-1);
 		}
 	}
+	
 	
 	/**
 	 * the Handler that notifies the adapter to reload
