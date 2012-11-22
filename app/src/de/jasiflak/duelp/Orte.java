@@ -3,8 +3,12 @@ package de.jasiflak.duelp;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -42,6 +46,17 @@ public class Orte extends Activity{
 		ListAdapter adapter_header = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, header);
 		ListView ort_header = (ListView) findViewById(R.id.ort_header);
 		ort_header.setAdapter(adapter_header);
+		ort_header.setOnItemClickListener(new OnItemClickListener() {		
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
+				 Intent intent = new Intent().setClass(arg0.getContext(), Orte_Alle.class);
+				 startActivity(intent);
+				// TODO Automatisch generierter Methodenstub
+				
+			}
+		});
 		
 		}
 	

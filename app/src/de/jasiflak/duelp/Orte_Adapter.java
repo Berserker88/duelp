@@ -16,8 +16,8 @@ import android.widget.TextView;
 
 public class Orte_Adapter extends BaseAdapter {
 
-	private Map<String, String[]> map;
-	private ArrayList<String> keys;
+	public static Map<String, String[]> map = new HashMap<String,String[]>();
+	public static ArrayList<String> keys;
 	private Context context;
 
 	public Orte_Adapter(Context c) {
