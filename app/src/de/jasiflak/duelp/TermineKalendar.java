@@ -106,46 +106,20 @@ public class TermineKalendar extends Activity {
         iv_showAsList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-//				HashMap<GregorianCalendar, Integer> map = mAdapter.getDateItems();
-//				HashMap<Long, Integer> gsonMap = new HashMap<Long, Integer>();
-//				
-//				for(Map.Entry<GregorianCalendar, Integer> entry : map.entrySet())
-//					gsonMap.put(entry.getKey().getTimeInMillis(), entry.getValue());
-//				
-//				Gson gson = new Gson();
-//				mTermineListeIntent.putExtra("listItems", gson.toJson(gsonMap));
-				
-//				TermineKalendarAdapter.mDateItems = mAdapter.getDateItems();
-				
-//				Log.i("info", "Dumped Map: " + gson.toJson(mAdapter.getDateItems()));
 				startActivityForResult(mTermineListeIntent, 1);
 			}
-		});
-        
-        
-//        TextView next = (TextView) findViewById(R.id.next);
-//        next.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				updateMonth(NEXT);
-//				refreshCalendar();
-//			}
-//		});
-//        
-//        TextView prev = (TextView) findViewById(R.id.previous);
-//        prev.setOnClickListener(new OnClickListener() {
-//			@Override
-//			public void onClick(View v) {
-//				updateMonth(PREV);
-//				refreshCalendar();
-//			}
-//		});
-        
+		});        
 	}
 	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(resultCode == RESULT_OK) {
+			int month = data.getIntExtra("month", mCalendar.get(Calendar.MONTH));
+			int year = data.getIntExtra("year", mCalendar.get(Calendar.YEAR));
+			mCalendar.set(Calendar.MONTH, month);
+			mCalendar.set(Calendar.YEAR, year);
+		}
 		refreshCalendar();
 	}
 	

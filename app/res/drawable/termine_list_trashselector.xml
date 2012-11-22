@@ -2,9 +2,9 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
 	    android:state_pressed="true"
-    	android:drawable="@drawable/termine_background_focused" />
+    	android:drawable="@drawable/termine_background_trash" />
     <item 
 		android:state_focused="true"
-    	android:drawable="@drawable/termine_background_focused" />
+    	android:drawable="@drawable/termine_background_trash" />
 
 </selector>
