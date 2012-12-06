@@ -38,7 +38,7 @@ public class Lernplan extends Activity
 	    testdaten.put(4, eintrag4);
 	    testdaten.put(5, eintrag5);
 	
-		    
+	    
 		//befüllen der Liste
 		for (Map.Entry<Integer, String[]> entry: testdaten.entrySet())
 		{
@@ -54,7 +54,6 @@ public class Lernplan extends Activity
 	    lv.setAdapter(adapter);
 	    
 	    
+	    
 	}
-	
-
 }
