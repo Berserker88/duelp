@@ -1,6 +1,9 @@
 *.class
 .classpath
+<<<<<<< HEAD
 
+=======
+>>>>>>> orte_tab
 # Package Files #
 *.war
 *.ear
