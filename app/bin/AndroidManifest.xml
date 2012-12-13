@@ -27,5 +27,7 @@
         <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Orte_Detail" android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".Orte_Alle" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".FaecherDetail" android:label="@string/title_activity_main" />
+        
     </application>
 </manifest>
