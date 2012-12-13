@@ -8,10 +8,17 @@
         android:id="@+id/editText1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Fächer"
-        android:ems="10" >
+        android:ems="10"
+        android:hint="Fächer"
+        android:text="Fächer" >
 
         <requestFocus />
     </EditText>
+
+    <ListView
+        android:id="@+id/listView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
 </LinearLayout>
