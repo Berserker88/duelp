@@ -1,9 +1,22 @@
 package de.jasiflak.duelp;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import android.content.Context;
 import android.util.Log;
@@ -36,8 +49,48 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mDaysOfMonth = new ArrayList<String>();
 		mDateItems = new HashMap<GregorianCalendar, Integer>();
 		refreshDaysOfMonth();
+		
+		try {
+			HttpClient httpclient = new DefaultHttpClient();
+		    HttpResponse response = httpclient.execute(new HttpGet("http://10.12.41.43:8080/duelp-backend/rest/termine"));
+		    StatusLine statusLine = response.getStatusLine();
+		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+		        ByteArrayOutputStream out = new ByteArrayOutputStream();
+		        response.getEntity().writeTo(out);
+		        out.close();
+		        String responseString = out.toString();
+		        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
+		        parseJSON(responseString);
+		    } else{
+		        //Closes the connection.
+		        response.getEntity().getContent().close();
+		    }
+		} catch(Exception ex) {
+			Log.i("debug", "error while calling url: " + ex.getMessage());
+			ex.printStackTrace();
+		}
 	}
 
+	
+	public void parseJSON(String json) {
+		JSONObject obj;
+		HashMap<ArrayList<Integer>, Integer> map = new HashMap<ArrayList<Integer>, Integer>();
+		try {
+			obj = new JSONObject(json);
+			map = (HashMap<ArrayList<Integer>, Integer>) obj.get("list");
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.i("debug", "error while parsing json: " + e.getMessage());
+		}
+		
+		for(ArrayList<Integer> yearMonthDay : map.keySet()) {
+			GregorianCalendar date = new GregorianCalendar(yearMonthDay.get(0), yearMonthDay.get(1), yearMonthDay.get(2));
+			mDateItems.put(date, map.get(yearMonthDay));
+		}
+		
+		Log.i("debug", "all ok: " + mDateItems.toString());
+	}
+	
 	
 	public HashMap<GregorianCalendar, Integer> getDateItems() {
 		return mDateItems;

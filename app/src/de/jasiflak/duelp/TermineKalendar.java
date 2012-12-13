@@ -6,6 +6,9 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -106,6 +109,24 @@ public class TermineKalendar extends Activity {
         iv_showAsList.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+//				JSONObject obj = new JSONObject();
+//				try {
+//					obj.put("list", TermineKalendarAdapter.mDateItems);
+//				} catch (JSONException e) {
+//					e.printStackTrace();
+//				}
+//				
+//				String sent = obj.toString();
+//				Log.i("info", "json sent hashmap: " + sent);
+//				HashMap<GregorianCalendar, Integer> test = new HashMap<GregorianCalendar, Integer>();
+//				try {
+//					JSONObject rec = new JSONObject(sent);
+//					Log.i("info", "json received hashmap: " + rec.toString());
+//					test = (HashMap<GregorianCalendar, Integer>) rec.get("list");
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+				
 				startActivityForResult(mTermineListeIntent, 1);
 			}
 		});        
