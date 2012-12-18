@@ -53,7 +53,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
-		mDateItems = new HashMap<GregorianCalendar, Integer>();
 		refreshDaysOfMonth();
 		
 		try {
@@ -92,12 +91,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 			} catch (ParseException e) {
 				e.printStackTrace();
 			}
-			parsed.setMonth(parsed.getMonth()+1);
 			GregorianCalendar datum = new GregorianCalendar();
 			datum.setTime(parsed);
 			mDateItems.put(datum, Integer.parseInt(map.get(date)));
 		}
-		
 		Log.i("debug", "all ok: " + map.toString());
 	}
 	

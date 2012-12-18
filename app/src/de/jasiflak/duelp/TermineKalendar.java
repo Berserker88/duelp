@@ -108,25 +108,7 @@ public class TermineKalendar extends Activity {
         ImageView iv_showAsList = (ImageView) findViewById(R.id.iv_kalendar_liste);
         iv_showAsList.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
-//				JSONObject obj = new JSONObject();
-//				try {
-//					obj.put("list", TermineKalendarAdapter.mDateItems);
-//				} catch (JSONException e) {
-//					e.printStackTrace();
-//				}
-//				
-//				String sent = obj.toString();
-//				Log.i("info", "json sent hashmap: " + sent);
-//				HashMap<GregorianCalendar, Integer> test = new HashMap<GregorianCalendar, Integer>();
-//				try {
-//					JSONObject rec = new JSONObject(sent);
-//					Log.i("info", "json received hashmap: " + rec.toString());
-//					test = (HashMap<GregorianCalendar, Integer>) rec.get("list");
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-				
+			public void onClick(View v) {				
 				startActivityForResult(mTermineListeIntent, 1);
 			}
 		});        
