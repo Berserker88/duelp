@@ -34,26 +34,7 @@ public class Orte_Adapter extends BaseAdapter {
 	public Orte_Adapter(Context c) {
 		
 		context = c;
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-		    HttpResponse response = httpclient.execute(new HttpGet("http://"+Duelp.URL+"/duelp-backend/rest/termine"));
-		    StatusLine statusLine = response.getStatusLine();
-		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-		        ByteArrayOutputStream out = new ByteArrayOutputStream();
-		        response.getEntity().writeTo(out);
-		        out.close();
-		        String responseString = out.toString();
-		        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
-		        
-		    } else{
-		        //Closes the connection.
-		        response.getEntity().getContent().close();
-		    }
-		} catch(Exception ex) {
-			Log.i("debug", "ERROR:" + ex.getMessage());
-			ex.printStackTrace();
-		}
-
+		
 		// Test-Array bauen
 		// ############################################################
 		map = new HashMap<String, String[]>();
@@ -122,6 +103,27 @@ public class Orte_Adapter extends BaseAdapter {
 						   Log.i("Debug: ", "Hier nach dem Intent!");
 						   context.startActivity(intent);
 						   Log.i("Debug: ", "Hier nach dem Start der Activity!");
+						   try {
+								HttpClient httpclient = new DefaultHttpClient();			
+							    HttpResponse response = httpclient.execute(new HttpGet("http://"+Duelp.URL+"/duelp-backend/rest/orte"));
+							    Log.i("debug", "httpresponse");
+							    StatusLine statusLine = response.getStatusLine();
+							    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+							        ByteArrayOutputStream out = new ByteArrayOutputStream();
+							        response.getEntity().writeTo(out);
+							        out.close();
+							        String responseString = out.toString();
+							        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
+							        
+							    } else{
+							        //Closes the connection.
+							        response.getEntity().getContent().close();
+							    }
+							} catch(Exception ex) {
+								Log.i("debug", "ERROR:" + ex.getMessage());
+								ex.printStackTrace();
+							}
+
 						
 					}
 
