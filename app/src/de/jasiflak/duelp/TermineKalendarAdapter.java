@@ -2,8 +2,11 @@ package de.jasiflak.duelp;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 
@@ -18,7 +21,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import com.google.gson.Gson;
+
 import android.content.Context;
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,12 +53,11 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
-		mDateItems = new HashMap<GregorianCalendar, Integer>();
 		refreshDaysOfMonth();
 		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-		    HttpResponse response = httpclient.execute(new HttpGet("http://10.12.41.43:8080/duelp-backend/rest/termine"));
+		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
 		    StatusLine statusLine = response.getStatusLine();
 		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
 		        ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -74,21 +79,23 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	
 	public void parseJSON(String json) {
 		JSONObject obj;
-		HashMap<ArrayList<Integer>, Integer> map = new HashMap<ArrayList<Integer>, Integer>();
-		try {
-			obj = new JSONObject(json);
-			map = (HashMap<ArrayList<Integer>, Integer>) obj.get("list");
-		} catch (JSONException e) {
-			e.printStackTrace();
-			Log.i("debug", "error while parsing json: " + e.getMessage());
-		}
+		HashMap<String, String> map = new HashMap<String, String>();
+		Gson gson = new Gson();
 		
-		for(ArrayList<Integer> yearMonthDay : map.keySet()) {
-			GregorianCalendar date = new GregorianCalendar(yearMonthDay.get(0), yearMonthDay.get(1), yearMonthDay.get(2));
-			mDateItems.put(date, map.get(yearMonthDay));
+		map = (HashMap<String, String>) gson.fromJson(json, map.getClass());
+		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		for(String date : map.keySet()) {
+			Date parsed = null;
+			try {
+				parsed = df.parse(date);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			GregorianCalendar datum = new GregorianCalendar();
+			datum.setTime(parsed);
+			mDateItems.put(datum, Integer.parseInt(map.get(date)));
 		}
-		
-		Log.i("debug", "all ok: " + mDateItems.toString());
+		Log.i("debug", "all ok: " + map.toString());
 	}
 	
 	
@@ -231,7 +238,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		// die views deaktivieren, um die Swipefunktionalität beizubehalten (bessere Swipe-Performance)
 		singleDayView.setEnabled(false);
 
-		// Markiere aktuelles Datum
+		// Markiere aktuelles Datumsimpledateformat
 		if (!mDaysOfMonth.get(position).equals("") && compareDates(mCalendar, mDaysOfMonth.get(position), mActualDate))
 			singleDayView.setBackgroundResource(R.drawable.termine_background_actual);
 		else if(!mDaysOfMonth.get(position).equals(""))

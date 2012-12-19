@@ -4,6 +4,10 @@
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
+<<<<<<< HEAD
 	<classpathentry exported="true" kind="lib" path="gson-2.2.2.jar"/>
+=======
+	<classpathentry exported="true" kind="lib" path="/home/timmae/workspace/duelp/gson-2.2.2.jar"/>
+>>>>>>> 06d7b25d41bbd772694f3614719f89d65ac544b1
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
