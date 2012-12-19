@@ -90,7 +90,6 @@ public class TermineKalendar extends Activity {
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
 				mAdapter.changeItemState(position, TermineKalendarAdapter.BUSY);
 				refreshCalendar();
-				httpRequest();
 			}
         });
         gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -127,26 +126,6 @@ public class TermineKalendar extends Activity {
 			}
 		});        
 	}
-	
-	
-	private void httpRequest() {
-		// Create a new HttpClient and Post Header
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/new");
-
-		try {
-		    // Add your data
-		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		    nameValuePairs.add(new BasicNameValuePair("json", "hallo du hansdieter!!"));
-		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-		    // Execute HTTP Post Request
-		    HttpResponse response = httpclient.execute(httppost);
-
-		} catch (Exception e) {
-		    System.out.println("Error in posting: " + e.getMessage());
-		}
-    }
 	
 	
 	@Override
