@@ -54,7 +54,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
-		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
@@ -81,7 +80,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		JSONObject obj;
 		HashMap<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
-		
+		Log.i("debug", "Hallo hier bin ich!!!!");
 		map = (HashMap<String, String>) gson.fromJson(json, map.getClass());
 		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
 		for(String date : map.keySet()) {
