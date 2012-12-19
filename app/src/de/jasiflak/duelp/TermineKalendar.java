@@ -1,11 +1,24 @@
 package de.jasiflak.duelp;
 
 
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,7 +77,7 @@ public class TermineKalendar extends Activity {
             	Log.i("info", "runter");
             }
         };
-        
+               
         // Erstellen des Adapters für den Kalendar
         mAdapter = new TermineKalendarAdapter(this, mCalendar);
         
@@ -77,6 +90,7 @@ public class TermineKalendar extends Activity {
 			public void onItemClick(AdapterView<?> parentView, View clickedView, int position, long id) {
 				mAdapter.changeItemState(position, TermineKalendarAdapter.BUSY);
 				refreshCalendar();
+				httpRequest();
 			}
         });
         gv_calendar.setOnItemLongClickListener(new OnItemLongClickListener() {
@@ -113,6 +127,26 @@ public class TermineKalendar extends Activity {
 			}
 		});        
 	}
+	
+	
+	private void httpRequest() {
+		// Create a new HttpClient and Post Header
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/new");
+
+		try {
+		    // Add your data
+		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		    nameValuePairs.add(new BasicNameValuePair("json", "hallo du hansdieter!!"));
+		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		    // Execute HTTP Post Request
+		    HttpResponse response = httpclient.execute(httppost);
+
+		} catch (Exception e) {
+		    System.out.println("Error in posting: " + e.getMessage());
+		}
+    }
 	
 	
 	@Override

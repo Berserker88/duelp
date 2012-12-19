@@ -57,7 +57,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
-		    HttpResponse response = httpclient.execute(new HttpGet("http://10.12.41.43:8080/duelp-backend/rest/termine"));
+		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
 		    StatusLine statusLine = response.getStatusLine();
 		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
 		        ByteArrayOutputStream out = new ByteArrayOutputStream();
