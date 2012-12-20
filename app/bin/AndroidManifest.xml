@@ -2,7 +2,11 @@
     package="de.jasiflak.duelp"
     android:versionCode="1"
     android:versionName="1.0" >
+    <permission
+          android:name="de.jasiflak.duelp.permission.MAPS_RECEIVE"
+          android:protectionLevel="signature"/>
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="de.jasiflak.duelp.permission.MAPS_RECEIVE"/>
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="15" />
@@ -27,5 +31,8 @@
         <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Orte_Detail" android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".Orte_Alle" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <meta-data
+    		android:name="com.google.android.maps.v2.API_KEY"
+    		android:value="AIzaSyB9O1U7yGAxf8dCC7i1PmiMSqMBeZqKVZo"/>
     </application>
 </manifest>

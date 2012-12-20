@@ -17,6 +17,8 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.Intent;
+
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -105,7 +107,7 @@ public class Orte_Adapter extends BaseAdapter {
 						   Log.i("Debug: ", "Hier nach dem Start der Activity!");
 						   try {
 								HttpClient httpclient = new DefaultHttpClient();			
-							    HttpResponse response = httpclient.execute(new HttpGet("http://"+Duelp.URL+"/duelp-backend/rest/orte"));
+							    HttpResponse response = httpclient.execute(new HttpGet("http://"+Duelp.URL+"/duelp-backend/rest/orte/"));
 							    Log.i("debug", "httpresponse");
 							    StatusLine statusLine = response.getStatusLine();
 							    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
@@ -120,8 +122,10 @@ public class Orte_Adapter extends BaseAdapter {
 							        response.getEntity().getContent().close();
 							    }
 							} catch(Exception ex) {
-								Log.i("debug", "ERROR:" + ex.getMessage());
-								ex.printStackTrace();
+								Log.i("debug", "Fehler beim Verbindungsaufbau ANFANG");
+								Log.e("debug", Log.getStackTraceString(ex));//("debug", "ERROR:" + ex.getMessage());
+								Log.i("debug", "Fehler beim Verbindungsaufbau ENDE");
+								//ex.printStackTrace();
 							}
 
 						
