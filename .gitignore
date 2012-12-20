@@ -1,10 +1,19 @@
 *.class
 .classpath
-<<<<<<< HEAD
 
-=======
->>>>>>> orte_tab
+
 # Package Files #
 *.war
 *.ear
+
+# Binary Files #
+*.bin
+
+# binary folder #
+app/bin/
+
+# Temporary Files #
+*~
+
+
 

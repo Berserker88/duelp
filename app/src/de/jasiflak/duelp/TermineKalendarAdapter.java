@@ -9,13 +9,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -54,7 +59,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
-		
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
@@ -81,9 +85,9 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		JSONObject obj;
 		HashMap<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
-		
+		Log.i("debug", "Hallo hier bin ich!!!!");
 		map = (HashMap<String, String>) gson.fromJson(json, map.getClass());
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		for(String date : map.keySet()) {
 			Date parsed = null;
 			try {
@@ -103,6 +107,38 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		return mDateItems;
 	}
 	
+	
+	private void httpRequest(GregorianCalendar date, String mode) {
+		// Create a new HttpClient and Post Header
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode);
+		String key = date.get(Calendar.DAY_OF_MONTH) +"."+ (date.get(Calendar.MONTH)+1) +"."+ date.get(Calendar.YEAR);
+		String param = "";
+		if (!mode.equals("delete")) {
+			String value = "" + mDateItems.get(date);
+			HashMap<String, String> map = new HashMap<String, String>();
+			map.put(key, value);
+			Gson gson = new Gson();
+			param = gson.toJson(map);
+		} else
+			param = key;
+		
+		try {
+		    // Add your data
+		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		    nameValuePairs.add(new BasicNameValuePair("json", param));
+		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		    // Execute HTTP Post Request
+		    HttpResponse response = httpclient.execute(httppost);
+
+		} catch (Exception e) {
+		    System.out.println("Error in posting: " + e.getMessage());
+		}
+    }
+	
+	
+	
 	/**
 	 * changes the itemstate in the mDateItems-HashMap
 	 * @param position the position in mDaysOfMonth to be updated
@@ -114,13 +150,19 @@ public class TermineKalendarAdapter extends BaseAdapter {
 			return;
 		
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
-		if (mDateItems.get(date) == null)
+		if (mDateItems.get(date) == null) {
 			mDateItems.put(date, state);
+			httpRequest(date, "new");
+		}
 		else {
 			int newState = mDateItems.get(date) ^ state;
 			mDateItems.remove(date);
-			if (newState != NOTHING)
+			if (newState == NOTHING)
+				httpRequest(date, "delete");
+			else {
 				mDateItems.put(date, newState);
+				httpRequest(date, "edit");
+			}
 		}
 	}
 

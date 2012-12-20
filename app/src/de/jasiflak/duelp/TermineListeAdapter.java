@@ -10,6 +10,16 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import com.google.gson.Gson;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,6 +66,27 @@ public class TermineListeAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		return position;
 	}
+	
+	
+	private void httpRequest(GregorianCalendar date) {
+		// Create a new HttpClient and Post Header
+		HttpClient httpclient = new DefaultHttpClient();
+		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
+		String key = date.get(Calendar.DAY_OF_MONTH) +"."+ (date.get(Calendar.MONTH)+1) +"."+ date.get(Calendar.YEAR);
+		try {
+		    // Add your data
+		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+		    nameValuePairs.add(new BasicNameValuePair("json", key));
+		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+		    // Execute HTTP Post Request
+		    HttpResponse response = httpclient.execute(httppost);
+		} catch (Exception e) {
+		    System.out.println("Error in posting: " + e.getMessage());
+		}
+    }
+	
+	
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -108,6 +139,7 @@ public class TermineListeAdapter extends BaseAdapter {
 				for(Map.Entry<GregorianCalendar, Integer> entry : TermineKalendarAdapter.mDateItems.entrySet()) {
 					strToCompare = entry.getKey().get(Calendar.DAY_OF_MONTH) + ". " + entry.getKey().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + entry.getKey().get(Calendar.YEAR);
 					if (strDate.equals(strToCompare)) {
+						httpRequest(entry.getKey());
 						Log.i("debug", "map before remove: " +TermineKalendarAdapter.mDateItems.toString());
 						TermineKalendarAdapter.mDateItems.remove(entry.getKey());
 						Log.i("debug", "map after remove: " +TermineKalendarAdapter.mDateItems.toString());
