@@ -87,7 +87,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		Gson gson = new Gson();
 		Log.i("debug", "Hallo hier bin ich!!!!");
 		map = (HashMap<String, String>) gson.fromJson(json, map.getClass());
-		SimpleDateFormat df = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		for(String date : map.keySet()) {
 			Date parsed = null;
 			try {
