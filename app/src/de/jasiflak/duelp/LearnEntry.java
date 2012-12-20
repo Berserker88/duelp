@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import android.util.Log;
+
 public class LearnEntry 
 {
 	int mId;
@@ -17,9 +19,7 @@ public class LearnEntry
 
 	//leerer Konstruktor
 	public LearnEntry()
-	{
-		
-	}
+	{}
 	
 	//Konstruktor
 	public LearnEntry(int id, Date datum, String fach, Date start, Date ende, String ort, boolean fruehstuek)
@@ -46,8 +46,8 @@ public class LearnEntry
 	
 	public LearnEntry(String id, String datum, String fach, String start, String ende, String ort, String fruehstueck) 
 	{
-		SimpleDateFormat  formatDate = new SimpleDateFormat("yyyy-MM-dd");
-		SimpleDateFormat  formatTime = new SimpleDateFormat("HH-MM");
+		SimpleDateFormat  formatDate = new SimpleDateFormat("dd.MM.yyyy");
+		SimpleDateFormat  formatTime = new SimpleDateFormat("HH:mm");
 		
 		this.mId = Integer.parseInt(id);
 		try 
@@ -92,10 +92,12 @@ public class LearnEntry
 		{
 			this.mFruehstuek = false;
 		}
+		
+		Log.i("debug", "Id: "+ mId+ " Datum: " + mDatum.toString() + " Fach: " +mFach + " Start: "+ mStart.toString() + " Ende: " +mEnde.toString() + " Ort: " + mOrt);
 			
 	}
 
-	//##### GET UND SET METHODEN ####
+	//##### GET UND SET METHODEN #####
 	public int getId()
 	{
 		return this.mId;
@@ -106,9 +108,9 @@ public class LearnEntry
 		this.mId = id;
 	}
 	
-	public Date getDate()
+	public String getDate()
 	{
-		return this.mDatum;
+		return this.mDatum.toString();
 	}
 	
 	public void setDate(Date datum)
@@ -126,9 +128,9 @@ public class LearnEntry
 		this.mFach = fach;
 	}
 	
-	public Date getStart()
+	public String getStart()
 	{
-		return this.mStart;
+		return this.mStart.toString();
 	}
 	
 	public void setStart(Date start)
@@ -136,9 +138,9 @@ public class LearnEntry
 		this.mStart = start;
 	}
 	
-	public Date getEnde()
+	public String getEnde()
 	{
-		return this.mEnde;
+		return this.mEnde.toString();
 	}
 	
 	public void setEnde(Date ende)
@@ -165,6 +167,4 @@ public class LearnEntry
 	{
 		this.mFruehstuek = fruehstueck;
 	}
-	
-
 }

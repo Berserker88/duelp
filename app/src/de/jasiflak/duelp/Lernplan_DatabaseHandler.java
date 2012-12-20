@@ -17,7 +17,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
     private static final int DATABASE_VERSION = 1;
  
     // Database Name
-    private static final String DATABASE_NAME = "duelp";
+    private static final String DATABASE_NAME = "duelp_learnPlan_db";
  
     // Learnplan table name
     private static final String TABLE_ENTRY = "lernplan";
@@ -42,12 +42,12 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
     {
         String CREATE_LEARNPLAN_TABLE = "CREATE TABLE " + TABLE_ENTRY +"("+ 
         		KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE ," + 
-        		KEY_DATUM + " DATETIME NOT NULL," + 
+        		KEY_DATUM + " VARCHAR NOT NULL," + 
         		KEY_FACH + " VARCHAR NOT NULL," + 
-        		KEY_START + " DATETIME NOT NULL,"+ 
-        		KEY_ENDE + " DATETIME NOT NULL," + 
+        		KEY_START + " VARCHAR NOT NULL,"+ 
+        		KEY_ENDE + " VARCHAR NOT NULL," + 
         		KEY_ORT + " VARCHAR,"+ 
-        		KEY_FRUEHSTUECK + " BOOL NOT NULL"+")";
+        		KEY_FRUEHSTUECK + " VARCHAR NOT NULL"+")";
         db.execSQL(CREATE_LEARNPLAN_TABLE);
     }
  
@@ -69,10 +69,10 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
      */
  
     // Adding new entry
-  /*  void addLearnEntry(LearnEntry learnEntry) 
+    void addLearnEntry(LearnEntry learnEntry) 
     {
     	SQLiteDatabase db = this.getWritableDatabase();
- 
+    	
     	ContentValues values = new ContentValues();
     	values.put(KEY_DATUM, learnEntry.getDate()); // Eintrag Datum
     	values.put(KEY_FACH, learnEntry.getFach()); // Eintrag Fach
@@ -84,7 +84,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         // Inserting Row
         db.insert(TABLE_ENTRY, null, values);
         db.close(); // Closing database connection
-    }*/
+    }
  
     // Getting single entry
     LearnEntry getLearnEnry(int id) 
@@ -116,7 +116,8 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) 
         {
-            do {
+            do 
+            {
                 LearnEntry learnEntry = new LearnEntry(cursor.getString(0), 
                 		cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
                 /*learnEntry.setId(cursor.getString(0));  		//<----geändert
@@ -126,7 +127,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
                 learnEntry.setEnde(cursor.getString(4));
                 learnEntry.setOrt(cursor.getString(5));
                 learnEntry.setFruehstueck(cursor.getString(6));*/
-                // Adding contact to list
+                // Adding learnEntry to list
                 learnEntryList.add(learnEntry);
             } while (cursor.moveToNext());
         }
@@ -137,7 +138,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
  
 
 	// Updating single entry
-   /* public int updateLearnEntry(LearnEntry learnEntry) 
+    public int updateLearnEntry(LearnEntry learnEntry) 
     {
         SQLiteDatabase db = this.getWritableDatabase();
  
@@ -152,7 +153,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         // updating row
         return db.update(TABLE_ENTRY, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(learnEntry.getId()) });
-    }*/
+    }
  
     // Deleting single entry
     public void deleteLearnEntry(LearnEntry learnEntry) 
@@ -173,10 +174,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
  
         // return count
 	        return cursor.getCount();
-	        }
+    }
 	 
 }
-
-
-
 
