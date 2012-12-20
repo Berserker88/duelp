@@ -97,7 +97,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
     	if (cursor != null)
     		cursor.moveToFirst();
  
-    	LearnEntry learnEntry = new LearnEntry(cursor.getString(0), //<---Geändert
+    	LearnEntry learnEntry = new LearnEntry(Integer.parseInt(cursor.getString(0)), //<---Geändert
     			cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
         // return contact
     	return learnEntry;
@@ -118,7 +118,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         {
             do 
             {
-                LearnEntry learnEntry = new LearnEntry(cursor.getString(0), 
+                LearnEntry learnEntry = new LearnEntry(Integer.parseInt(cursor.getString(0)), 
                 		cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
                 /*learnEntry.setId(cursor.getString(0));  		//<----geändert
                 learnEntry.setDatum(cursor.getString(1));

@@ -1,28 +1,43 @@
 package de.jasiflak.duelp;
 
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import android.util.Log;
-
 public class LearnEntry 
 {
 	int mId;
-	Date mDatum;
+	String mDatum;
 	String mFach;
-	Date mStart;
-	Date mEnde;
+	String mStart;
+	String mEnde;
 	String mOrt;
-	boolean mFruehstuek;
+	String mFruehstuek;
 
 	//leerer Konstruktor
 	public LearnEntry()
 	{}
 	
+	public LearnEntry(int id, String datum, String fach, String start, String ende, String ort, String fruehstueck)
+	{
+		this.mId = id;
+		this.mDatum = datum;
+		this.mFach = fach;
+		this.mStart = start;
+		this.mEnde = ende;
+		this.mOrt = ort;
+		this.mFruehstuek = fruehstueck;
+	}
+	
+	public LearnEntry(String datum, String fach, String start, String ende, String ort, String fruehstueck)
+	{
+		this.mDatum = datum;
+		this.mFach = fach;
+		this.mStart = start;
+		this.mEnde = ende;
+		this.mOrt = ort;
+		this.mFruehstuek = fruehstueck;
+	}
+	
+	
 	//Konstruktor
-	public LearnEntry(int id, Date datum, String fach, Date start, Date ende, String ort, boolean fruehstuek)
+	/*public LearnEntry(int id, Date datum, String fach, Date start, Date ende, String ort, boolean fruehstuek)
 	{
 		this.mId = id;
 		this.mDatum = datum;
@@ -32,7 +47,9 @@ public class LearnEntry
 		this.mOrt = ort;
 		this.mFruehstuek = fruehstuek;
 	}
+	*/
 	
+	/*
 	//Konstruktor
 	public LearnEntry(Date datum, String fach, Date start, Date ende, String ort, boolean fruehstuek)
 	{
@@ -43,8 +60,9 @@ public class LearnEntry
 		this.mOrt = ort;
 		this.mFruehstuek = fruehstuek;
 	}
+	*/
 	
-	public LearnEntry(String id, String datum, String fach, String start, String ende, String ort, String fruehstueck) 
+	/*public LearnEntry(String id, String datum, String fach, String start, String ende, String ort, String fruehstueck) 
 	{
 		SimpleDateFormat  formatDate = new SimpleDateFormat("dd.MM.yyyy");
 		SimpleDateFormat  formatTime = new SimpleDateFormat("HH:mm");
@@ -96,6 +114,7 @@ public class LearnEntry
 		Log.i("debug", "Id: "+ mId+ " Datum: " + mDatum.toString() + " Fach: " +mFach + " Start: "+ mStart.toString() + " Ende: " +mEnde.toString() + " Ort: " + mOrt);
 			
 	}
+	*/
 
 	//##### GET UND SET METHODEN #####
 	public int getId()
@@ -110,10 +129,10 @@ public class LearnEntry
 	
 	public String getDate()
 	{
-		return this.mDatum.toString();
+		return this.mDatum;
 	}
 	
-	public void setDate(Date datum)
+	public void setDate(String datum)
 	{
 		this.mDatum = datum;
 	}
@@ -130,20 +149,20 @@ public class LearnEntry
 	
 	public String getStart()
 	{
-		return this.mStart.toString();
+		return this.mStart;
 	}
 	
-	public void setStart(Date start)
+	public void setStart(String start)
 	{
 		this.mStart = start;
 	}
 	
 	public String getEnde()
 	{
-		return this.mEnde.toString();
+		return this.mEnde;
 	}
 	
-	public void setEnde(Date ende)
+	public void setEnde(String ende)
 	{
 		this.mEnde = ende;
 	}
@@ -158,12 +177,12 @@ public class LearnEntry
 		this.mOrt = ort;
 	}
 	
-	public boolean getFruehstueck()
+	public String getFruehstueck()
 	{
 		return this.mFruehstuek;
 	}
 	
-	public void setFruehstueck(boolean fruehstueck)
+	public void setFruehstueck(String fruehstueck)
 	{
 		this.mFruehstuek = fruehstueck;
 	}
