@@ -72,7 +72,7 @@ public class TermineListeAdapter extends BaseAdapter {
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
-		String key = date.get(Calendar.DAY_OF_MONTH) +"."+ (date.get(Calendar.MONTH)+1) +"."+ date.get(Calendar.YEAR);
+		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		try {
 		    // Add your data
 		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();

@@ -112,7 +112,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode);
-		String key = date.get(Calendar.DAY_OF_MONTH) +"."+ (date.get(Calendar.MONTH)+1) +"."+ date.get(Calendar.YEAR);
+		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		String param = "";
 		if (!mode.equals("delete")) {
 			String value = "" + mDateItems.get(date);
