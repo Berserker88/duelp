@@ -12,4 +12,10 @@
         android:textSize="30px" >
     </TextView>
 
+    <CheckBox
+        android:id="@+id/chkbox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
 </LinearLayout>
