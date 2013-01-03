@@ -52,7 +52,38 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private Calendar mActualDate;
 	private ArrayList<String> mDaysOfMonth;
 	private Context mContext;
+	private GregorianCalendar chosenDate;
 
+	
+	private Thread httpAction = new Thread() {
+		@Override
+		public void run() {
+			try {
+				HttpClient httpclient = new DefaultHttpClient();
+			    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
+			    StatusLine statusLine = response.getStatusLine();
+			    Log.i("debug", "request sent");
+			    Log.i("debug", "answer: " + statusLine.getStatusCode());
+			    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+			        ByteArrayOutputStream out = new ByteArrayOutputStream();
+			        response.getEntity().writeTo(out);
+			        out.close();
+			        String responseString = out.toString();
+			        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
+			        parseJSON(responseString);
+			    } else{
+			        //Closes the connection.
+			        response.getEntity().getContent().close();
+			    }
+			} catch(Exception ex) {
+				Log.i("debug", "error while calling url: " + ex.getMessage());
+				ex.printStackTrace();
+			}		
+		}
+	};
+	
+	
+	
 	public TermineKalendarAdapter(Context c, Calendar calendar) {
 		mCalendar = calendar;
 		mActualDate = GregorianCalendar.getInstance();
@@ -60,30 +91,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
 		
-		HttpAction httprequest = new HttpAction();
-		httprequest.execute();
-		
-//		try {
-//			HttpClient httpclient = new DefaultHttpClient();
-//		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
-//		    StatusLine statusLine = response.getStatusLine();
-//		    Log.i("debug", "request sent");
-//		    Log.i("debug", "answer: " + statusLine.getStatusCode());
-//		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-//		        ByteArrayOutputStream out = new ByteArrayOutputStream();
-//		        response.getEntity().writeTo(out);
-//		        out.close();
-//		        String responseString = out.toString();
-//		        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
-//		        parseJSON(responseString);
-//		    } else{
-//		        //Closes the connection.
-//		        response.getEntity().getContent().close();
-//		    }
-//		} catch(Exception ex) {
-//			Log.i("debug", "error while calling url: " + ex.getMessage());
-//			ex.printStackTrace();
-//		}
+//		HttpAction httprequest = new HttpAction();
+//		httprequest.execute();
+		httpAction.start();
+
 	}
 
 	
@@ -159,16 +170,38 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItems.get(date) == null) {
 			mDateItems.put(date, state);
-			httpRequest(date, "new");
+			chosenDate = date;
+			Thread httpUpdate = new Thread() {
+				@Override
+				public void run() {
+					httpRequest(chosenDate, "new");
+				}
+			};
+			httpUpdate.start();
 		}
 		else {
 			int newState = mDateItems.get(date) ^ state;
 			mDateItems.remove(date);
-			if (newState == NOTHING)
-				httpRequest(date, "delete");
+			if (newState == NOTHING) {
+				chosenDate = date;
+				Thread httpUpdate = new Thread() {
+					@Override
+					public void run() {
+						httpRequest(chosenDate, "delete");
+					}
+				};
+				httpUpdate.start();
+			}
 			else {
 				mDateItems.put(date, newState);
-				httpRequest(date, "edit");
+				chosenDate = date;
+				Thread httpUpdate = new Thread() {
+					@Override
+					public void run() {
+						httpRequest(chosenDate, "edit");
+					}
+				};
+				httpUpdate.start();
 			}
 		}
 	}

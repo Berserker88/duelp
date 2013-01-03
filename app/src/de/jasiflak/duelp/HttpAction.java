@@ -20,10 +20,10 @@ import com.google.gson.Gson;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class HttpAction extends AsyncTask<Void, String, Boolean> {
+public class HttpAction extends AsyncTask<String, Void, Void> {
 
 	@Override
-	protected Boolean doInBackground(Void... params) {
+	protected Void doInBackground(String... params) {
 		try {
 			HttpClient httpclient = new DefaultHttpClient();
 		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
@@ -45,8 +45,6 @@ public class HttpAction extends AsyncTask<Void, String, Boolean> {
 			Log.i("debug", "error while calling url: " + ex.getMessage());
 			ex.printStackTrace();
 		}
-		
-		
 		return null;
 	}
 	
@@ -70,6 +68,4 @@ public class HttpAction extends AsyncTask<Void, String, Boolean> {
 		}
 		Log.i("debug", "all ok: " + map.toString());
 	}
-	
-	
 }
