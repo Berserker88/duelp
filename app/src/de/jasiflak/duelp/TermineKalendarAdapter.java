@@ -94,7 +94,12 @@ public class TermineKalendarAdapter extends BaseAdapter {
 //		HttpAction httprequest = new HttpAction();
 //		httprequest.execute();
 		httpAction.start();
-
+		try {
+			httpAction.join();
+		} catch (InterruptedException e) {
+			Log.i("debug", "fuck!!!");
+			e.printStackTrace();
+		}
 	}
 
 	
