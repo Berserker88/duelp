@@ -59,25 +59,31 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
-		try {
-			HttpClient httpclient = new DefaultHttpClient();
-		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
-		    StatusLine statusLine = response.getStatusLine();
-		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-		        ByteArrayOutputStream out = new ByteArrayOutputStream();
-		        response.getEntity().writeTo(out);
-		        out.close();
-		        String responseString = out.toString();
-		        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
-		        parseJSON(responseString);
-		    } else{
-		        //Closes the connection.
-		        response.getEntity().getContent().close();
-		    }
-		} catch(Exception ex) {
-			Log.i("debug", "error while calling url: " + ex.getMessage());
-			ex.printStackTrace();
-		}
+		
+		HttpAction httprequest = new HttpAction();
+		httprequest.execute();
+		
+//		try {
+//			HttpClient httpclient = new DefaultHttpClient();
+//		    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
+//		    StatusLine statusLine = response.getStatusLine();
+//		    Log.i("debug", "request sent");
+//		    Log.i("debug", "answer: " + statusLine.getStatusCode());
+//		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+//		        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//		        response.getEntity().writeTo(out);
+//		        out.close();
+//		        String responseString = out.toString();
+//		        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
+//		        parseJSON(responseString);
+//		    } else{
+//		        //Closes the connection.
+//		        response.getEntity().getContent().close();
+//		    }
+//		} catch(Exception ex) {
+//			Log.i("debug", "error while calling url: " + ex.getMessage());
+//			ex.printStackTrace();
+//		}
 	}
 
 	
@@ -110,6 +116,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	
 	private void httpRequest(GregorianCalendar date, String mode) {
 		// Create a new HttpClient and Post Header
+		Log.i("debug", "http-request");
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode);
 		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
