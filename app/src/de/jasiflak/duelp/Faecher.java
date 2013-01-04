@@ -78,7 +78,7 @@ public class Faecher extends ListActivity
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
-		intent.putExtra("selected",MOBILE_OS[position]);
+		//intent.putExtra("selected",MOBILE_OS[position]);
 		startActivity(intent);
 	}
 	

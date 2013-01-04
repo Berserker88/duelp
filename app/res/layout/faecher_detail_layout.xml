@@ -3,11 +3,76 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    <TextView
+
+    <!--
+         <TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Large"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+    -->
+
+    <EditText
+        android:id="@+id/txtFach"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Fachname"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/txtDatum"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="Prüfungsdatum"
+        android:inputType="text" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="4"
+        android:rating="2.0"
+        android:stepSize="1.0" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/checkedIn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:focusable="false" />
+
+        <TextView
+            android:id="@+id/lblChkBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Eingecheckt" />
+    </LinearLayout>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Speichern" />
+
+        <Button
+            android:id="@+id/btnDel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fach löschen" />
+    </LinearLayout>
 
 </LinearLayout>

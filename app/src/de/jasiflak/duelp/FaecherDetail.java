@@ -14,7 +14,7 @@ public class FaecherDetail extends Activity
 		setContentView(R.layout.faecher_detail_layout);
 		
 		Intent intent = getIntent();
-		((TextView)(findViewById(R.id.textView1))).setText("Es wurde "+intent.getStringExtra("selected")+ " gewählt!");
+		//((TextView)(findViewById(R.id.textView1))).setText("Es wurde "+intent.getStringExtra("selected")+ " gewählt!");
 		
 		
 	}
