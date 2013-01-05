@@ -4,15 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!--
-         <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Large"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    -->
-
     <EditText
         android:id="@+id/txtFach"
         android:layout_width="fill_parent"
@@ -32,8 +23,11 @@
         style="@style/duelpRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="20dp"
         android:numStars="5"
-        android:rating="2.0"
+        android:rating="0.0"
         android:stepSize="1.0" />
 
     <LinearLayout
@@ -43,39 +37,35 @@
         android:layout_weight="2"
         android:orientation="horizontal" >
 
-        <CheckBox
-            android:id="@+id/checkedIn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:focusable="false" />
+    <CheckBox
+        android:id="@+id/checkedIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:focusable="false" />
 
-        <TextView
-            android:id="@+id/lblChkBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Eingecheckt" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/lblChkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Eingecheckt" />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
-        android:orientation="horizontal" >
+</LinearLayout>
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Speichern" />
-
-        <Button
-            android:id="@+id/btnDel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Fach löschen" />
-    </LinearLayout>
+	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent"
+	    android:layout_weight="1"
+	    android:orientation="horizontal" >
+	<Button
+	    android:id="@+id/btnSave"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Speichern" />
+	<Button
+	    android:id="@+id/btnDel"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="Fach löschen" />
+	</LinearLayout>
 
 </LinearLayout>
