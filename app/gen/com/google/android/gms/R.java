@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package de.jasiflak.duelp;
+package com.google.android.gms;
 
 public final class R {
     public static final class array {

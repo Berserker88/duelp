@@ -11,7 +11,7 @@ import android.widget.TabHost;
 
 public class Duelp extends TabActivity {
 
-	public static String URL = "192.168.1.11:8080";
+	public static String URL = "192.168.1.12:8080";
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,7 +28,7 @@ public class Duelp extends TabActivity {
         tabhost.addTab(spec); 
         
         intent = new Intent().setClass(this,Faecher.class);
-        spec = tabhost.newTabSpec("tab2").setIndicator("FŠcher",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
+        spec = tabhost.newTabSpec("tab2").setIndicator("Fï¿½cher",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
         tabhost.addTab(spec);
         
         intent = new Intent().setClass(this,TermineKalendar.class);        
