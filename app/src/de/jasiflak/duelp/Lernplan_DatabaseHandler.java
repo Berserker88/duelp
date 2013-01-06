@@ -40,6 +40,8 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
     @Override
     public void onCreate(SQLiteDatabase db) 
     {
+    	//DropTable();
+    	
         String CREATE_LEARNPLAN_TABLE = "CREATE TABLE " + TABLE_ENTRY +"("+ 
         		KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE ," + 
         		KEY_DATUM + " VARCHAR NOT NULL," + 
@@ -51,6 +53,17 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         db.execSQL(CREATE_LEARNPLAN_TABLE);
     }
  
+    
+    public void DropTable()
+    {
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	
+    	String drop = "DROP TABLE "+ TABLE_ENTRY;
+    	
+    	db.execSQL(drop);
+    	db.close();
+    }
+    
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) 
