@@ -18,6 +18,7 @@ public class Duelp extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_layout);
         
+        
         Resources res = getResources();  
         TabHost tabhost = getTabHost();
         TabHost.TabSpec spec;

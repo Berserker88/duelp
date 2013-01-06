@@ -9,7 +9,7 @@ package de.jasiflak.duelp;
 
 public final class R {
     public static final class array {
-        public static int strArr_weekdays=0x7f070000;
+        public static final int strArr_weekdays=0x7f070000;
     }
     public static final class attr {
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
@@ -19,7 +19,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cameraBearing=0x7f010001;
+        public static final int cameraBearing=0x7f010001;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -27,7 +27,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cameraTargetLat=0x7f010002;
+        public static final int cameraTargetLat=0x7f010002;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -35,7 +35,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cameraTargetLng=0x7f010003;
+        public static final int cameraTargetLng=0x7f010003;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -43,7 +43,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cameraTilt=0x7f010004;
+        public static final int cameraTilt=0x7f010004;
         /** <p>Must be a floating point value, such as "<code>1.2</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -51,7 +51,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int cameraZoom=0x7f010005;
+        public static final int cameraZoom=0x7f010005;
         /** <p>Must be one of the following constant values.</p>
 <table>
 <colgroup align="left" />
@@ -64,7 +64,7 @@ containing a value of this type.
 <tr><td><code>terrain</code></td><td>3</td><td></td></tr>
 </table>
          */
-        public static int mapType=0x7f010000;
+        public static final int mapType=0x7f010000;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -72,7 +72,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiCompass=0x7f010006;
+        public static final int uiCompass=0x7f010006;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -80,7 +80,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiRotateGestures=0x7f010007;
+        public static final int uiRotateGestures=0x7f010007;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -88,7 +88,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiScrollGestures=0x7f010008;
+        public static final int uiScrollGestures=0x7f010008;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -96,7 +96,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiTiltGestures=0x7f010009;
+        public static final int uiTiltGestures=0x7f010009;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -104,7 +104,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiZoomControls=0x7f01000a;
+        public static final int uiZoomControls=0x7f01000a;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -112,7 +112,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int uiZoomGestures=0x7f01000b;
+        public static final int uiZoomGestures=0x7f01000b;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -120,7 +120,7 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int useViewLifecycle=0x7f01000c;
+        public static final int useViewLifecycle=0x7f01000c;
         /** <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
 <p>This may also be a reference to a resource (in the form
 "<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
@@ -128,34 +128,12 @@ theme attribute (in the form
 "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
 containing a value of this type.
          */
-        public static int zOrderOnTop=0x7f01000d;
+        public static final int zOrderOnTop=0x7f01000d;
     }
     public static final class color {
-        public static int white=0x7f060000;
+        public static final int white=0x7f060000;
     }
     public static final class drawable {
-<<<<<<< HEAD
-        public static int ic_action_search=0x7f020000;
-        public static int ic_launcher=0x7f020001;
-        public static int ic_tabs=0x7f020002;
-        public static int ic_tabs_orte=0x7f020003;
-        public static int ic_tabs_termine=0x7f020004;
-        public static int icon=0x7f020005;
-        public static int map_ic_pushpin=0x7f020006;
-        public static int termine_background=0x7f020007;
-        public static int termine_background_actual=0x7f020008;
-        public static int termine_background_focused=0x7f020009;
-        public static int termine_background_header=0x7f02000a;
-        public static int termine_background_trash=0x7f02000b;
-        public static int termine_ic_busy=0x7f02000c;
-        public static int termine_ic_home=0x7f02000d;
-        public static int termine_ic_list=0x7f02000e;
-        public static int termine_ic_trash=0x7f02000f;
-        public static int termine_kalendar_dynamicbackground=0x7f020010;
-        public static int termine_list_border=0x7f020011;
-        public static int termine_list_trashselector=0x7f020012;
-        public static int termine_listselector=0x7f020013;
-=======
         public static final int ic_action_search=0x7f020000;
         public static final int ic_launcher=0x7f020001;
         public static final int ic_tabs=0x7f020002;
@@ -177,120 +155,119 @@ containing a value of this type.
         public static final int termine_list_border=0x7f020012;
         public static final int termine_list_trashselector=0x7f020013;
         public static final int termine_listselector=0x7f020014;
->>>>>>> b694c4d6d0a4da122fc3dac56e30a64e077d7335
     }
     public static final class id {
-        public static int city=0x7f04000d;
-        public static int editText1=0x7f040005;
-        public static int gv_kalendar=0x7f04001a;
-        public static int gv_kalendar_wochentage=0x7f040019;
-        public static int header=0x7f040016;
-        public static int hiddentext=0x7f040011;
-        public static int imageView1=0x7f040012;
-        public static int iv_icon1=0x7f040014;
-        public static int iv_icon2=0x7f040015;
-        public static int iv_kalendar_liste=0x7f040018;
-        public static int iv_list_item_busy=0x7f04001c;
-        public static int iv_list_item_delete=0x7f04001e;
-        public static int iv_list_item_home=0x7f04001d;
-        public static int listView1=0x7f040006;
-        public static int lv_calendar_entries=0x7f040020;
-        public static int mapview=0x7f04000e;
-        public static int mapview_alle_orte=0x7f040009;
-        public static int menu_settings=0x7f040021;
-        public static int name=0x7f04000a;
-        public static int none=0x7f040000;
-        public static int normal=0x7f040001;
-        public static int ort_header=0x7f040007;
-        public static int ort_liste=0x7f040008;
-        public static int row1=0x7f04000f;
-        public static int row2=0x7f040010;
-        public static int satellite=0x7f040002;
-        public static int street=0x7f04000b;
-        public static int terrain=0x7f040003;
-        public static int textView1=0x7f040004;
-        public static int tv_kalendar_title=0x7f040017;
-        public static int tv_list_back=0x7f04001f;
-        public static int tv_list_item_date=0x7f04001b;
-        public static int tv_tagNummer=0x7f040013;
-        public static int zipcode=0x7f04000c;
+        public static final int city=0x7f04000d;
+        public static final int editText1=0x7f040005;
+        public static final int gv_kalendar=0x7f04001a;
+        public static final int gv_kalendar_wochentage=0x7f040019;
+        public static final int header=0x7f040016;
+        public static final int hiddentext=0x7f040011;
+        public static final int imageView1=0x7f040012;
+        public static final int iv_icon1=0x7f040014;
+        public static final int iv_icon2=0x7f040015;
+        public static final int iv_kalendar_liste=0x7f040018;
+        public static final int iv_list_item_busy=0x7f04001c;
+        public static final int iv_list_item_delete=0x7f04001e;
+        public static final int iv_list_item_home=0x7f04001d;
+        public static final int listView1=0x7f040006;
+        public static final int lv_calendar_entries=0x7f040020;
+        public static final int mapview=0x7f04000e;
+        public static final int mapview_alle_orte=0x7f040009;
+        public static final int menu_settings=0x7f040021;
+        public static final int name=0x7f04000a;
+        public static final int none=0x7f040000;
+        public static final int normal=0x7f040001;
+        public static final int ort_header=0x7f040007;
+        public static final int ort_liste=0x7f040008;
+        public static final int row1=0x7f04000f;
+        public static final int row2=0x7f040010;
+        public static final int satellite=0x7f040002;
+        public static final int street=0x7f04000b;
+        public static final int terrain=0x7f040003;
+        public static final int textView1=0x7f040004;
+        public static final int tv_kalendar_title=0x7f040017;
+        public static final int tv_list_back=0x7f04001f;
+        public static final int tv_list_item_date=0x7f04001b;
+        public static final int tv_tagNummer=0x7f040013;
+        public static final int zipcode=0x7f04000c;
     }
     public static final class layout {
-        public static int faecher_detail_layout=0x7f030000;
-        public static int faecher_layout=0x7f030001;
-        public static int lernplan_layout=0x7f030002;
-        public static int main_tab_layout=0x7f030003;
-        public static int orte_layout=0x7f030004;
-        public static int orte_layout_alle_orte=0x7f030005;
-        public static int orte_layout_detail=0x7f030006;
-        public static int orte_layout_listview_row=0x7f030007;
-        public static int termine_kalendar_item=0x7f030008;
-        public static int termine_kalendar_layout=0x7f030009;
-        public static int termine_liste_item=0x7f03000a;
-        public static int termine_liste_layout=0x7f03000b;
+        public static final int faecher_detail_layout=0x7f030000;
+        public static final int faecher_layout=0x7f030001;
+        public static final int lernplan_layout=0x7f030002;
+        public static final int main_tab_layout=0x7f030003;
+        public static final int orte_layout=0x7f030004;
+        public static final int orte_layout_alle_orte=0x7f030005;
+        public static final int orte_layout_detail=0x7f030006;
+        public static final int orte_layout_listview_row=0x7f030007;
+        public static final int termine_kalendar_item=0x7f030008;
+        public static final int termine_kalendar_layout=0x7f030009;
+        public static final int termine_liste_item=0x7f03000a;
+        public static final int termine_liste_layout=0x7f03000b;
     }
     public static final class menu {
-        public static int activity_main=0x7f090000;
+        public static final int activity_main=0x7f090000;
     }
     public static final class string {
-        public static int app_name=0x7f05000b;
-        public static int back=0x7f050015;
+        public static final int app_name=0x7f05000b;
+        public static final int back=0x7f050015;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
          */
-        public static int common_google_play_services_enable_button=0x7f050006;
+        public static final int common_google_play_services_enable_button=0x7f050006;
         /**  Message in confirmation dialog informing user they need to enable
         Google Play services in application settings [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_enable_text=0x7f050005;
+        public static final int common_google_play_services_enable_text=0x7f050005;
         /**  Title of confirmation dialog informing user they need to enable
         Google Play services in application settings [CHAR LIMIT=40] 
          */
-        public static int common_google_play_services_enable_title=0x7f050004;
+        public static final int common_google_play_services_enable_title=0x7f050004;
         /**  Button in confirmation dialog for installing Google Play services [CHAR LIMIT=30] 
          */
-        public static int common_google_play_services_install_button=0x7f050003;
+        public static final int common_google_play_services_install_button=0x7f050003;
         /**  (For phones) Message in confirmation dialog informing user that
         they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_install_text_phone=0x7f050001;
+        public static final int common_google_play_services_install_text_phone=0x7f050001;
         /**  (For tablets) Message in confirmation dialog informing user that
         they need to install Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_install_text_tablet=0x7f050002;
+        public static final int common_google_play_services_install_text_tablet=0x7f050002;
         /**  Title of confirmation dialog informing user that they need to install
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
-        public static int common_google_play_services_install_title=0x7f050000;
+        public static final int common_google_play_services_install_title=0x7f050000;
         /**  Message in confirmation dialog informing user there is an unknow issue in Google Player
         services [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_unknown_issue=0x7f050009;
+        public static final int common_google_play_services_unknown_issue=0x7f050009;
         /**  Button in confirmation dialog for updating Google Play services [CHAR LIMIT=20] 
          */
-        public static int common_google_play_services_update_button=0x7f05000a;
+        public static final int common_google_play_services_update_button=0x7f05000a;
         /**  Message in confirmation dialog informing user that they need to update
         Google Play services (from Play Store) [CHAR LIMIT=NONE] 
          */
-        public static int common_google_play_services_update_text=0x7f050008;
+        public static final int common_google_play_services_update_text=0x7f050008;
         /**  Title of confirmation dialog informing user that they need to update
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
-        public static int common_google_play_services_update_title=0x7f050007;
-        public static int content_busy=0x7f050012;
-        public static int content_home=0x7f050011;
-        public static int content_termine_list=0x7f050014;
-        public static int content_trash=0x7f050013;
-        public static int hello_world=0x7f05000c;
-        public static int menu_settings=0x7f05000d;
-        public static int next_month=0x7f050010;
-        public static int open=0x7f050016;
-        public static int prev_month=0x7f05000f;
-        public static int title_activity_main=0x7f05000e;
+        public static final int common_google_play_services_update_title=0x7f050007;
+        public static final int content_busy=0x7f050012;
+        public static final int content_home=0x7f050011;
+        public static final int content_termine_list=0x7f050014;
+        public static final int content_trash=0x7f050013;
+        public static final int hello_world=0x7f05000c;
+        public static final int menu_settings=0x7f05000d;
+        public static final int next_month=0x7f050010;
+        public static final int open=0x7f050016;
+        public static final int prev_month=0x7f05000f;
+        public static final int title_activity_main=0x7f05000e;
     }
     public static final class style {
-        public static int AppTheme=0x7f080000;
+        public static final int AppTheme=0x7f080000;
     }
     public static final class styleable {
         /** Attributes that can be used with a MapAttrs.
