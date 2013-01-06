@@ -17,7 +17,7 @@ import android.widget.ListView;
 
 public class Lernplan extends Activity
 {
-	  public void refresh()
+	  public void initialisiere()
 	  {
 		  Lernplan_DatabaseHandler db = new Lernplan_DatabaseHandler(this);
 		  List<String> valueList = new ArrayList<String>();
@@ -47,7 +47,7 @@ public class Lernplan extends Activity
 		setContentView(R.layout.lernplan_layout);
 
 		
-		refresh();
+		initialisiere();
 		
 /*###in refresh() verlagert anfang
 		//Instanziieren einer Liste, erstellen einer Liste
