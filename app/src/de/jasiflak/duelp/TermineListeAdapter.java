@@ -35,6 +35,8 @@ public class TermineListeAdapter extends BaseAdapter {
 	
 	private Context mContext;
 	private List<GregorianCalendar> mDateKeys;
+	private GregorianCalendar dateToDel;
+	
 	
 	public TermineListeAdapter(Context c) {
 		List<GregorianCalendar> keys = new ArrayList<GregorianCalendar>();
@@ -72,7 +74,7 @@ public class TermineListeAdapter extends BaseAdapter {
 		// Create a new HttpClient and Post Header
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
-		String key = date.get(Calendar.DAY_OF_MONTH) +"."+ (date.get(Calendar.MONTH)+1) +"."+ date.get(Calendar.YEAR);
+		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		try {
 		    // Add your data
 		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
@@ -139,7 +141,14 @@ public class TermineListeAdapter extends BaseAdapter {
 				for(Map.Entry<GregorianCalendar, Integer> entry : TermineKalendarAdapter.mDateItems.entrySet()) {
 					strToCompare = entry.getKey().get(Calendar.DAY_OF_MONTH) + ". " + entry.getKey().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + entry.getKey().get(Calendar.YEAR);
 					if (strDate.equals(strToCompare)) {
-						httpRequest(entry.getKey());
+						dateToDel = entry.getKey();
+						Thread httpUpdate = new Thread() {
+							@Override
+							public void run() {
+								httpRequest(dateToDel);
+							}
+						};
+						httpUpdate.start();
 						Log.i("debug", "map before remove: " +TermineKalendarAdapter.mDateItems.toString());
 						TermineKalendarAdapter.mDateItems.remove(entry.getKey());
 						Log.i("debug", "map after remove: " +TermineKalendarAdapter.mDateItems.toString());
