@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TermineListeAdapter extends BaseAdapter {
 
@@ -143,11 +144,15 @@ public class TermineListeAdapter extends BaseAdapter {
 					if (strDate.equals(strToCompare)) {
 						dateToDel = entry.getKey();
 						String key = dateToDel.get(Calendar.YEAR) +"-"+ (dateToDel.get(Calendar.MONTH)+1) +"-"+ dateToDel.get(Calendar.DAY_OF_MONTH);
+						
 						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
 						httpAction.execute();
-						Log.i("debug", "map before remove: " +TermineKalendarAdapter.mDateItems.toString());
-						TermineKalendarAdapter.mDateItems.remove(entry.getKey());
-						Log.i("debug", "map after remove: " +TermineKalendarAdapter.mDateItems.toString());
+						try {
+							httpAction.waitForAnswer();
+							TermineKalendarAdapter.mDateItems.remove(entry.getKey());
+						} catch (SecurityException ex) {
+							Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+						}
 						break;
 					}
 				}
