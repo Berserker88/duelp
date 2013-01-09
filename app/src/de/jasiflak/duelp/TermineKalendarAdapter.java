@@ -28,7 +28,10 @@ import org.json.JSONTokener;
 
 import com.google.gson.Gson;
 
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.text.InputFilter.LengthFilter;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,6 +41,7 @@ import android.widget.BaseAdapter;
 
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TermineKalendarAdapter extends BaseAdapter {
 
@@ -53,35 +57,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private ArrayList<String> mDaysOfMonth;
 	private Context mContext;
 	private GregorianCalendar chosenDate;
-
-	
-	private Thread httpAction = new Thread() {
-		@Override
-		public void run() {
-			try {
-				HttpClient httpclient = new DefaultHttpClient();
-			    HttpResponse response = httpclient.execute(new HttpGet("http://" + Duelp.URL + "/duelp-backend/rest/termine"));
-			    StatusLine statusLine = response.getStatusLine();
-			    Log.i("debug", "request sent");
-			    Log.i("debug", "answer: " + statusLine.getStatusCode());
-			    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-			        ByteArrayOutputStream out = new ByteArrayOutputStream();
-			        response.getEntity().writeTo(out);
-			        out.close();
-			        String responseString = out.toString();
-			        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
-			        parseJSON(responseString);
-			    } else{
-			        //Closes the connection.
-			        response.getEntity().getContent().close();
-			    }
-			} catch(Exception ex) {
-				Log.i("debug", "error while calling url: " + ex.getMessage());
-				ex.printStackTrace();
-			}		
-		}
-	};
-	
 	
 	
 	public TermineKalendarAdapter(Context c, Calendar calendar) {
@@ -91,14 +66,13 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
 		
-//		HttpAction httprequest = new HttpAction();
-//		httprequest.execute();
-		httpAction.start();
+		HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
+		httpRequest.execute();
 		try {
-			httpAction.join();
-		} catch (InterruptedException e) {
-			Log.i("debug", "fuck!!!");
-			e.printStackTrace();
+			String answer = httpRequest.waitForAnswer();
+			parseJSON(answer);
+		} catch(SecurityException ex) {
+			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 		}
 	}
 
@@ -133,8 +107,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private void httpRequest(GregorianCalendar date, String mode) {
 		// Create a new HttpClient and Post Header
 		Log.i("debug", "http-request");
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode);
 		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		String param = "";
 		if (!mode.equals("delete")) {
@@ -146,18 +118,9 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		} else
 			param = key;
 		
-		try {
-		    // Add your data
-		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		    nameValuePairs.add(new BasicNameValuePair("json", param));
-		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-		    // Execute HTTP Post Request
-		    HttpResponse response = httpclient.execute(httppost);
-
-		} catch (Exception e) {
-		    System.out.println("Error in posting: " + e.getMessage());
-		}
+		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
+		httpAction.execute();
+		httpAction.waitForAnswer();
     }
 	
 	
@@ -174,39 +137,34 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItems.get(date) == null) {
-			mDateItems.put(date, state);
-			chosenDate = date;
-			Thread httpUpdate = new Thread() {
-				@Override
-				public void run() {
-					httpRequest(chosenDate, "new");
-				}
-			};
-			httpUpdate.start();
+			try {
+				chosenDate = date;
+				httpRequest(chosenDate, "new");
+				mDateItems.put(date, state);
+			} catch(SecurityException ex) {
+				Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+			}
 		}
 		else {
 			int newState = mDateItems.get(date) ^ state;
-			mDateItems.remove(date);
 			if (newState == NOTHING) {
-				chosenDate = date;
-				Thread httpUpdate = new Thread() {
-					@Override
-					public void run() {
-						httpRequest(chosenDate, "delete");
-					}
-				};
-				httpUpdate.start();
+				try {
+					chosenDate = date;
+					httpRequest(chosenDate, "delete");
+					mDateItems.remove(date);
+				} catch(SecurityException ex) {
+					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+				}
 			}
 			else {
-				mDateItems.put(date, newState);
-				chosenDate = date;
-				Thread httpUpdate = new Thread() {
-					@Override
-					public void run() {
-						httpRequest(chosenDate, "edit");
-					}
-				};
-				httpUpdate.start();
+				try {
+					mDateItems.put(date, newState);
+					chosenDate = date;
+					httpRequest(chosenDate, "edit");
+				} catch(SecurityException ex) {
+					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+					mDateItems.remove(date);
+				}
 			}
 		}
 	}

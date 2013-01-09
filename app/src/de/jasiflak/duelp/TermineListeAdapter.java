@@ -29,6 +29,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TermineListeAdapter extends BaseAdapter {
 
@@ -70,23 +71,23 @@ public class TermineListeAdapter extends BaseAdapter {
 	}
 	
 	
-	private void httpRequest(GregorianCalendar date) {
-		// Create a new HttpClient and Post Header
-		HttpClient httpclient = new DefaultHttpClient();
-		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
-		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
-		try {
-		    // Add your data
-		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-		    nameValuePairs.add(new BasicNameValuePair("json", key));
-		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-		    // Execute HTTP Post Request
-		    HttpResponse response = httpclient.execute(httppost);
-		} catch (Exception e) {
-		    System.out.println("Error in posting: " + e.getMessage());
-		}
-    }
+//	private void httpRequest(GregorianCalendar date) {
+//		// Create a new HttpClient and Post Header
+//		HttpClient httpclient = new DefaultHttpClient();
+//		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
+//		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
+//		try {
+//		    // Add your data
+//		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//		    nameValuePairs.add(new BasicNameValuePair("json", key));
+//		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+//
+//		    // Execute HTTP Post Request
+//		    httpclient.execute(httppost);
+//		} catch (Exception e) {
+//		    System.out.println("Error in posting: " + e.getMessage());
+//		}
+//    }
 	
 	
 
@@ -142,16 +143,16 @@ public class TermineListeAdapter extends BaseAdapter {
 					strToCompare = entry.getKey().get(Calendar.DAY_OF_MONTH) + ". " + entry.getKey().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + entry.getKey().get(Calendar.YEAR);
 					if (strDate.equals(strToCompare)) {
 						dateToDel = entry.getKey();
-						Thread httpUpdate = new Thread() {
-							@Override
-							public void run() {
-								httpRequest(dateToDel);
-							}
-						};
-						httpUpdate.start();
-						Log.i("debug", "map before remove: " +TermineKalendarAdapter.mDateItems.toString());
-						TermineKalendarAdapter.mDateItems.remove(entry.getKey());
-						Log.i("debug", "map after remove: " +TermineKalendarAdapter.mDateItems.toString());
+						String key = dateToDel.get(Calendar.YEAR) +"-"+ (dateToDel.get(Calendar.MONTH)+1) +"-"+ dateToDel.get(Calendar.DAY_OF_MONTH);
+						
+						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
+						httpAction.execute();
+						try {
+							httpAction.waitForAnswer();
+							TermineKalendarAdapter.mDateItems.remove(entry.getKey());
+						} catch (SecurityException ex) {
+							Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+						}
 						break;
 					}
 				}
