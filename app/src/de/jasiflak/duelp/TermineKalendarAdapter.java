@@ -57,9 +57,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private ArrayList<String> mDaysOfMonth;
 	private Context mContext;
 	private GregorianCalendar chosenDate;
-	
+	private boolean mTimeout;
 	
 	public TermineKalendarAdapter(Context c, Calendar calendar) {
+		mTimeout = false;
 		mCalendar = calendar;
 		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
@@ -68,12 +69,11 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
 		httpRequest.execute();
-		try {
-			String answer = httpRequest.waitForAnswer();
+		String answer = httpRequest.waitForAnswer();
+		if(!answer.equals("timeout"))
 			parseJSON(answer);
-		} catch(SecurityException ex) {
+		else
 			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	
@@ -120,7 +120,8 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
 		httpAction.execute();
-		httpAction.waitForAnswer();
+		if(httpAction.waitForAnswer().equals("timeout"))
+			mTimeout = true;
     }
 	
 	
@@ -137,33 +138,35 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItems.get(date) == null) {
-			try {
-				chosenDate = date;
-				httpRequest(chosenDate, "new");
+			chosenDate = date;
+			httpRequest(chosenDate, "new");
+			if(!mTimeout)
 				mDateItems.put(date, state);
-			} catch(SecurityException ex) {
+			else {
 				Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+				mTimeout = false;
 			}
 		}
 		else {
 			int newState = mDateItems.get(date) ^ state;
 			if (newState == NOTHING) {
-				try {
-					chosenDate = date;
-					httpRequest(chosenDate, "delete");
+				chosenDate = date;
+				httpRequest(chosenDate, "delete");
+				if(!mTimeout)
 					mDateItems.remove(date);
-				} catch(SecurityException ex) {
+				else {
 					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+					mTimeout = false;
 				}
 			}
 			else {
-				try {
-					mDateItems.put(date, newState);
-					chosenDate = date;
-					httpRequest(chosenDate, "edit");
-				} catch(SecurityException ex) {
+				mDateItems.put(date, newState);
+				chosenDate = date;
+				httpRequest(chosenDate, "edit");
+				if(mTimeout) {
 					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 					mDateItems.remove(date);
+					mTimeout = false;
 				}
 			}
 		}
