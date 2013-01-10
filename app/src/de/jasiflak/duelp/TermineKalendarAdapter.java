@@ -116,10 +116,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItems.get(date) == null) {
 			chosenDate = date;
+			mDateItems.put(date, state);
 			httpRequest(chosenDate, "new");
-			if(!mTimeout)
-				mDateItems.put(date, state);
-			else {
+			if(mTimeout) {
+				mDateItems.remove(date);
 				Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 				mTimeout = false;
 			}
@@ -143,6 +143,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 				if(mTimeout) {
 					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 					mDateItems.remove(date);
+					mDateItems.put(date, state);
 					mTimeout = false;
 				}
 			}
