@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
 
-    <com.google.android.maps.MapView
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/mapview_alle_orte"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:apiKey="0A6SU1mL25MCATdHlOo5LIGfa80SHdFlAYWdJNw"
-        android:clickable="true" />
-
-</RelativeLayout>
+        android:layout_height="fill_parent"        
+        class="com.google.android.gms.maps.MapFragment"/>
