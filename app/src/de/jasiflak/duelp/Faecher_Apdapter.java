@@ -1,51 +1,89 @@
 package de.jasiflak.duelp;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-//import android.widget.ImageView;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
-public class Faecher_Apdapter extends ArrayAdapter<String> 
+public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach> 
 {
 	private final Context context;
-	private final String[] values;
+	private List<Fach> mFaecher;
 
-	public Faecher_Apdapter (Context context, String[] values)
-	{
-		super(context, R.layout.faecher_layout, values);
+	public Faecher_Apdapter (Context context, List<Fach> faecher)
+	{	
+		//super(context, R.layout.faecher_layout, faecher);
+
 		this.context = context;
-		this.values = values;
+		this.mFaecher = faecher;
+		
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		Log.i("Debug","Adapter:GetView..");
+
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.faecher_layout, parent, false);
 		TextView textView = (TextView) rowView.findViewById(R.id.label);
-		//ImageView imageView = (ImageView) rowView.findViewById(R.id.logo);
-		textView.setText(values[position]);
-
-		// Change icon based on name
-		String s = values[position];
-
-		System.out.println(s);
-
-		/*if (s.equals("WindowsMobile")) {
-			imageView.setImageResource(R.drawable.windowsmobile_logo);
-		} else if (s.equals("iOS")) {
-			imageView.setImageResource(R.drawable.ios_logo);
-		} else if (s.equals("Blackberry")) {
-			imageView.setImageResource(R.drawable.blackberry_logo);
-		} else {
-			imageView.setImageResource(R.drawable.android_logo);
-		}*/
+		
+		//Checkbox
+		final CheckBox chkBox = (CheckBox) rowView.findViewById(R.id.chkbox);
+		
+		OnClickListener checkBoxListener;
+		checkBoxListener = new OnClickListener()
+		{
+			@Override
+			public void onClick(View v) 
+			{
+				if(chkBox.isChecked())
+				{
+					Log.i("Debug","Checkbox is checked..");	
+				}	
+				else
+				{
+					Log.i("Debug","Checkbox is checked..");	
+				}
+			};
+		};
+		
+		chkBox.setOnClickListener(checkBoxListener);
+		
+		
+		
+		for (Fach f : this.mFaecher)
+		{
+			Log.i("Debug","Fach: "+f.toString());
+		}
+		
+		textView.setText(mFaecher.get(position) .getmName());
 
 		return rowView;
+	}
+
+	@Override
+	public int getCount() {
+		return this.mFaecher.size();
+	}
+
+	@Override
+	public Object getItem(int position) {
+		return this.mFaecher.get(position);
+	}
+
+	@Override
+	public long getItemId(int position) {
+		// TODO Auto-generated method stub
+		return position;
 	}
 }

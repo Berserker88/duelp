@@ -1,5 +1,4 @@
 package de.jasiflak.duelp;
-
 public class Fach {
 
 	private String mName;
@@ -15,7 +14,6 @@ public class Fach {
 		this.mCheckedIn = checked;
 	
 	}
-	
 	
 	public boolean ismCheckedIn() {
 		return mCheckedIn;
@@ -42,4 +40,7 @@ public class Fach {
 		this.mName = mName;
 	}
 	
+	public String toString() {
+		   return this.getmName() + " - " + this.getmDate();
+		}
 }
