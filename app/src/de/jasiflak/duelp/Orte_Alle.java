@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -20,6 +21,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.maps.GeoPoint;
 import com.google.android.maps.ItemizedOverlay;
 import com.google.android.maps.MapActivity;
@@ -32,72 +42,63 @@ import com.google.android.maps.OverlayItem;
 import de.jasiflak.duelp.Orte_Detail.MapOverlay;
 
 public class Orte_Alle extends MapActivity {
-	MapController mc;
-	GeoPoint p;
-
-	// Mapoverlay to draw a marker for the Mapview
-	class MapOverlay extends com.google.android.maps.Overlay {
-		@Override
-		public boolean draw(Canvas canvas, MapView mapView, boolean shadow,
-				long when) {
-			super.draw(canvas, mapView, shadow);
-
-			// Translate GeoPoint to screen Pixels
-			Point screenPts = new Point();
-			mapView.getProjection().toPixels(p, screenPts);
-
-			// add marker to the Overlay with canvas
-			Bitmap bmp = BitmapFactory.decodeResource(getResources(),
-					R.drawable.map_ic_pushpin);
-
-			canvas.drawBitmap(bmp, screenPts.x - 15, screenPts.y - 50, null);
-			return true;
-		}
-	}
+	private GoogleMap mMap;
 
 	@Override
 	protected boolean isRouteDisplayed() {
 		// TODO Automatisch generierter Methodenstub
 		return false;
 	}
+	
+	//public LatLng getMinMaxBounds()
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orte_layout_alle_orte);
-		MapView mapView = (MapView) findViewById(R.id.mapview_alle_orte);
-		mapView.setBuiltInZoomControls(true);
-		Log.i("Debug:", "Start: Klasse Orte Alle");
-
-
-		// MapController to let the mapview move to a specific position
-		mc = mapView.getController();
-
+		
+		
+		
+				
+		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview_alle_orte)).getMap();
+		
 		// Geocoder for reverse-geocode the location(adress) to latitude -
-		// longitude
-		Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-		try {
-			List<Address> addresses = geoCoder.getFromLocationName("Burj al Arab", 1);
+				// longitude
+				Geocoder geoCoder = new Geocoder(this);
+				Log.i("Debug:", "Geocoder initialisiert");
+				for(String key: Orte_Adapter.map.keySet()){
+				try {
+					String[] values = Orte_Adapter.map.get(key);
+					Log.i("Debug:", "Values"+ values.toString());
+					List<Address> addresses = geoCoder.getFromLocationName(values[0]+" "+values[1]+" "+values[2],1);
+					if (addresses.size() > 0) {
+						Log.i("Debug:", "Passende Lat,Lng gefunden");						
+						mMap.addMarker(new MarkerOptions()
+				        .position(new LatLng((addresses.get(0).getLatitude()),
+								(addresses.get(0).getLongitude()))).title(key+"\n"+values[0]+" "+values[1]+"\n"+values[2]+" "+values[3]));
+						Log.i("Debug:", "Marker hinzugefügt");
+						
+						}
+				} catch (IOException e) {
+					e.printStackTrace();
+					}
+				}
+				
+				
+				
+				mMap.setOnCameraChangeListener(new OnCameraChangeListener() {
 
-			if (addresses.size() > 0) {
-				p = new GeoPoint((int) (addresses.get(0).getLatitude() * 1E6),
-						(int) (addresses.get(0).getLongitude() * 1E6));
-
-				// let the mapview move to the specific GeoPoint
-				mc.animateTo(p);
-				// setting zoomlevel of the mapview
-				mc.setZoom(17);
-				// adding the mapoverlay with the marker to the mapview
-				MapOverlay mapOverlay = new MapOverlay();
-				List<Overlay> listOfOverlays = mapView.getOverlays();
-				listOfOverlays.clear();
-				listOfOverlays.add(mapOverlay);
-
-				mapView.invalidate();
-			}
-			// if google can't reverse-geocode the adress, throw an exception
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+				    @Override
+				    public void onCameraChange(CameraPosition arg0) {
+				    	LatLng northeast = new LatLng(51.645976,6.981812);
+				    	LatLng southwest = new LatLng(51.138691,6.113892);	
+						LatLngBounds bounds = new LatLngBounds(southwest, northeast);
+				        // Move camera.
+				    	mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,10));
+				        // Remove listener to prevent position reset on camera move.
+				        mMap.setOnCameraChangeListener(null);
+				    }
+				});
+		
 
 	}
 
