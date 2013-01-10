@@ -70,6 +70,7 @@ public class HttpAction extends Thread {
 		mIsPOST = isPOST;
 		mTimeout = false;
 		mURL = url;
+		mResponse = "";
 		//set the connection-timeout
 		HttpParams httpParameters = new BasicHttpParams();
 		int timeoutConnection = 3000;
@@ -123,7 +124,7 @@ public class HttpAction extends Thread {
 	/**
 	 * simply starts the Thread
 	 */
-	public void execute() throws SecurityException {
+	public void execute() {
 		this.start();			
 	}
 	
@@ -139,7 +140,7 @@ public class HttpAction extends Thread {
 			e.printStackTrace();
 		}
 		if(mTimeout)
-			throw new SecurityException("TimeOut beim aufrufen der URL: " + mURL);
+			return "timeout";
 		return mResponse;
 	}
 }

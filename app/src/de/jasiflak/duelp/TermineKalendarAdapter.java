@@ -1,7 +1,5 @@
 package de.jasiflak.duelp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,30 +7,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import com.google.gson.Gson;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.text.InputFilter.LengthFilter;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +35,10 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	private ArrayList<String> mDaysOfMonth;
 	private Context mContext;
 	private GregorianCalendar chosenDate;
-	
+	private boolean mTimeout;
 	
 	public TermineKalendarAdapter(Context c, Calendar calendar) {
+		mTimeout = false;
 		mCalendar = calendar;
 		mActualDate = GregorianCalendar.getInstance();
 		mContext = c;
@@ -68,17 +47,15 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
 		httpRequest.execute();
-		try {
-			String answer = httpRequest.waitForAnswer();
+		String answer = httpRequest.waitForAnswer();
+		if(!answer.equals("timeout"))
 			parseJSON(answer);
-		} catch(SecurityException ex) {
+		else
 			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-		}
 	}
 
 	
 	public void parseJSON(String json) {
-		JSONObject obj;
 		HashMap<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
 		Log.i("debug", "Hallo hier bin ich!!!!");
@@ -120,7 +97,8 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
 		httpAction.execute();
-		httpAction.waitForAnswer();
+		if(httpAction.waitForAnswer().equals("timeout"))
+			mTimeout = true;
     }
 	
 	
@@ -137,33 +115,36 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		GregorianCalendar date = new GregorianCalendar(mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH), Integer.parseInt(mDaysOfMonth.get(position)));
 		if (mDateItems.get(date) == null) {
-			try {
-				chosenDate = date;
-				httpRequest(chosenDate, "new");
-				mDateItems.put(date, state);
-			} catch(SecurityException ex) {
+			chosenDate = date;
+			mDateItems.put(date, state);
+			httpRequest(chosenDate, "new");
+			if(mTimeout) {
+				mDateItems.remove(date);
 				Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+				mTimeout = false;
 			}
 		}
 		else {
 			int newState = mDateItems.get(date) ^ state;
 			if (newState == NOTHING) {
-				try {
-					chosenDate = date;
-					httpRequest(chosenDate, "delete");
+				chosenDate = date;
+				httpRequest(chosenDate, "delete");
+				if(!mTimeout)
 					mDateItems.remove(date);
-				} catch(SecurityException ex) {
+				else {
 					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+					mTimeout = false;
 				}
 			}
 			else {
-				try {
-					mDateItems.put(date, newState);
-					chosenDate = date;
-					httpRequest(chosenDate, "edit");
-				} catch(SecurityException ex) {
+				mDateItems.put(date, newState);
+				chosenDate = date;
+				httpRequest(chosenDate, "edit");
+				if(mTimeout) {
 					Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 					mDateItems.remove(date);
+					mDateItems.put(date, state);
+					mTimeout = false;
 				}
 			}
 		}
