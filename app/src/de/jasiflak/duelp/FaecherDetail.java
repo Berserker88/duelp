@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -22,13 +23,17 @@ public class FaecherDetail extends Activity
 	private int year;
 	private int month;
 	private int day;
+	private Intent mIntent;
 	
 	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.faecher_detail_layout);
-
+		
+		//mIntent = getIntent();
+	//	mIntent.getExtras()
+		
 	
 		//DateEditText...
 		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum);

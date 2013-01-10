@@ -18,10 +18,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 
+
+
 public class Faecher extends ListActivity 
 {
+	private List<Fach> mFaecher;
 
-	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		
@@ -38,18 +40,17 @@ public class Faecher extends ListActivity
 		Fach rga = new Fach("RGA","01.02.2013",1,false);
 		Fach lopro = new Fach("LoPro","04.02.2013",1,false);
 	
-		List<Fach> faecher = new ArrayList<Fach>();
+		this.mFaecher = new ArrayList<Fach>();
 		
-		faecher.add(newFach);
-		
-		faecher.add(ezs);
-		faecher.add(its);
-		faecher.add(rga);
-		faecher.add(lopro);
+		mFaecher.add(newFach);
+		mFaecher.add(ezs);
+		mFaecher.add(its);
+		mFaecher.add(rga);
+		mFaecher.add(lopro);
 
 		try {
 			
-			setListAdapter(new Faecher_Apdapter(this,faecher));
+			setListAdapter(new Faecher_Apdapter(this,mFaecher));
 		} catch (Exception e) {
 			Log.i("Debug",e.getLocalizedMessage());
 		}
@@ -62,8 +63,16 @@ public class Faecher extends ListActivity
 	{
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
+		
+		
+		if(mFaecher.get(position).getmRating() != -1)
+		{
+			intent.putExtra("name",mFaecher.get(position).getmName());
+			intent.putExtra("date",mFaecher.get(position).getmDate());
+			intent.putExtra("rating",mFaecher.get(position).getmRating());	
+		}
+
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
-		//intent.putExtra("selected",MOBILE_OS[position]);
 		startActivity(intent);
 	}
 	
