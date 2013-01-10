@@ -1,7 +1,5 @@
 package de.jasiflak.duelp;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,30 +7,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.json.JSONTokener;
-
 import com.google.gson.Gson;
 
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.text.InputFilter.LengthFilter;
-import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +56,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 
 	
 	public void parseJSON(String json) {
-		JSONObject obj;
 		HashMap<String, String> map = new HashMap<String, String>();
 		Gson gson = new Gson();
 		Log.i("debug", "Hallo hier bin ich!!!!");
