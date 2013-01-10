@@ -40,31 +40,39 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 		//Checkbox
 		final CheckBox chkBox = (CheckBox) rowView.findViewById(R.id.chkbox);
 		
-		OnClickListener checkBoxListener;
-		checkBoxListener = new OnClickListener()
+		
+		//Set checkbox visibility
+		if (position == 0)
 		{
-			@Override
-			public void onClick(View v) 
+			chkBox.setVisibility(View.INVISIBLE);	
+		}
+		else
+		{
+			OnClickListener checkBoxListener;
+			checkBoxListener = new OnClickListener()
 			{
-				if(chkBox.isChecked())
+				@Override
+				public void onClick(View v) 
 				{
-					Log.i("Debug","Checkbox is checked..");	
-				}	
-				else
-				{
-					Log.i("Debug","Checkbox is checked..");	
-				}
+					if(chkBox.isChecked())
+					{
+						Log.i("Debug","Checkbox is checked..");	
+					}	
+					else
+					{
+						Log.i("Debug","Checkbox is checked..");	
+					}
+				};
 			};
-		};
-		
-		chkBox.setOnClickListener(checkBoxListener);
-		
-		
-		
-		for (Fach f : this.mFaecher)
+			
+			chkBox.setOnClickListener(checkBoxListener);
+		}
+
+		//DEBUG
+		/*for (Fach f : this.mFaecher)
 		{
 			Log.i("Debug","Fach: "+f.toString());
-		}
+		}*/
 		
 		textView.setText(mFaecher.get(position) .getmName());
 
