@@ -15,5 +15,8 @@ app/bin/
 # Temporary Files #
 *~
 
+# binary play-services folder #
+app/bin/google-play-services_lib/bin/R.txt
+
 
 
