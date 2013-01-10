@@ -40,6 +40,8 @@ public class Faecher extends ListActivity
 	
 		List<Fach> faecher = new ArrayList<Fach>();
 		
+		faecher.add(newFach);
+		
 		faecher.add(ezs);
 		faecher.add(its);
 		faecher.add(rga);
