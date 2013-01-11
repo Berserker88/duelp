@@ -1,7 +1,11 @@
 package de.jasiflak.duelp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -33,26 +37,41 @@ public class FaecherDetail extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.faecher_detail_layout);
 		
+		//Fachname
+		 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
+		
+			//DateEditText...
+		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum);
+		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
 		
-		//Fachname
-		 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
-		 fachEditText.setText(mBundle.getCharSequence("name"));
 		
-		//DateEditText...
-		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum);
+		if(!mBundle.getCharSequence("name").equals("+"))
+		{
+			fachEditText.setText(mBundle.getCharSequence("name"));
+			try {
+				setBundleDateOnView();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		dateEditText.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	 showDialog(DATE_DIALOG_ID);
-            }
-        });
+		else
+		{
+			setCurrentDateOnView(); 
+			
+		}
+		
+			
+		 dateEditText.setOnClickListener(new View.OnClickListener() {
+         public void onClick(View v) {
+         	 showDialog(DATE_DIALOG_ID);
+         }
+     	});
+	
 
-		
-		//Set current date to label
-		setCurrentDateOnView();
-		
 		 //Save Button
 		 final Button button = (Button) findViewById(R.id.btnSave);
 		 button.setOnClickListener(new View.OnClickListener() {
@@ -92,6 +111,23 @@ public class FaecherDetail extends Activity
 				// Month is 0 based, just add 1
 		.append(day).append(".").append(month + 1).append(".").append(year)
 				.append(" "));
+
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void setBundleDateOnView() throws ParseException {
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		Date date = dateFormatter.parse(mBundle.getString("date"));
+		
+		day = date.getDay();
+		month = date.getMonth();
+		year = date.getYear();
+		
+		// set current date into textview
+		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum); 
+
+		dateEditText.setText(mBundle.getString("date"));
 
 	}
 	

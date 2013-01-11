@@ -63,15 +63,11 @@ public class Faecher extends ListActivity
 	{
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
-		
-		
-		if(mFaecher.get(position).getmRating() != -1)
-		{
-			intent.putExtra("name",mFaecher.get(position).getmName());
-			intent.putExtra("date",mFaecher.get(position).getmDate());
-			intent.putExtra("rating",mFaecher.get(position).getmRating());	
-		}
 
+		intent.putExtra("name",mFaecher.get(position).getmName());
+		intent.putExtra("date",mFaecher.get(position).getmDate());
+		intent.putExtra("rating",mFaecher.get(position).getmRating());	
+	
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
 		startActivity(intent);
 	}
