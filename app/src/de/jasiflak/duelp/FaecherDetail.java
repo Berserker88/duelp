@@ -1,6 +1,7 @@
 package de.jasiflak.duelp;
 
 import java.util.Calendar;
+import java.util.HashMap;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -24,6 +25,7 @@ public class FaecherDetail extends Activity
 	private int month;
 	private int day;
 	private Intent mIntent;
+	private Bundle mBundle;
 	
 	
 	public void onCreate(Bundle savedInstanceState)
@@ -31,10 +33,13 @@ public class FaecherDetail extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.faecher_detail_layout);
 		
-		//mIntent = getIntent();
-	//	mIntent.getExtras()
+		mIntent = getIntent();
+		this.mBundle = mIntent.getExtras();
 		
-	
+		//Fachname
+		 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
+		 fachEditText.setText(mBundle.getCharSequence("name"));
+		
 		//DateEditText...
 		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum);
 		
