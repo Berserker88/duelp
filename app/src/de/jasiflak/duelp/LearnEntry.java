@@ -1,5 +1,7 @@
 package de.jasiflak.duelp;
 
+
+
 public class LearnEntry 
 {
 	int mId;
@@ -8,7 +10,7 @@ public class LearnEntry
 	String mStart;
 	String mEnde;
 	String mOrt;
-	String mFruehstuek;
+	String mFruehstueck;
 
 	//leerer Konstruktor
 	public LearnEntry()
@@ -22,7 +24,7 @@ public class LearnEntry
 		this.mStart = start;
 		this.mEnde = ende;
 		this.mOrt = ort;
-		this.mFruehstuek = fruehstueck;
+		this.mFruehstueck = fruehstueck;
 	}
 	
 	public LearnEntry(String datum, String fach, String start, String ende, String ort, String fruehstueck)
@@ -32,9 +34,30 @@ public class LearnEntry
 		this.mStart = start;
 		this.mEnde = ende;
 		this.mOrt = ort;
-		this.mFruehstuek = fruehstueck;
+		this.mFruehstueck = fruehstueck;
+	}
+	public String toString() 
+	{
+		String string;
+		string = mDatum+";"+mFach+";"+mStart+";"+mEnde+";"+mOrt+";"+mFruehstueck;
+		
+		return string;
 	}
 	
+	public static LearnEntry fromString(String lernplan) 
+	{
+		LearnEntry learnEntry = new LearnEntry();
+		String parsed[] = lernplan.split(";");
+
+		learnEntry.mDatum = parsed[0];
+		learnEntry.mFach = parsed[1];
+		learnEntry.mStart = parsed[2];
+		learnEntry.mEnde = parsed[3];
+		learnEntry.mOrt = parsed[4];
+		learnEntry.mFruehstueck = parsed[5];
+		
+		return learnEntry;
+	}
 	
 	//Konstruktor
 	/*public LearnEntry(int id, Date datum, String fach, Date start, Date ende, String ort, boolean fruehstuek)
@@ -179,11 +202,11 @@ public class LearnEntry
 	
 	public String getFruehstueck()
 	{
-		return this.mFruehstuek;
+		return this.mFruehstueck;
 	}
 	
 	public void setFruehstueck(String fruehstueck)
 	{
-		this.mFruehstuek = fruehstueck;
+		this.mFruehstueck = fruehstueck;
 	}
 }

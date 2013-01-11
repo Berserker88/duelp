@@ -8,6 +8,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class Lernplan_DatabaseHandler extends SQLiteOpenHelper 
 {
@@ -52,17 +53,6 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         		KEY_FRUEHSTUECK + " VARCHAR NOT NULL"+")";
         db.execSQL(CREATE_LEARNPLAN_TABLE);
     }
- 
-    
-    public void DropTable()
-    {
-    	SQLiteDatabase db = this.getWritableDatabase();
-    	
-    	String drop = "DROP TABLE "+ TABLE_ENTRY;
-    	
-    	db.execSQL(drop);
-    	db.close();
-    }
     
     // Upgrading database
     @Override
@@ -98,7 +88,7 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
         db.insert(TABLE_ENTRY, null, values);
         db.close(); // Closing database connection
     }
- 
+    
     // Getting single entry
     LearnEntry getLearnEnry(int id) 
     {
@@ -176,7 +166,14 @@ public class Lernplan_DatabaseHandler extends SQLiteOpenHelper
                 new String[] { String.valueOf(learnEntry.getId()) });
         db.close();
     }
- 
+    
+    public void deleteAllRows()
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_ENTRY, null, null);
+        db.close();	
+    }
+    
     // Getting entrys Count
     public int getLearnEntryCount() 
     {
