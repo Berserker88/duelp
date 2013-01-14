@@ -3,6 +3,7 @@ package de.jasiflak.duelp;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -43,6 +44,9 @@ import de.jasiflak.duelp.Orte_Detail.MapOverlay;
 
 public class Orte_Alle extends MapActivity {
 	private GoogleMap mMap;
+	private LatLng mNortheast;
+	private LatLng mSouthwest;
+	
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -50,8 +54,6 @@ public class Orte_Alle extends MapActivity {
 		return false;
 	}
 	
-	//public LatLng getMinMaxBounds()
-
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orte_layout_alle_orte);
@@ -63,8 +65,10 @@ public class Orte_Alle extends MapActivity {
 		
 		// Geocoder for reverse-geocode the location(adress) to latitude -
 				// longitude
-				Geocoder geoCoder = new Geocoder(this);
+				Geocoder geoCoder = new Geocoder(this,Locale.getDefault());
 				Log.i("Debug:", "Geocoder initialisiert");
+				List<Double> lats = new ArrayList<Double>();
+				List<Double> longs = new ArrayList<Double>();				
 				for(String key: Orte_Adapter.map.keySet()){
 				try {
 					String[] values = Orte_Adapter.map.get(key);
@@ -75,6 +79,8 @@ public class Orte_Alle extends MapActivity {
 						mMap.addMarker(new MarkerOptions()
 				        .position(new LatLng((addresses.get(0).getLatitude()),
 								(addresses.get(0).getLongitude()))).title(key+"\n"+values[0]+" "+values[1]+"\n"+values[2]+" "+values[3]));
+						lats.add(addresses.get(0).getLatitude());
+						longs.add(addresses.get(0).getLongitude());
 						Log.i("Debug:", "Marker hinzugefügt");
 						
 						}
@@ -82,18 +88,21 @@ public class Orte_Alle extends MapActivity {
 					e.printStackTrace();
 					}
 				}
-				
-				
-				
+				Log.i("debug","Sortieren");
+				Collections.sort(lats);
+				Collections.sort(longs);
+				Log.i("debug","Sortiert!"+lats.toString());
+				mNortheast = new LatLng(lats.get(lats.size()-1), longs.get(longs.size()-1));
+				mSouthwest = new LatLng(lats.get(0), longs.get(0));
+				Log.i("debug", mNortheast.latitude+" "+mSouthwest.longitude);
 				mMap.setOnCameraChangeListener(new OnCameraChangeListener() {
 
 				    @Override
 				    public void onCameraChange(CameraPosition arg0) {
-				    	LatLng northeast = new LatLng(51.645976,6.981812);
-				    	LatLng southwest = new LatLng(51.138691,6.113892);	
-						LatLngBounds bounds = new LatLngBounds(southwest, northeast);
+				    	
+						LatLngBounds bounds = new LatLngBounds(mSouthwest, mNortheast);
 				        // Move camera.
-				    	mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,10));
+				    	mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds,70));
 				        // Remove listener to prevent position reset on camera move.
 				        mMap.setOnCameraChangeListener(null);
 				    }
