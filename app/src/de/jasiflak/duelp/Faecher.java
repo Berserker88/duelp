@@ -18,58 +18,44 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.CheckBox;
 
+
+
 public class Faecher extends ListActivity 
 {
-	static final String[] MOBILE_OS = new String[] { "Android", "iOS",
-		"WindowsMobile", "Blackberry"};
-	
+	private List<Fach> mFaecher;
+
 	public void onCreate(Bundle savedInstanceState)
 	{
 		
-		Log.i("Debug","Create test...");
+		Log.i("Debug","Create...");
 
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.faecher_layout);
 		
-		//setListAdapter(new ArrayAdapter<String>(this, R.layout.list_mobile,
-		//		R.id.label, MOBILE_OS));
-
-		setListAdapter(new Faecher_Apdapter(this, MOBILE_OS));
+		//NEW FACH DUMMY
+		Fach newFach = new Fach("+","01.01.2013",-1,false);
 		
-		//Checkbox
-		final CheckBox chkBox = (CheckBox) findViewById(R.id.chkbox);
-		 
-		OnClickListener checkBoxListener;
-		checkBoxListener =new OnClickListener()
-		{
-			@Override
-			public void onClick(View v) 
-			{
-				if(chkBox.isChecked())
-				{
-					Log.i("Debug","Checkbox is checked..");	
-				}	
-				else
-				{
-					Log.i("Debug","Checkbox is checked..");	
-				}
-			};
-		};
 		
+		Fach ezs = new Fach("EZS","09.02.2013",3,false);
+		Fach its = new Fach("ITS","13.02.2013",4,false);
+		Fach rga = new Fach("RGA","01.02.2013",1,false);
+		Fach lopro = new Fach("LoPro","04.02.2013",1,false);
+	
+		this.mFaecher = new ArrayList<Fach>();
+		
+		mFaecher.add(newFach);
+		mFaecher.add(ezs);
+		mFaecher.add(its);
+		mFaecher.add(rga);
+		mFaecher.add(lopro);
 
-		//DATASOURCE
-		/*ArrayList<String> valueList = new ArrayList<String>();
-		for (int i = 0; i < 10; i++)
-		{
-			valueList.add("value" + i);
-		}*/
-
-		//LIST
-
-		/*ListAdapter adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
-	    final ListView lv = (ListView)findViewById(R.id.listView1);
-	    lv.setAdapter(adapter);	*/
-
+		try {
+			
+			setListAdapter(new Faecher_Apdapter(this,mFaecher));
+		} catch (Exception e) {
+			Log.i("Debug",e.getLocalizedMessage());
+		}
+		
+		
 	}
 	
 	@Override
@@ -77,8 +63,12 @@ public class Faecher extends ListActivity
 	{
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
+
+		intent.putExtra("name",mFaecher.get(position).getmName());
+		intent.putExtra("date",mFaecher.get(position).getmDate());
+		intent.putExtra("rating",mFaecher.get(position).getmRating());	
+	
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
-		//intent.putExtra("selected",MOBILE_OS[position]);
 		startActivity(intent);
 	}
 	
