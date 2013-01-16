@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -17,6 +18,8 @@ import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.location.Address;
 import android.location.Geocoder;
+import android.location.LocationManager;
+import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -58,9 +61,18 @@ public class Orte_Alle extends MapActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orte_layout_alle_orte);
 		
+		//determine your location
+		LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
+		LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+		final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 		
-		
-				
+		 if (!gpsEnabled) {
+		        // Build an alert dialog here that requests that the user enable
+		        // the location services, then when the user clicks the "OK" button,
+		        // call enableLocationSettings()
+			 Log.i("debug", "GPS OFF!?");
+		    }
+		 
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(R.id.mapview_alle_orte)).getMap();
 		
 		// Geocoder for reverse-geocode the location(adress) to latitude -
@@ -78,7 +90,7 @@ public class Orte_Alle extends MapActivity {
 						Log.i("Debug:", "Passende Lat,Lng gefunden");						
 						mMap.addMarker(new MarkerOptions()
 				        .position(new LatLng((addresses.get(0).getLatitude()),
-								(addresses.get(0).getLongitude()))).title(key+"\n"+values[0]+" "+values[1]+"\n"+values[2]+" "+values[3]));
+								(addresses.get(0).getLongitude()))).title(key+"\n"+values[0]+" "+values[1]+"\n"+values[2]+" "+values[3]).visible(true));
 						lats.add(addresses.get(0).getLatitude());
 						longs.add(addresses.get(0).getLongitude());
 						Log.i("Debug:", "Marker hinzugefügt");
@@ -88,6 +100,7 @@ public class Orte_Alle extends MapActivity {
 					e.printStackTrace();
 					}
 				}
+				
 				Log.i("debug","Sortieren");
 				Collections.sort(lats);
 				Collections.sort(longs);
