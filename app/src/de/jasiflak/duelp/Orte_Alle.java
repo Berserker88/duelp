@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -54,6 +55,7 @@ import com.google.android.maps.OverlayItem;
 
 import de.jasiflak.duelp.Orte_Detail.MapOverlay;
 
+
 public class Orte_Alle extends MapActivity {
 	private GoogleMap mMap;
 	private LatLng mNortheast;
@@ -82,7 +84,7 @@ public class Orte_Alle extends MapActivity {
 				        // the location services, then when the user clicks the "OK" button,
 				        // call enableLocationSettings()
 					 Log.i("debug", "GPS OFF!?");
-					 Toast.makeText(getBaseContext(), "Für hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG).show();
+					 Toast.makeText(getBaseContext(), "Fï¿½r hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG).show();
 				    }
 				 
 				// Define a listener that responds to location updates
@@ -147,7 +149,7 @@ public class Orte_Alle extends MapActivity {
 								(addresses.get(0).getLongitude()))).title(key+"\n"+values[0]+" "+values[1]+"\n"+values[2]+" "+values[3]).visible(true));
 						lats.add(addresses.get(0).getLatitude());
 						longs.add(addresses.get(0).getLongitude());
-						Log.i("Debug:", "Marker hinzugefügt");
+						Log.i("Debug:", "Marker hinzugefï¿½gt");
 						
 						}
 				} catch (IOException e) {
