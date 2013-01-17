@@ -60,6 +60,7 @@ public class Orte_Alle extends MapActivity {
 	private LatLng mSouthwest;
 	private LatLng mActPosition;
 	Marker mIndicator;
+	Polygon mAccuracy;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -73,7 +74,7 @@ public class Orte_Alle extends MapActivity {
 		
 		//determine your location
 				LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-				/*LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
+				LocationProvider provider = locationManager.getProvider(LocationManager.GPS_PROVIDER);
 				final boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 				
 				 if (!gpsEnabled) {
@@ -81,7 +82,8 @@ public class Orte_Alle extends MapActivity {
 				        // the location services, then when the user clicks the "OK" button,
 				        // call enableLocationSettings()
 					 Log.i("debug", "GPS OFF!?");
-				    }*/
+					 Toast.makeText(getBaseContext(), "Für hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG).show();
+				    }
 				 
 				// Define a listener that responds to location updates
 				 LocationListener locationListener = new LocationListener() {
@@ -91,12 +93,23 @@ public class Orte_Alle extends MapActivity {
 				       
 				       if(mIndicator!=null){
 				    	   mIndicator.remove();
+				    	   mAccuracy.remove();
 				       }
 				       mIndicator = mMap.addMarker(new MarkerOptions()
 				       .position(mActPosition)	
 				       .title("Ihre Position")
 				       .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
 				       mIndicator.showInfoWindow();
+				       Log.i("debug"," "+(location.getAccuracy()));
+				       mAccuracy = mMap.addPolygon(new PolygonOptions()
+				       .add(new LatLng(mActPosition.latitude+(location.getAccuracy()/11111), mActPosition.longitude), 
+				    		   new LatLng(mActPosition.latitude, mActPosition.longitude+(location.getAccuracy()/11111)), 
+				    		   new LatLng(mActPosition.latitude-(location.getAccuracy()/11111), mActPosition.longitude), 
+				    		   new LatLng(mActPosition.latitude, mActPosition.longitude-(location.getAccuracy()/11111)))
+				    	.strokeColor(Color.CYAN)
+				    	.fillColor(Color.CYAN)
+				    	);
+				       Log.i("debug","Farbe des Genauigkeitskreises: "+mAccuracy.getFillColor());
 				       
 				       
 				       
