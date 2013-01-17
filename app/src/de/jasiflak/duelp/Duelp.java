@@ -27,11 +27,12 @@ import android.widget.Toast;
 public class Duelp extends TabActivity {
 
 
-	public static String URL = "10.12.41.43:8080";
+	public static String URL = "192.168.1.12:8080";
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
 	public static String mUser;
+	public static boolean mOfflineMode;
 
 
 	
@@ -40,6 +41,7 @@ public class Duelp extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_layout);
         mContext = this;
+        mOfflineMode = false;
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
@@ -68,20 +70,27 @@ public class Duelp extends TabActivity {
 	                	   Log.i("debug", "Antwort: " + answer);
 	                	   if(answer.equals("yes")) {
 	                		   mUser = user.getText().toString();
-	                		   initializeTabBar();
+	                		   mOfflineMode = false;
+	                		   Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
 	                	   }
 	                	   else {
-	                		   destroy();
+	                		   mUser = null;
+	                		   mOfflineMode = true;
+	                		   Toast.makeText(mContext, "Falscher Username oder Passwort. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
 	                	   }
                        } catch(Exception ex) {
-                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
                     	   destroy();
                        }
+                       initializeTabBar();
                    }
                })
                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       destroy();
+                       mUser = null;
+                       mOfflineMode = true;
+                       Toast.makeText(mContext, "Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
+                       initializeTabBar();
                    }
                });
         mLoginDialog = builder.create();
