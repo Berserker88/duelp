@@ -82,7 +82,7 @@ public class HttpAction extends Thread {
 		mResponse = "";
 		//set the connection-timeout
 		HttpParams httpParameters = new BasicHttpParams();
-		int timeoutConnection = 3000;
+		int timeoutConnection = 4000;
 		HttpConnectionParams.setConnectionTimeout(httpParameters, timeoutConnection);
 		
 		mHttpClient = new DefaultHttpClient(httpParameters);

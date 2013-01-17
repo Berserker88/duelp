@@ -80,10 +80,10 @@ public class Duelp extends TabActivity {
 	                	   else {
 	                		   mUser = null;
 	                		   mOfflineMode = true;
-	                		   Toast.makeText(mContext, "Falscher Username oder Passwort. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
+	                		   Toast.makeText(mContext, "Falscher Username oder Passwort. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
 	                	   }
                        } catch(Exception ex) {
-                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
+                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
                     	   destroy();
                        }
                        initializeTabBar();
@@ -117,7 +117,7 @@ public class Duelp extends TabActivity {
         mTabhost.addTab(spec);
         
         intent = new Intent().setClass(this,Faecher.class);
-        spec = mTabhost.newTabSpec("tab2").setIndicator("F�cher",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
+        spec = mTabhost.newTabSpec("tab2").setIndicator("Fächer",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
         mTabhost.addTab(spec);
         
         intent = new Intent().setClass(this,TermineKalendar.class);        
