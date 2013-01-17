@@ -2,6 +2,7 @@ package de.jasiflak.duelp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -84,12 +85,25 @@ public class FaecherDetail extends Activity
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
 					
-					//HTTP POST
+					//CREATE JSON REPRESENTATION OF CURRENT FACH
+					ArrayList<String> arrList = new ArrayList<String>();
+					arrList.add((String) mBundle.get("id"));
+					arrList.add((String) mBundle.get("name"));
+					arrList.add((String) mBundle.get("date"));
+					arrList.add((String) mBundle.get("rating").toString());
+					arrList.add("false");
+
+					//TO JSON
+					Gson gson = new Gson();
+					String postString = gson.toJson(arrList);
 					
+					Log.i("Debug","POSTJSON:" + postString);
+					
+					
+					//HTTP POST
 					// Create a new HttpClient and Post Header
 					Log.i("Debug", "http-request");
-					
-					HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, "blablablub");
+					HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
 					httpAction.execute();
 					if(httpAction.waitForAnswer().equals("timeout"))
 					Log.i("Debug","Timeout");
