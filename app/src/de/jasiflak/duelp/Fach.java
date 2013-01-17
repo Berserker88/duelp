@@ -1,18 +1,19 @@
 package de.jasiflak.duelp;
 public class Fach {
 
+	private int mId;
 	private String mName;
 	private String mDate;
 	private int mRating;
 	private boolean mCheckedIn;
 	
-	public Fach (String name, String date, int rat, boolean checked)
+	public Fach (int id,String name, String date, int rat, boolean checked)
 	{
+		this.mId = id;
 		this.mName = name;
 		this.mDate = date;
 		this.mRating = rat;
 		this.mCheckedIn = checked;
-	
 	}
 	
 	public boolean ismCheckedIn() {
@@ -41,6 +42,15 @@ public class Fach {
 	}
 	
 	public String toString() {
-		   return this.getmName() + " - " + this.getmDate()+ " - " + this.getmRating();
+		   return this.mId + " - "+ this.getmName() + " - " + this.getmDate()+ " - " + this.getmRating();
 		}
+
+	public int getmId() {
+		return mId;
+	}
+
+	public void setmId(int mId) {
+		this.mId = mId;
+	}
 }
+
