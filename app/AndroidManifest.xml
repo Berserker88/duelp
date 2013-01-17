@@ -38,7 +38,7 @@
         <activity android:name=".FaecherDetail" android:theme="@android:style/Theme.NoTitleBar" ></activity> 
         <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
         <activity android:name=".Orte_Detail" android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name=".Orte_Alle" android:theme="@android:style/Theme.NoTitleBar.Fullscreen" />
+        <activity android:name=".Orte_Alle" android:theme="@android:style/Theme.NoTitleBar" />
         <meta-data
     		android:name="com.google.android.maps.v2.API_KEY"
     		android:value="AIzaSyB9O1U7yGAxf8dCC7i1PmiMSqMBeZqKVZo"/>
