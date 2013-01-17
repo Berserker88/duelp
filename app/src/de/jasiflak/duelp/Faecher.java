@@ -46,23 +46,7 @@ public class Faecher extends ListActivity
 		
 	
 		refreshData();
-		
-		//NEW FACH DUMMY
-		/*Fach newFach = new Fach("+","01.01.2013",-1,false);
-		
-		
-		Fach ezs = new Fach("EZS","09.02.2013",3,false);
-		Fach its = new Fach("ITS","13.02.2013",4,false);
-		Fach rga = new Fach("RGA","01.02.2013",1,false);
-		Fach lopro = new Fach("LoPro","04.02.2013",1,false);
-	
-		this.mFaecher = new ArrayList<Fach>();
-		
-		mFaecher.add(newFach);
-		mFaecher.add(ezs);
-		mFaecher.add(its);
-		mFaecher.add(rga);
-		mFaecher.add(lopro);*/
+
 
 		try {
 			
@@ -82,7 +66,7 @@ public class Faecher extends ListActivity
 		try {
 			String response = httpAction.waitForAnswer();		
 			Log.i("Debug","Response: " +  response);	
-			if(!response.equals("timeout"))
+			if(!response.equals("timeout")  && !response.equals(""))
 			{
 				parseJSON(response);
 			}
@@ -103,14 +87,14 @@ public class Faecher extends ListActivity
 		
 		
 		this.mFaecher.clear();
-		Fach newFach = new Fach("+","01.01.2013",-1,false);
+		Fach newFach = new Fach(-1,"+","01.01.2013",-1,false);
 		mFaecher.add(newFach);
 				
 		// Fach (String name, String date, int rat, boolean checked)
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			Fach fach = new Fach(list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
 			Log.i("Debug","BAUM:" + fach.toString());
 			this.mFaecher.add(fach);	
 		}
