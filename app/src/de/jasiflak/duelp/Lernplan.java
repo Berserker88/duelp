@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 public class Lernplan extends Activity
@@ -32,8 +33,9 @@ public class Lernplan extends Activity
 		  if(httpRequest.waitForAnswer().equals("timeout"))
 		  {
 			  Log.i("debug", "KEINE SERVERVERBINDUNG");
-			  refresh();	
-		  } 
+			  refresh();
+			  Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
+		  }
 		  else
 		  {
 			  	db.deleteAllRows();
@@ -47,13 +49,14 @@ public class Lernplan extends Activity
 				List<LearnEntry> ety = db.getAllLearnEntrys();
 				  for(LearnEntry le : ety)
 			      {
-			  	    	valueList.add(le.getDate()  + " " +le.getFach() + "\n"+"\t\t\t"+ le.getStart() + " - " +le.getEnde() + " " + le.getOrt() + " Frühstück: " + le.getFruehstueck());
+			  	    	valueList.add(le.getDate()  + " " +le.getFach() + " "+ le.getStart() + " - " +le.getEnde() + " " + "\n"+"\t\t"+le.getOrt() + " Frühstück: " + le.getFruehstueck());
 			  	  }
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 				  final ListView lv = (ListView)findViewById(R.id.listView1);
 				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 				  lv.setAdapter(adapter);
+				  Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
 			}
 		  
 		  //#############################
@@ -104,7 +107,7 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+"\t\t\t"+ le.getStart() + " - " +le.getEnde() + " " + le.getOrt() + " Frühstück: " + le.getFruehstueck());
+			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+"\t\t"+ le.getStart() + " - " +le.getEnde() + " " + le.getOrt() + " Frühstück: " + le.getFruehstueck());
 	  	  }
 		  
 		  //generieren eines „ListAdapter“ für die „ListView“
@@ -112,7 +115,8 @@ public class Lernplan extends Activity
 		  final ListView lv = (ListView)findViewById(R.id.listView1);
 		  lv.setAdapter(null); //inhalt vom ListAdapter löschen
 		  Log.i("debug", "refresh");
-		  lv.setAdapter(adapter);  
+		  lv.setAdapter(adapter);
+		  Toast.makeText(getBaseContext(), "Liste aktualisiert!", Toast.LENGTH_LONG).show();
 	  }
 	     
 	  public void syncDB()

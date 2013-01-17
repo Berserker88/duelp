@@ -12,7 +12,7 @@ import android.widget.TabHost;
 
 public class Duelp extends TabActivity {
 
-	public static String URL = "10.12.4.101:8080";
+	public static String URL = "10.12.47.101:8080";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -27,7 +27,7 @@ public class Duelp extends TabActivity {
 		spec = tabhost
 				.newTabSpec("tab1")
 				.setIndicator("Lernplan",
-						res.getDrawable(R.drawable.ic_tabs_lernplan))
+						res.getDrawable(R.drawable.ic_tabs_lernplan4))
 				.setContent(intent);
 		tabhost.addTab(spec);
 
