@@ -86,9 +86,13 @@ public class FaecherDetail extends Activity
 					Log.i("Debug","Save button clicked!");	
 					
 					//CREATE JSON REPRESENTATION OF CURRENT FACH
+					
+					 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
+
+					
 					ArrayList<String> arrList = new ArrayList<String>();
 					arrList.add((String) mBundle.get("id"));
-					arrList.add((String) mBundle.get("name"));
+					arrList.add((String) fachEditText.getText().toString());
 					arrList.add((String) mBundle.get("date"));
 					arrList.add((String) mBundle.get("rating").toString());
 					arrList.add("false");
