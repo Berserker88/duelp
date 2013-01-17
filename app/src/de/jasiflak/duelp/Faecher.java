@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import de.jasiflak.duelp.HttpAction.HttpActionException;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -46,7 +48,23 @@ public class Faecher extends ListActivity
 		
 	
 		refreshData();
-
+		
+		//NEW FACH DUMMY
+		/*Fach newFach = new Fach("+","01.01.2013",-1,false);
+		
+		
+		Fach ezs = new Fach("EZS","09.02.2013",3,false);
+		Fach its = new Fach("ITS","13.02.2013",4,false);
+		Fach rga = new Fach("RGA","01.02.2013",1,false);
+		Fach lopro = new Fach("LoPro","04.02.2013",1,false);
+	
+		this.mFaecher = new ArrayList<Fach>();
+		
+		mFaecher.add(newFach);
+		mFaecher.add(ezs);
+		mFaecher.add(its);
+		mFaecher.add(rga);
+		mFaecher.add(lopro);*/
 
 		try {
 			
@@ -61,19 +79,19 @@ public class Faecher extends ListActivity
 	public void refreshData()
 	{
 		
-		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/get", false,null);
-		httpAction.execute();
 		try {
-			String response = httpAction.waitForAnswer();		
-			Log.i("Debug","Response: " +  response);	
-			if(!response.equals("timeout")  && !response.equals(""))
-			{
-				parseJSON(response);
-			}
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher", false,null);
+			httpAction.execute();
+			String response = httpAction.waitForAnswer();
+			Log.i("Debug","Response: " +  response);
+			parseJSON(response);
 
-		} catch (SecurityException ex) {
-			//INSERT CORRECT CONTEXT HIER
-			Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+		} catch (Exception ex) {
+			try {
+				Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 			
 	}
@@ -87,14 +105,14 @@ public class Faecher extends ListActivity
 		
 		
 		this.mFaecher.clear();
-		Fach newFach = new Fach(-1,"+","01.01.2013",-1,false);
+		Fach newFach = new Fach("+","01.01.2013",-1,false);
 		mFaecher.add(newFach);
 				
 		// Fach (String name, String date, int rat, boolean checked)
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
+			Fach fach = new Fach(list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
 			Log.i("Debug","BAUM:" + fach.toString());
 			this.mFaecher.add(fach);	
 		}
@@ -108,8 +126,7 @@ public class Faecher extends ListActivity
 	{
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
-		String idString ="" +mFaecher.get(position).getmId() ;
-		intent.putExtra("id", idString);
+
 		intent.putExtra("name",mFaecher.get(position).getmName());
 		intent.putExtra("date",mFaecher.get(position).getmDate());
 		intent.putExtra("rating",mFaecher.get(position).getmRating());	

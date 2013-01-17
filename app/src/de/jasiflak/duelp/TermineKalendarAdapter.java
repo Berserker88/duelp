@@ -10,6 +10,8 @@ import java.util.HashMap;
 import org.json.JSONObject;
 import com.google.gson.Gson;
 
+import de.jasiflak.duelp.HttpAction.HttpActionException;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,13 +47,16 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
 		
-		HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
-		httpRequest.execute();
-		String answer = httpRequest.waitForAnswer();
-		if(!answer.equals("timeout"))
+		HttpAction httpRequest;
+		try {
+			httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
+			httpRequest.execute();
+			String answer = httpRequest.waitForAnswer();
 			parseJSON(answer);
-		else
+		} catch (HttpActionException e) {
 			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+		}
+		
 	}
 
 	
@@ -95,10 +100,16 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		} else
 			param = key;
 		
-		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
-		httpAction.execute();
-		if(httpAction.waitForAnswer().equals("timeout"))
-			mTimeout = true;
+		HttpAction httpAction;
+		try {
+			httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
+			httpAction.execute();
+			if(httpAction.waitForAnswer().equals("timeout"))
+				mTimeout = true;
+		} catch (HttpActionException e) {
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
     }
 	
 	

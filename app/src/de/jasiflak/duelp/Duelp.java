@@ -1,9 +1,11 @@
 package de.jasiflak.duelp;
 
 
+
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -24,7 +26,7 @@ import android.widget.Toast;
 
 public class Duelp extends TabActivity {
 
-	public static String URL = "10.12.41.43:8080";
+	public static String URL = "10.12.47.101:8080";
 	private AlertDialog mLoginDialog;
 	private Context mContext;
 	public static String mUser;
@@ -56,19 +58,22 @@ public class Duelp extends TabActivity {
                        loginInfos.add(pass.getText().toString());
                 	   Log.i("debug", "Parameter: " + loginInfos.toString());
                        Gson gson = new Gson();
-                       HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/login", true, gson.toJson(loginInfos));
-                	   httpLogin.execute();
-                	   String answer = httpLogin.waitForAnswer();
-                	   Log.i("debug", "Antwort: " + answer);
-                	   if(answer.equals("timeout"))
-                		   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-                	   else if(answer.equals("yes")) {
-                		   mUser = user.getText().toString();
-                		   initializeTabBar();
-                	   }
-                	   else {
-                		   destroy();
-                	   }
+                       try {
+	                       HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/login", true, gson.toJson(loginInfos));
+	                	   httpLogin.execute();
+	                	   String answer = httpLogin.waitForAnswer();
+	                	   Log.i("debug", "Antwort: " + answer);
+	                	   if(answer.equals("yes")) {
+	                		   mUser = user.getText().toString();
+	                		   initializeTabBar();
+	                	   }
+	                	   else {
+	                		   destroy();
+	                	   }
+                       } catch(Exception ex) {
+                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+                    	   destroy();
+                       }
                    }
                })
                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -93,7 +98,7 @@ public class Duelp extends TabActivity {
         Intent intent;
     	
     	intent = new Intent().setClass(this,Lernplan.class);        
-        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan)).setContent(intent);
+        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan4)).setContent(intent);
         tabhost.addTab(spec);
         
         intent = new Intent().setClass(this,Faecher.class);
