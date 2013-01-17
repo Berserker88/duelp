@@ -147,12 +147,11 @@ public class TermineListeAdapter extends BaseAdapter {
 						
 						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
 						httpAction.execute();
-						try {
-							httpAction.waitForAnswer();
-							TermineKalendarAdapter.mDateItems.remove(entry.getKey());
-						} catch (SecurityException ex) {
+						
+						if(httpAction.waitForAnswer().equals("timeout"))
 							Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-						}
+						else
+							TermineKalendarAdapter.mDateItems.remove(entry.getKey());
 						break;
 					}
 				}

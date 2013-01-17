@@ -93,31 +93,45 @@ public class HttpAction extends Thread {
 	
 	public void run() {
 		if(mIsPOST) {
-			try {
-				mHttpClient.execute(mHttpPost);
-			} catch (Exception e) {
-				mTimeout = true;
-			}
+			
+				try {
+					mHttpResponse = mHttpClient.execute(mHttpPost);
+				} catch (Exception ex) {
+					Log.i("debug", "error while calling url: " + ex.getMessage());
+					mTimeout = true;
+				}
+				try {
+					parseAnswer();
+				} catch (IOException ex) {
+					mResponse = "";
+				}
+			
 		} else {
 			try {
 			    mHttpResponse = mHttpClient.execute(mHttpGet);
-			    StatusLine statusLine = mHttpResponse.getStatusLine();
-	
-			    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-			        ByteArrayOutputStream out = new ByteArrayOutputStream();
-			        mHttpResponse.getEntity().writeTo(out);
-			        out.close();
-			        mResponse = out.toString();
-			        Log.i("debug", "Habe folgende Antwort erhalten: " + mResponse);
-			    } else{
-			        //Closes the connection.
-			        mHttpResponse.getEntity().getContent().close();
-			    }
+			    parseAnswer();
+			    
 			} catch(Exception ex) {
 				Log.i("debug", "error while calling url: " + ex.getMessage());
 				mTimeout = true;
 			}
 		}
+	}
+	
+	
+	private void parseAnswer() throws IOException {
+		StatusLine statusLine = mHttpResponse.getStatusLine();
+		
+	    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+	        ByteArrayOutputStream out = new ByteArrayOutputStream();
+	        mHttpResponse.getEntity().writeTo(out);
+	        out.close();
+	        mResponse = out.toString();
+	        Log.i("debug", "Habe folgende Antwort erhalten: " + mResponse);
+	    } else if(!mIsPOST){
+	        //Closes the connection.
+	        mHttpResponse.getEntity().getContent().close();
+	    }
 	}
 	
 	
@@ -131,7 +145,6 @@ public class HttpAction extends Thread {
 	/**
 	 * waits for the Thread to end 
 	 * @return the Response if it is a GET request or null otherwise 
-	 * throws "SecurityExcepton" if the server is not responding
 	 */
 	public String waitForAnswer() {
 		try {
