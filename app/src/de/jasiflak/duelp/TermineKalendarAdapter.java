@@ -56,7 +56,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		} catch (HttpActionException e) {
 			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 		}
-		
 	}
 
 	

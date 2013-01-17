@@ -12,6 +12,8 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 
+import com.google.gson.Gson;
+
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -106,14 +108,25 @@ public class FaecherDetail extends Activity
 					
 					//HTTP POST
 					// Create a new HttpClient and Post Header
-					Log.i("Debug", "http-request");
-					HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
-					httpAction.execute();
-					if(httpAction.waitForAnswer().equals("timeout"))
-					Log.i("Debug","Timeout");
-					//mTimeout = true;
-					//Pop back view
-					//finish();
+				
+					try
+					{
+						
+						Log.i("Debug", "http-request");
+						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+						httpAction.execute();
+						if(httpAction.waitForAnswer().equals("timeout"))
+						Log.i("Debug","Timeout");
+						//mTimeout = true;
+						//Pop back view
+						//finish();
+						
+					}
+					
+					catch (Exception e) 
+					{
+					}
+					
  
              }
          });
