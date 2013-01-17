@@ -11,6 +11,10 @@
     <string name="content_trash">Eintrag löschen</string>
     <string name="content_termine_list">Zeige Termine als Liste</string>
     <string name="back">Zurück</string>
+    <string name="username">Username</string>
+    <string name="password">Passwort</string>
+    <string name="login">Login</string>
+    <string name="cancel">Abbrechen</string>
 
     
 	<color name="white">#ffffff</color>
