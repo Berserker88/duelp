@@ -61,7 +61,7 @@ public class Faecher extends ListActivity
 	public void refreshData()
 	{
 		
-		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher", false,null);
+		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/get", false,null);
 		httpAction.execute();
 		try {
 			String response = httpAction.waitForAnswer();		
