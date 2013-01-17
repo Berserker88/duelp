@@ -16,7 +16,7 @@ import android.widget.TabHost;
 
 public class Duelp extends TabActivity {
 
-	public static String URL = "10.12.41.43:8080";
+	public static String URL = "10.12.40.240:8080";
 
 	
     @Override

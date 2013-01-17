@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -14,6 +15,8 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.google.gson.Gson;
 
 import android.content.Context;
 import android.content.Intent;
@@ -26,16 +29,18 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Orte_Adapter extends BaseAdapter {
 
 	public static Map<String, String[]> map = new HashMap<String,String[]>();
-	public static ArrayList<String> keys;
+	public static ArrayList<String> keys = new ArrayList<String>();;
 	private Context context;
 
 	public Orte_Adapter(Context c) {
 		
 		context = c;
+
 		
 		// Test-Array bauen
 		// ############################################################
@@ -49,15 +54,11 @@ public class Orte_Adapter extends BaseAdapter {
 		map.put("Simon Schiller", simon);
 		map.put("Theodoros Georgiu", aki);
 		map.put("Florian Reinsberg", flo);
-		
-		keys = new ArrayList<String>();
 		keys.add("Jannis Raiber");
 		keys.add("Simon Schiller");
 		keys.add("Theodoros Georgiu");
 		keys.add("Florian Reinsberg");
-
 		
-
 	}
 
 	@Override
@@ -104,34 +105,9 @@ public class Orte_Adapter extends BaseAdapter {
 						   intent.putExtra("values",map.get(keys.get(Integer.parseInt(position.getText().toString()))));						   
 						   Log.i("Debug: ", "Hier nach dem Intent!");
 						   context.startActivity(intent);
-						   Log.i("Debug: ", "Hier nach dem Start der Activity!");
-						   try {
-								HttpClient httpclient = new DefaultHttpClient();			
-							    HttpResponse response = httpclient.execute(new HttpGet("http://"+Duelp.URL+"/duelp-backend/rest/orte/"));
-							    Log.i("debug", "httpresponse");
-							    StatusLine statusLine = response.getStatusLine();
-							    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-							        ByteArrayOutputStream out = new ByteArrayOutputStream();
-							        response.getEntity().writeTo(out);
-							        out.close();
-							        String responseString = out.toString();
-							        Log.i("debug", "Habe folgende Antwort erhalten: " + responseString);
-							        
-							    } else{
-							        //Closes the connection.
-							        response.getEntity().getContent().close();
-							    }
-							} catch(Exception ex) {
-								Log.i("debug", "Fehler beim Verbindungsaufbau ANFANG");
-								Log.e("debug", Log.getStackTraceString(ex));//("debug", "ERROR:" + ex.getMessage());
-								Log.i("debug", "Fehler beim Verbindungsaufbau ENDE");
-								//ex.printStackTrace();
-							}
-
-						
+						   Log.i("Debug: ", "Hier nach dem Start der Activity!");						
 					}
-
-			      }); 
+			   }); 
 
 		return listlayout;
 	}
