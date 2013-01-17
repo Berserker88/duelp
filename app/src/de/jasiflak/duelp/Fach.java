@@ -41,6 +41,6 @@ public class Fach {
 	}
 	
 	public String toString() {
-		   return this.getmName() + " - " + this.getmDate();
+		   return this.getmName() + " - " + this.getmDate()+ " - " + this.getmRating();
 		}
 }
