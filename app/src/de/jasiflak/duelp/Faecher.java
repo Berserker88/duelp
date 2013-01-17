@@ -10,6 +10,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 
+import de.jasiflak.duelp.HttpAction.HttpActionException;
+
 import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Context;
@@ -77,19 +79,19 @@ public class Faecher extends ListActivity
 	public void refreshData()
 	{
 		
-		HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher", false,null);
-		httpAction.execute();
 		try {
-			String response = httpAction.waitForAnswer();		
-			Log.i("Debug","Response: " +  response);	
-			if(!response.equals("timeout"))
-			{
-				parseJSON(response);
-			}
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher", false,null);
+			httpAction.execute();
+			String response = httpAction.waitForAnswer();
+			Log.i("Debug","Response: " +  response);
+			parseJSON(response);
 
-		} catch (SecurityException ex) {
-			//INSERT CORRECT CONTEXT HIER
-			Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+		} catch (Exception ex) {
+			try {
+				Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
 		}
 			
 	}

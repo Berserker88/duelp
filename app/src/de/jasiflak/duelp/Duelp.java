@@ -56,19 +56,22 @@ public class Duelp extends TabActivity {
                        loginInfos.add(pass.getText().toString());
                 	   Log.i("debug", "Parameter: " + loginInfos.toString());
                        Gson gson = new Gson();
-                       HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/login", true, gson.toJson(loginInfos));
-                	   httpLogin.execute();
-                	   String answer = httpLogin.waitForAnswer();
-                	   Log.i("debug", "Antwort: " + answer);
-                	   if(answer.equals("timeout"))
-                		   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-                	   else if(answer.equals("yes")) {
-                		   mUser = user.getText().toString();
-                		   initializeTabBar();
-                	   }
-                	   else {
-                		   destroy();
-                	   }
+                       try {
+	                       HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/login", true, gson.toJson(loginInfos));
+	                	   httpLogin.execute();
+	                	   String answer = httpLogin.waitForAnswer();
+	                	   Log.i("debug", "Antwort: " + answer);
+	                	   if(answer.equals("yes")) {
+	                		   mUser = user.getText().toString();
+	                		   initializeTabBar();
+	                	   }
+	                	   else {
+	                		   destroy();
+	                	   }
+                       } catch(Exception ex) {
+                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+                    	   destroy();
+                       }
                    }
                })
                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {

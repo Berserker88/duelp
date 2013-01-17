@@ -58,15 +58,24 @@ public class HttpAction extends Thread {
 	private Thread mThread;
 	private boolean mIsPOST;
 	private boolean mTimeout;
+	private String mErrMessage;
+	private boolean mError;
 	
+	
+	public class HttpActionException extends Exception {
+	    public HttpActionException(String message) {
+	        super(message);
+	    }
+	}
 	
 	/**
 	 * Simply constructs the Thread but it is NOT executed
 	 * @param url the requesting url as a String
 	 * @param isPOST a bool that indicates wheather your request is a POST or not (if it is not, the third param can be "null")
 	 * @param jsonParams just needed if your request is POST. 
+	 * @throws HttpActionException 
 	 */
-	public HttpAction(String url, boolean isPOST, String jsonParams) {
+	public HttpAction(String url, boolean isPOST, String jsonParams) throws HttpActionException {
 		mIsPOST = isPOST;
 		mTimeout = false;
 		mURL = url;
@@ -85,35 +94,51 @@ public class HttpAction extends Thread {
 		    nameValuePairs.add(new BasicNameValuePair("json", jsonParams));
 		    try {
 				mHttpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
+			} catch (Exception e) {
+				throw new HttpActionException("Encoding fuckup with the Params");
 			}
 		}
 	}
 	
+	public void wirfException(String message) throws HttpActionException {
+		throw new HttpActionException("Encoding fuckup with the Params"); 
+	}
+	
 	public void run() {
 		if(mIsPOST) {
-			
-				try {
-					mHttpResponse = mHttpClient.execute(mHttpPost);
-				} catch (Exception ex) {
-					Log.i("debug", "error while calling url: " + ex.getMessage());
-					mTimeout = true;
-				}
-				try {
-					parseAnswer();
-				} catch (IOException ex) {
-					mResponse = "";
-				}
+
+			try {
+				mHttpResponse = mHttpClient.execute(mHttpPost);
+			} catch(Exception ex) {
+				mErrMessage = ex.getMessage();
+				mError = true;
+				return;
+			}
+
+			try {
+				parseAnswer();
+			} catch (IOException ex) {
+				mErrMessage = ex.getMessage();
+				mError = true;
+				return;
+			}
 			
 		} else {
 			try {
 			    mHttpResponse = mHttpClient.execute(mHttpGet);
-			    parseAnswer();
-			    
 			} catch(Exception ex) {
 				Log.i("debug", "error while calling url: " + ex.getMessage());
-				mTimeout = true;
+				mErrMessage = ex.getMessage();
+				mError = true;
+				return;
+			}
+			try {
+				parseAnswer();
+				Log.i("debug", "answer parsed: " + mResponse);
+			} catch (IOException ex) {
+				Log.i("debug", "Error while parsing answer");
+				mErrMessage = ex.getMessage();
+				mError = true;
 			}
 		}
 	}
@@ -145,15 +170,16 @@ public class HttpAction extends Thread {
 	/**
 	 * waits for the Thread to end 
 	 * @return the Response if it is a GET request or null otherwise 
+	 * @throws HttpActionException 
 	 */
-	public String waitForAnswer() {
+	public String waitForAnswer() throws HttpActionException {
 		try {
 			this.join();
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			throw new HttpActionException(e.getMessage());
 		}
-		if(mTimeout)
-			return "timeout";
+		if(mError)
+			throw new HttpActionException(mErrMessage);
 		return mResponse;
 	}
 }
