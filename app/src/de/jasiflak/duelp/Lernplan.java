@@ -27,17 +27,13 @@ public class Lernplan extends Activity
 		  Lernplan_DatabaseHandler db = new Lernplan_DatabaseHandler(this);
 		  List<LearnEntry> lernplan_strings = new ArrayList<LearnEntry>();
 		  
+		  try
+		  {
 		  HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
 		  httpRequest.execute();
+		  httpRequest.waitForAnswer();
 		  
-		  if(httpRequest.waitForAnswer().equals("timeout"))
-		  {
-			  Log.i("debug", "KEINE SERVERVERBINDUNG");
-			  refresh();
-			  Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
-		  }
-		  else
-		  {
+		 
 			  	db.deleteAllRows();
 				lernplan_strings = parseJson(httpRequest.waitForAnswer());
 				for(LearnEntry temp : lernplan_strings)
@@ -57,7 +53,14 @@ public class Lernplan extends Activity
 				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 				  lv.setAdapter(adapter);
 				  Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
-			}
+		  }
+		  catch(Exception e)
+		  {
+			  Log.i("debug", "KEINE SERVERVERBINDUNG");
+			  refresh();
+			  Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
+		  }
+		  
 		  
 		  //#############################
 		  

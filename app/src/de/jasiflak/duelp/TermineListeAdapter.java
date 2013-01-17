@@ -144,13 +144,12 @@ public class TermineListeAdapter extends BaseAdapter {
 					if (strDate.equals(strToCompare)) {
 						dateToDel = entry.getKey();
 						String key = dateToDel.get(Calendar.YEAR) +"-"+ (dateToDel.get(Calendar.MONTH)+1) +"-"+ dateToDel.get(Calendar.DAY_OF_MONTH);
-						
-						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
-						httpAction.execute();
 						try {
+							HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
+							httpAction.execute();
 							httpAction.waitForAnswer();
 							TermineKalendarAdapter.mDateItems.remove(entry.getKey());
-						} catch (SecurityException ex) {
+						} catch(Exception ex) {
 							Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
 						}
 						break;

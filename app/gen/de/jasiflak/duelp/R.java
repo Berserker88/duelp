@@ -172,58 +172,61 @@ containing a value of this type.
         public static final int btnSave=0x7f040009;
         public static final int checkedIn=0x7f040007;
         public static final int chkbox=0x7f04000c;
-        public static final int city=0x7f040016;
-        public static final int gv_kalendar=0x7f040023;
-        public static final int gv_kalendar_wochentage=0x7f040022;
-        public static final int header=0x7f04001f;
-        public static final int hiddentext=0x7f04001a;
-        public static final int imageView1=0x7f04001b;
-        public static final int iv_icon1=0x7f04001d;
-        public static final int iv_icon2=0x7f04001e;
-        public static final int iv_kalendar_liste=0x7f040021;
-        public static final int iv_list_item_busy=0x7f040025;
-        public static final int iv_list_item_delete=0x7f040027;
-        public static final int iv_list_item_home=0x7f040026;
+        public static final int city=0x7f040018;
+        public static final int gv_kalendar=0x7f040025;
+        public static final int gv_kalendar_wochentage=0x7f040024;
+        public static final int header=0x7f040021;
+        public static final int hiddentext=0x7f04001c;
+        public static final int imageView1=0x7f04001d;
+        public static final int iv_icon1=0x7f04001f;
+        public static final int iv_icon2=0x7f040020;
+        public static final int iv_kalendar_liste=0x7f040023;
+        public static final int iv_list_item_busy=0x7f040027;
+        public static final int iv_list_item_delete=0x7f040029;
+        public static final int iv_list_item_home=0x7f040028;
         public static final int label=0x7f04000b;
         public static final int lblChkBox=0x7f040008;
         public static final int listView1=0x7f04000f;
-        public static final int lv_calendar_entries=0x7f040029;
-        public static final int mapview=0x7f040017;
-        public static final int mapview_alle_orte=0x7f040012;
-        public static final int menu_settings=0x7f04002a;
-        public static final int name=0x7f040013;
+        public static final int lv_calendar_entries=0x7f04002b;
+        public static final int mapview=0x7f040019;
+        public static final int mapview_alle_orte=0x7f040014;
+        public static final int menu_settings=0x7f04002c;
+        public static final int name=0x7f040015;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040001;
-        public static final int ort_header=0x7f040010;
-        public static final int ort_liste=0x7f040011;
+        public static final int ort_header=0x7f040012;
+        public static final int ort_liste=0x7f040013;
+        public static final int password=0x7f040011;
         public static final int ratingBar=0x7f040006;
-        public static final int row1=0x7f040018;
-        public static final int row2=0x7f040019;
+        public static final int row1=0x7f04001a;
+        public static final int row2=0x7f04001b;
         public static final int satellite=0x7f040002;
-        public static final int street=0x7f040014;
+        public static final int street=0x7f040016;
         public static final int terrain=0x7f040003;
         public static final int textView1=0x7f04000d;
-        public static final int tv_kalendar_title=0x7f040020;
-        public static final int tv_list_back=0x7f040028;
-        public static final int tv_list_item_date=0x7f040024;
-        public static final int tv_tagNummer=0x7f04001c;
+        public static final int tv_kalendar_title=0x7f040022;
+        public static final int tv_list_back=0x7f04002a;
+        public static final int tv_list_item_date=0x7f040026;
+        public static final int tv_tagNummer=0x7f04001e;
         public static final int txtDatum=0x7f040005;
         public static final int txtFach=0x7f040004;
-        public static final int zipcode=0x7f040015;
+        public static final int username=0x7f040010;
+        public static final int zipcode=0x7f040017;
     }
     public static final class layout {
         public static final int faecher_detail_layout=0x7f030000;
         public static final int faecher_layout=0x7f030001;
         public static final int lernplan_layout=0x7f030002;
-        public static final int main_tab_layout=0x7f030003;
-        public static final int orte_layout=0x7f030004;
-        public static final int orte_layout_alle_orte=0x7f030005;
-        public static final int orte_layout_detail=0x7f030006;
-        public static final int orte_layout_listview_row=0x7f030007;
-        public static final int termine_kalendar_item=0x7f030008;
-        public static final int termine_kalendar_layout=0x7f030009;
-        public static final int termine_liste_item=0x7f03000a;
-        public static final int termine_liste_layout=0x7f03000b;
+        public static final int login_layout=0x7f030003;
+        public static final int main_tab_layout=0x7f030004;
+        public static final int orte_layout=0x7f030005;
+        public static final int orte_layout_alle_orte=0x7f030006;
+        public static final int orte_layout_detail=0x7f030007;
+        public static final int orte_layout_listview_row=0x7f030008;
+        public static final int termine_kalendar_item=0x7f030009;
+        public static final int termine_kalendar_layout=0x7f03000a;
+        public static final int termine_liste_item=0x7f03000b;
+        public static final int termine_liste_layout=0x7f03000c;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;
@@ -231,6 +234,7 @@ containing a value of this type.
     public static final class string {
         public static final int app_name=0x7f05000b;
         public static final int back=0x7f050015;
+        public static final int cancel=0x7f050019;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
@@ -279,11 +283,14 @@ containing a value of this type.
         public static final int content_termine_list=0x7f050014;
         public static final int content_trash=0x7f050013;
         public static final int hello_world=0x7f05000c;
+        public static final int login=0x7f050018;
         public static final int menu_settings=0x7f05000d;
         public static final int next_month=0x7f050010;
-        public static final int open=0x7f050016;
+        public static final int open=0x7f05001a;
+        public static final int password=0x7f050017;
         public static final int prev_month=0x7f05000f;
         public static final int title_activity_main=0x7f05000e;
+        public static final int username=0x7f050016;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;
