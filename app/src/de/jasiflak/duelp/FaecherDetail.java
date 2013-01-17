@@ -4,8 +4,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+
+import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -75,11 +79,24 @@ public class FaecherDetail extends Activity
 		 //Save Button
 		 final Button button = (Button) findViewById(R.id.btnSave);
 		 button.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
+             public void onClick(View v) 
+             {
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
-
-            	 
+					
+					//HTTP POST
+					
+					// Create a new HttpClient and Post Header
+					Log.i("Debug", "http-request");
+					
+					HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, "blablablub");
+					httpAction.execute();
+					if(httpAction.waitForAnswer().equals("timeout"))
+					Log.i("Debug","Timeout");
+					//mTimeout = true;
+					//Pop back view
+					//finish();
+ 
              }
          });
 		 
