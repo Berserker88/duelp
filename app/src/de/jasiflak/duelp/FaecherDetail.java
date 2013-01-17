@@ -2,10 +2,13 @@ package de.jasiflak.duelp;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+
+import com.google.gson.Gson;
 
 import android.app.Activity;
 import android.app.DatePickerDialog;
@@ -75,11 +78,53 @@ public class FaecherDetail extends Activity
 		 //Save Button
 		 final Button button = (Button) findViewById(R.id.btnSave);
 		 button.setOnClickListener(new View.OnClickListener() {
-             public void onClick(View v) {
+             public void onClick(View v) 
+             {
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
+					
+					//CREATE JSON REPRESENTATION OF CURRENT FACH
+					
+					 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
 
-            	 
+					
+					ArrayList<String> arrList = new ArrayList<String>();
+					arrList.add((String) mBundle.get("id"));
+					arrList.add((String) fachEditText.getText().toString());
+					arrList.add((String) mBundle.get("date"));
+					arrList.add((String) mBundle.get("rating").toString());
+					arrList.add("false");
+
+					//TO JSON
+					Gson gson = new Gson();
+					String postString = gson.toJson(arrList);
+					
+					Log.i("Debug","POSTJSON:" + postString);
+					
+					
+					//HTTP POST
+					// Create a new HttpClient and Post Header
+					
+					
+					try
+					{
+						
+						Log.i("Debug", "http-request");
+						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+						httpAction.execute();
+						if(httpAction.waitForAnswer().equals("timeout"))
+						Log.i("Debug","Timeout");
+						//mTimeout = true;
+						//Pop back view
+						//finish();
+						
+					}
+					
+					catch (Exception e) 
+					{
+					}
+					
+ 
              }
          });
 		 

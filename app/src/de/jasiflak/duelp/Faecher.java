@@ -80,7 +80,7 @@ public class Faecher extends ListActivity
 	{
 		
 		try {
-			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher", false,null);
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/get", false,null);
 			httpAction.execute();
 			String response = httpAction.waitForAnswer();
 			Log.i("Debug","Response: " +  response);
@@ -105,14 +105,14 @@ public class Faecher extends ListActivity
 		
 		
 		this.mFaecher.clear();
-		Fach newFach = new Fach("+","01.01.2013",-1,false);
+		Fach newFach = new Fach(-1,"+","01.01.2013",-1,false);
 		mFaecher.add(newFach);
 				
 		// Fach (String name, String date, int rat, boolean checked)
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			Fach fach = new Fach(list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
 			Log.i("Debug","BAUM:" + fach.toString());
 			this.mFaecher.add(fach);	
 		}
@@ -127,6 +127,7 @@ public class Faecher extends ListActivity
 		Log.i("Debug","item select....");
 		Intent intent = new Intent();
 
+		intent.putExtra("id",""+mFaecher.get(position).getmId());
 		intent.putExtra("name",mFaecher.get(position).getmName());
 		intent.putExtra("date",mFaecher.get(position).getmDate());
 		intent.putExtra("rating",mFaecher.get(position).getmRating());	
