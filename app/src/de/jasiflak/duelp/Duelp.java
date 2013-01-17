@@ -1,9 +1,11 @@
 package de.jasiflak.duelp;
 
 
+
 import java.util.ArrayList;
 
 import com.google.gson.Gson;
+
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -24,7 +26,7 @@ import android.widget.Toast;
 
 public class Duelp extends TabActivity {
 
-	public static String URL = "10.12.41.43:8080";
+	public static String URL = "10.12.47.101:8080";
 	private AlertDialog mLoginDialog;
 	private Context mContext;
 	public static String mUser;
@@ -96,7 +98,7 @@ public class Duelp extends TabActivity {
         Intent intent;
     	
     	intent = new Intent().setClass(this,Lernplan.class);        
-        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan)).setContent(intent);
+        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan4)).setContent(intent);
         tabhost.addTab(spec);
         
         intent = new Intent().setClass(this,Faecher.class);
