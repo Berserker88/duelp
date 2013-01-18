@@ -33,7 +33,7 @@ public class Duelp extends TabActivity {
 
 
 
-	public static String URL = "10.12.41.43:8080";
+	public static String URL = "10.12.47.101:8080";
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
