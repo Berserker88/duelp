@@ -84,7 +84,6 @@ public class Duelp extends TabActivity {
 	                	   }
                        } catch(Exception ex) {
                     	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
-                    	   destroy();
                        }
                        initializeTabBar();
                    }
