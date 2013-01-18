@@ -35,36 +35,17 @@ public class Faecher extends ListActivity
 	private List<Fach> mFaecher;
 	//private Context mContext;
 	
-
-
+	
 
 	public void onCreate(Bundle savedInstanceState)
 	{
 		
 		Log.i("Debug","Create...");
-
+		        
 		super.onCreate(savedInstanceState);
 		this.mFaecher = new ArrayList<Fach>();
 		
-	
 		refreshData();
-		
-		//NEW FACH DUMMY
-		/*Fach newFach = new Fach("+","01.01.2013",-1,false);
-		
-		
-		Fach ezs = new Fach("EZS","09.02.2013",3,false);
-		Fach its = new Fach("ITS","13.02.2013",4,false);
-		Fach rga = new Fach("RGA","01.02.2013",1,false);
-		Fach lopro = new Fach("LoPro","04.02.2013",1,false);
-	
-		this.mFaecher = new ArrayList<Fach>();
-		
-		mFaecher.add(newFach);
-		mFaecher.add(ezs);
-		mFaecher.add(its);
-		mFaecher.add(rga);
-		mFaecher.add(lopro);*/
 
 		try {
 			
@@ -72,7 +53,27 @@ public class Faecher extends ListActivity
 		} catch (Exception e) {
 			Log.i("Debug",e.getLocalizedMessage());
 		}
+	}
+	
+	
+	public void onResume(Bundle savedInstanceState)
+	{
+		
+		Log.i("Debug","Resume....!");
 
+	}
+	
+	public void onRestart()
+	{
+		super.onRestart();
+		Log.i("Debug","RESTART!!!");
+		
+		refreshData();
+		
+		//Refresh List
+		this.setListAdapter(null); //inhalt vom ListAdapter löschen
+		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
+		
 	}
 	
 	

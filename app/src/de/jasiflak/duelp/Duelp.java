@@ -32,6 +32,7 @@ import android.widget.Toast;
 public class Duelp extends TabActivity {
 
 
+
 	public static String URL = "10.12.41.43:8080";
 
 	private AlertDialog mLoginDialog;
