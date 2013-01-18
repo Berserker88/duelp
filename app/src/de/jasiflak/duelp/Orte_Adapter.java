@@ -1,27 +1,16 @@
 package de.jasiflak.duelp;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import com.google.gson.Gson;
 
 import android.content.Context;
 import android.content.Intent;
 
-import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,11 +29,17 @@ public class Orte_Adapter extends BaseAdapter {
 	public Orte_Adapter(Context c) {
 		
 		context = c;
-
-		
+		try{
+		HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/orte", false, null);
+		httpRequest.execute();
+		String answer = httpRequest.waitForAnswer();
+		parseJSON(answer);
+		}catch (Exception ex){
+			Toast.makeText(c, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();	
+		}
 		// Test-Array bauen
 		// ############################################################
-		map = new HashMap<String, String[]>();
+		/*map = new HashMap<String, String[]>();
 		String[] jannis = { "Kölnerstraße", "229", "47805", "Krefeld" };
 		String[] simon = { "Verdistrasse", "30", "47623", "Kevelaer" };
 		String[] aki = { "Steegerstrasse", "75", "41334", "Viersen" };
@@ -58,6 +53,32 @@ public class Orte_Adapter extends BaseAdapter {
 		keys.add("Simon Schiller");
 		keys.add("Theodoros Georgiu");
 		keys.add("Florian Reinsberg");
+		
+		*/
+	}
+	public void parseJSON(String json) {
+		List<String> adresses = new ArrayList<String>();
+		Gson gson = new Gson();
+		Log.i("debug", "Parse Json from Orte_Map");
+		adresses = (List<String>) gson.fromJson(json, adresses.getClass());
+		
+		Log.i("debug",adresses.toString());
+		
+		for (int i=0; i < adresses.size();i++)
+		{
+			String tmp[] = adresses.get(i).split(";");
+			String tmpval[] = new String[4];
+			tmpval[0]=tmp[2];
+			tmpval[1]=tmp[3];
+			tmpval[2]=tmp[4];
+			tmpval[3]=tmp[5];
+			map.put(tmp[0]+" "+tmp[1], tmpval);
+		    keys.add(tmp[0]+" "+tmp[1]);
+		 for(Map.Entry<String, String[]> entry : map.entrySet()){
+		    Log.i("debug", "Schlüssel eingetragen: "+ entry.getKey());
+		    Log.i("debug", "Value in Map dazu: "+ entry.getValue());
+		 }
+		}
 		
 	}
 
