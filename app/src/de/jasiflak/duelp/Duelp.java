@@ -54,7 +54,7 @@ public class Duelp extends TabActivity {
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
-        LayoutInflater inflater = this.getLayoutInflater();
+        final LayoutInflater inflater = this.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.login_layout, null);
         
         
@@ -96,7 +96,74 @@ public class Duelp extends TabActivity {
                        mAnsweredLogin = true;
                    }
                })
-               .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+               .setNeutralButton(R.string.register, new DialogInterface.OnClickListener() {
+				
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+					final View layoutRegister = inflater.inflate(R.layout.register_layout, null);
+					
+					builder.setView(layoutRegister)
+					
+						.setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								ArrayList<String> registerInfos = new ArrayList<String>();
+								EditText user = (EditText) layout.findViewById(R.id.username);
+								EditText pass = (EditText) layout.findViewById(R.id.password);
+								Log.i("debug", "user: " + user.getText().toString());
+								registerInfos.add(user.getText().toString());
+								registerInfos.add(pass.getText().toString());
+								Log.i("debug", "Parameter: " + registerInfos.toString());
+								Gson gson = new Gson();
+								try {
+									HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/register", true, gson.toJson(registerInfos));
+									httpLogin.execute();
+									String answer = httpLogin.waitForAnswer();
+									Log.i("debug", "Antwort: " + answer);
+									if(answer.equals("yes")) {
+										mUser = user.getText().toString();
+										mOfflineMode = false;
+										Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
+									}
+									else {
+										mUser = null;
+										mOfflineMode = true;
+										Toast.makeText(mContext, "Username existiert bereits", Toast.LENGTH_SHORT).show();
+									}
+								} catch(Exception ex) {
+								   	Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
+								}
+								initializeTabBar();
+										
+							}
+						})
+						
+							.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									destroy();
+								}
+							});
+					
+					
+					
+					AlertDialog registerDialog = builder.create();
+					
+					registerDialog.setCanceledOnTouchOutside(false);
+			        registerDialog.setOnCancelListener(new OnCancelListener() {
+						
+						@Override
+						public void onCancel(DialogInterface dialog) {
+							destroy();
+						}
+					});
+			        mLoginDialog.dismiss();
+			        registerDialog.show();
+				}
+			})
+               .setNegativeButton(R.string.offline, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
                        mUser = null;
                        mOfflineMode = true;
@@ -105,6 +172,7 @@ public class Duelp extends TabActivity {
                        mAnsweredLogin = true;
                    }
                });
+        
         mLoginDialog = builder.create();
         mLoginDialog.setCanceledOnTouchOutside(false);
         mLoginDialog.setOnCancelListener(new OnCancelListener() {

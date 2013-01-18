@@ -223,10 +223,11 @@ containing a value of this type.
         public static final int orte_layout_alle_orte=0x7f030006;
         public static final int orte_layout_detail=0x7f030007;
         public static final int orte_layout_listview_row=0x7f030008;
-        public static final int termine_kalendar_item=0x7f030009;
-        public static final int termine_kalendar_layout=0x7f03000a;
-        public static final int termine_liste_item=0x7f03000b;
-        public static final int termine_liste_layout=0x7f03000c;
+        public static final int register_layout=0x7f030009;
+        public static final int termine_kalendar_item=0x7f03000a;
+        public static final int termine_kalendar_layout=0x7f03000b;
+        public static final int termine_liste_item=0x7f03000c;
+        public static final int termine_liste_layout=0x7f03000d;
     }
     public static final class menu {
         public static final int activity_main=0x7f090000;
@@ -234,7 +235,7 @@ containing a value of this type.
     public static final class string {
         public static final int app_name=0x7f05000b;
         public static final int back=0x7f050015;
-        public static final int cancel=0x7f050019;
+        public static final int cancel=0x7f05001c;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
@@ -287,9 +288,11 @@ containing a value of this type.
         public static final int login=0x7f050018;
         public static final int menu_settings=0x7f05000d;
         public static final int next_month=0x7f050010;
-        public static final int open=0x7f05001b;
+        public static final int offline=0x7f050019;
+        public static final int open=0x7f05001d;
         public static final int password=0x7f050017;
         public static final int prev_month=0x7f05000f;
+        public static final int register=0x7f05001b;
         public static final int title_activity_main=0x7f05000e;
         public static final int username=0x7f050016;
     }
