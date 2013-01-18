@@ -30,7 +30,7 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Log.i("Debug","Adapter:GetView..");
+		//Log.i("Debug","Adapter:GetView..");
 
 		LayoutInflater inflater = (LayoutInflater) context
 				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
