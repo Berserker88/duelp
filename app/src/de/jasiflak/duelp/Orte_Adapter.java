@@ -64,7 +64,7 @@ public class Orte_Adapter extends BaseAdapter {
 		
 		Log.i("debug",adresses.toString());
 		
-		for (int i=0; i < adresses.size()-1;i++)
+		for (int i=0; i < adresses.size();i++)
 		{
 			String tmp[] = adresses.get(i).split(";");
 			String tmpval[] = new String[4];
