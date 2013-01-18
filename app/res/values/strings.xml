@@ -14,6 +14,9 @@
     <string name="username">Username</string>
     <string name="password">Passwort</string>
     <string name="login">Login</string>
+    <string name="offline">Offline</string>
+    <string name="exit_menu">Beenden</string>
+    <string name="register">Registrieren</string>
     <string name="cancel">Abbrechen</string>
 
     
