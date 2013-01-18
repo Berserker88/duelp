@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 public class Lernplan extends Activity
 {
-	
 	  public void initialisiere() 
 	  {
 		  Log.i("debug", "initialisiere");
@@ -51,12 +50,15 @@ public class Lernplan extends Activity
 			  final ListView lv = (ListView)findViewById(R.id.listView1);
 			  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 			  lv.setAdapter(adapter);
+			  
 			  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
 		  }
 		  catch(Exception e)
 		  {
+
 			Log.i("debug", "KEINE SERVERVERBINDUNG");
 			readDatabase();
+			
 			//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
 		  }
 		  
@@ -163,6 +165,8 @@ public class Lernplan extends Activity
 				  Log.i("debug", "refresh button clicked!");
 			  }
 		  });
+		  if(Duelp.mOfflineMode)
+			  button.setEnabled(false);
 	}
 	
 }
