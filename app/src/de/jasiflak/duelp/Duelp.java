@@ -32,7 +32,7 @@ import android.widget.Toast;
 public class Duelp extends TabActivity {
 
 
-	public static String URL = "192.168.1.12:8080";
+	public static String URL = "10.12.41.43:8080";
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
@@ -138,17 +138,6 @@ public class Duelp extends TabActivity {
         intent = new Intent().setClass(this,Orte.class);       
         spec = mTabhost.newTabSpec("tab4").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
         mTabhost.addTab(spec);
-        
-//        mTabhost.setOnTabChangedListener(new OnTabChangeListener() {
-//			
-//			@Override
-//			public void onTabChanged(String tabId) {
-//				if(!tabId.equals("tab1") && mOfflineMode) {
-//					Toast.makeText(mContext, "Sie müssen eingeloggt sein um diese Funktion nutzen zu können", Toast.LENGTH_SHORT).show();
-//					mTabhost.setCurrentTab(0);
-//				}
-//			}
-//		});
         
         
         for(int i=1; i < mTabhost.getTabWidget().getChildCount(); i++)
