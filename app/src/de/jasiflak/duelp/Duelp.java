@@ -14,25 +14,32 @@ import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TabHost;
+import android.widget.TabHost.OnTabChangeListener;
 import android.widget.Toast;
 
 public class Duelp extends TabActivity {
 
 
-
 	public static String URL = "10.12.40.240:8080";
+
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
 	public static String mUser;
+	public static boolean mOfflineMode;
+	private TabHost mTabhost;
+	private boolean mAnsweredLogin;
 
 
 	
@@ -41,6 +48,9 @@ public class Duelp extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_layout);
         mContext = this;
+        mOfflineMode = true;
+        mAnsweredLogin = false;
+        mTabhost = getTabHost();
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         // Get the layout inflater
@@ -69,56 +79,95 @@ public class Duelp extends TabActivity {
 	                	   Log.i("debug", "Antwort: " + answer);
 	                	   if(answer.equals("yes")) {
 	                		   mUser = user.getText().toString();
-	                		   initializeTabBar();
+	                		   mOfflineMode = false;
+	                		   Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
 	                	   }
 	                	   else {
-	                		   destroy();
+	                		   mUser = null;
+	                		   mOfflineMode = true;
+	                		   Toast.makeText(mContext, "Falscher Username oder Passwort. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
 	                	   }
                        } catch(Exception ex) {
-                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-                    	   destroy();
+                    	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
                        }
+                       initializeTabBar();
+                       mAnsweredLogin = true;
                    }
                })
                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                    public void onClick(DialogInterface dialog, int id) {
-                       destroy();
+                       mUser = null;
+                       mOfflineMode = true;
+                       Toast.makeText(mContext, "Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
+                       initializeTabBar();
+                       mAnsweredLogin = true;
                    }
                });
         mLoginDialog = builder.create();
-        
-        mLoginDialog.show();
-        
-        
-
-        
+        mLoginDialog.setCanceledOnTouchOutside(false);
+        mLoginDialog.setOnCancelListener(new OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				destroy();
+			}
+		});
+        mLoginDialog.show();  
     }
     
     
     public void initializeTabBar() {
     	Resources res = getResources();  
-        TabHost tabhost = getTabHost();
         TabHost.TabSpec spec;
         Intent intent;
     	
     	intent = new Intent().setClass(this,Lernplan.class);        
-        spec = tabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan4)).setContent(intent);
-        tabhost.addTab(spec);
+        spec = mTabhost.newTabSpec("tab1").setIndicator("Lernplan",res.getDrawable(R.drawable.ic_tabs_lernplan4)).setContent(intent);
+        mTabhost.addTab(spec);
         
         intent = new Intent().setClass(this,Faecher.class);
-        spec = tabhost.newTabSpec("tab2").setIndicator("F�cher",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
-        tabhost.addTab(spec);
+        spec = mTabhost.newTabSpec("tab2").setIndicator("Fächer",res.getDrawable(R.drawable.ic_tabs_faecher2)).setContent(intent);
+        mTabhost.addTab(spec);
         
         intent = new Intent().setClass(this,TermineKalendar.class);        
-        spec = tabhost.newTabSpec("tab3").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs_termine)).setContent(intent);
-        tabhost.addTab(spec);      
+        spec = mTabhost.newTabSpec("tab3").setIndicator("Termine",res.getDrawable(R.drawable.ic_tabs_termine)).setContent(intent);
+        mTabhost.addTab(spec);      
 
         intent = new Intent().setClass(this,Orte.class);       
-        spec = tabhost.newTabSpec("tab4").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
-        tabhost.addTab(spec);
+        spec = mTabhost.newTabSpec("tab4").setIndicator("Orte",res.getDrawable(R.drawable.ic_tabs_orte)).setContent(intent);
+        mTabhost.addTab(spec);
+        
+//        mTabhost.setOnTabChangedListener(new OnTabChangeListener() {
+//			
+//			@Override
+//			public void onTabChanged(String tabId) {
+//				if(!tabId.equals("tab1") && mOfflineMode) {
+//					Toast.makeText(mContext, "Sie müssen eingeloggt sein um diese Funktion nutzen zu können", Toast.LENGTH_SHORT).show();
+//					mTabhost.setCurrentTab(0);
+//				}
+//			}
+//		});
         
         
-        tabhost.setCurrentTab(0);
+        for(int i=1; i < mTabhost.getTabWidget().getChildCount(); i++)
+        {
+        	final int tabNr = i;
+            getTabWidget().getChildAt(i).setOnClickListener(new OnClickListener() { 
+
+                @Override 
+                public void onClick(View v) { 
+
+                    if (mOfflineMode)
+                    	Toast.makeText(mContext, "Sie müssen eingeloggt sein um diese Funktion nutzen zu können", Toast.LENGTH_SHORT).show();
+                    else
+                        mTabhost.setCurrentTab(tabNr);
+                } 
+            });
+        }
+        
+        
+        
+        mTabhost.setCurrentTab(0);
     }
 
     @Override
