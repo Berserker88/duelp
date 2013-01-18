@@ -8,14 +8,11 @@ import com.google.gson.Gson;
 
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
-import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
@@ -26,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TabHost;
-import android.widget.TabHost.OnTabChangeListener;
 import android.widget.Toast;
 
 public class Duelp extends TabActivity {
@@ -110,8 +106,8 @@ public class Duelp extends TabActivity {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								ArrayList<String> registerInfos = new ArrayList<String>();
-								EditText user = (EditText) layout.findViewById(R.id.username);
-								EditText pass = (EditText) layout.findViewById(R.id.password);
+								EditText user = (EditText) layoutRegister.findViewById(R.id.usernameReg);
+								EditText pass = (EditText) layoutRegister.findViewById(R.id.passwordReg);
 								Log.i("debug", "user: " + user.getText().toString());
 								registerInfos.add(user.getText().toString());
 								registerInfos.add(pass.getText().toString());

@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 public class Lernplan extends Activity
 {
-	
 	  public void initialisiere() 
 	  {
 		  Log.i("debug", "initialisiere");
@@ -32,8 +31,7 @@ public class Lernplan extends Activity
 			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
 			httpRequest.execute();
 			httpRequest.waitForAnswer();
-		  
-		 
+			Log.i("debug", "httpRequest");
 			db.deleteAllRows();		//löscht den inhalt aller tabellen
 			lernplan_strings = parseJson(httpRequest.waitForAnswer());
 			for(LearnEntry temp : lernplan_strings)
@@ -52,13 +50,16 @@ public class Lernplan extends Activity
 			  final ListView lv = (ListView)findViewById(R.id.listView1);
 			  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 			  lv.setAdapter(adapter);
+			  
 			  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
 		  }
 		  catch(Exception e)
 		  {
-Log.i("debug", "KEINE SERVERVERBINDUNG");
-refresh();
-Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
+
+			Log.i("debug", "KEINE SERVERVERBINDUNG");
+			readDatabase();
+			
+			//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
 		  }
 		  
 		  
@@ -99,8 +100,13 @@ Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LO
 			
 					  
 	  }
-	   
+	  
 	  public void refresh()
+	  {
+		  initialisiere();
+	  }
+	   
+	  public void readDatabase()
 	  {
 		  Log.i("debug", "refresh aufgerufen");
 		  
@@ -159,6 +165,8 @@ Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LO
 				  Log.i("debug", "refresh button clicked!");
 			  }
 		  });
+		  if(Duelp.mOfflineMode)
+			  button.setEnabled(false);
 	}
 	
 }
