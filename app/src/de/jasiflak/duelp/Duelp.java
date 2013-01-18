@@ -21,6 +21,7 @@ import android.content.res.Resources;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
@@ -55,6 +56,8 @@ public class Duelp extends TabActivity {
         // Get the layout inflater
         LayoutInflater inflater = this.getLayoutInflater();
         final View layout = inflater.inflate(R.layout.login_layout, null);
+        
+        
 
         // Inflate and set the layout for the dialog
         // Pass null as the parent view because its going in the dialog layout
@@ -173,6 +176,18 @@ public class Duelp extends TabActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.activity_main, menu);
         return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.exit_app:
+                destroy();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
     
     private void destroy() {
