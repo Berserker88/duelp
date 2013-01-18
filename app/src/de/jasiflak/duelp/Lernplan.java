@@ -18,47 +18,48 @@ import android.widget.Toast;
 
 public class Lernplan extends Activity
 {
-	
-	  public void initialisiere() //TODO Connection abfragen
+	  public void initialisiere() 
 	  {
 		  Log.i("debug", "initialisiere");
 		  
 		  //#############################
-		  Lernplan_DatabaseHandler db = new Lernplan_DatabaseHandler(this);
+		  Lernplan_DatabaseHandler db = new Lernplan_DatabaseHandler(this); //Datenbank instanziiert
 		  List<LearnEntry> lernplan_strings = new ArrayList<LearnEntry>();
 		  
 		  try
 		  {
-		  HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
-		  httpRequest.execute();
-		  httpRequest.waitForAnswer();
-		  
-		 
-			  	db.deleteAllRows();
-				lernplan_strings = parseJson(httpRequest.waitForAnswer());
-				for(LearnEntry temp : lernplan_strings)
-				{
-					db.addLearnEntry(temp);
-				}
-				
-				List<String> valueList = new ArrayList<String>();
-				List<LearnEntry> ety = db.getAllLearnEntrys();
-				  for(LearnEntry le : ety)
-			      {
-			  	    	valueList.add(le.getDate()  + " " +le.getFach() + " "+ le.getStart() + " - " +le.getEnde() + " " + "\n"+"\t\t"+le.getOrt() + " Frühstück: " + le.getFruehstueck());
-			  	  }
-				  
-				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
-				  final ListView lv = (ListView)findViewById(R.id.listView1);
-				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
-				  lv.setAdapter(adapter);
-				  Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
+			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
+			httpRequest.execute();
+			httpRequest.waitForAnswer();
+			Log.i("debug", "httpRequest");
+			db.deleteAllRows();		//löscht den inhalt aller tabellen
+			lernplan_strings = parseJson(httpRequest.waitForAnswer());
+			for(LearnEntry temp : lernplan_strings)
+			{
+				db.addLearnEntry(temp);
+			}
+			
+			List<String> valueList = new ArrayList<String>();
+			List<LearnEntry> ety = db.getAllLearnEntrys();
+			  for(LearnEntry le : ety)
+			  {
+				  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+			  }
+			  
+			  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
+			  final ListView lv = (ListView)findViewById(R.id.listView1);
+			  lv.setAdapter(null);//inhalt vom ListAdapter löschen
+			  lv.setAdapter(adapter);
+			  
+			  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
 		  }
 		  catch(Exception e)
 		  {
-			  Log.i("debug", "KEINE SERVERVERBINDUNG");
-			  refresh();
-			  Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
+
+			Log.i("debug", "KEINE SERVERVERBINDUNG");
+			readDatabase();
+			
+			//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
 		  }
 		  
 		  
@@ -99,8 +100,13 @@ public class Lernplan extends Activity
 			
 					  
 	  }
-	   
+	  
 	  public void refresh()
+	  {
+		  initialisiere();
+	  }
+	   
+	  public void readDatabase()
 	  {
 		  Log.i("debug", "refresh aufgerufen");
 		  
@@ -110,7 +116,7 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+"\t\t"+ le.getStart() + " - " +le.getEnde() + " " + le.getOrt() + " Frühstück: " + le.getFruehstueck());
+			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
 	  	  }
 		  
 		  //generieren eines „ListAdapter“ für die „ListView“
@@ -119,7 +125,7 @@ public class Lernplan extends Activity
 		  lv.setAdapter(null); //inhalt vom ListAdapter löschen
 		  Log.i("debug", "refresh");
 		  lv.setAdapter(adapter);
-		  Toast.makeText(getBaseContext(), "Liste aktualisiert!", Toast.LENGTH_LONG).show();
+		  //Toast.makeText(getBaseContext(), "Liste aktualisiert!", Toast.LENGTH_LONG).show();
 	  }
 	     
 	  public void syncDB()
@@ -159,6 +165,8 @@ public class Lernplan extends Activity
 				  Log.i("debug", "refresh button clicked!");
 			  }
 		  });
+		  if(Duelp.mOfflineMode)
+			  button.setEnabled(false);
 	}
 	
 }
