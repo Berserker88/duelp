@@ -14,6 +14,8 @@ import android.app.ProgressDialog;
 import android.app.TabActivity;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
+import android.content.DialogInterface.OnDismissListener;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.util.Log;
@@ -36,6 +38,7 @@ public class Duelp extends TabActivity {
 	public static String mUser;
 	public static boolean mOfflineMode;
 	private TabHost mTabhost;
+	private boolean mAnsweredLogin;
 
 
 	
@@ -44,7 +47,8 @@ public class Duelp extends TabActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_tab_layout);
         mContext = this;
-        mOfflineMode = false;
+        mOfflineMode = true;
+        mAnsweredLogin = false;
         mTabhost = getTabHost();
         
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -86,6 +90,7 @@ public class Duelp extends TabActivity {
                     	   Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
                        }
                        initializeTabBar();
+                       mAnsweredLogin = true;
                    }
                })
                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -94,15 +99,19 @@ public class Duelp extends TabActivity {
                        mOfflineMode = true;
                        Toast.makeText(mContext, "Sie gelangen nun in den Offline-Modus", Toast.LENGTH_LONG).show();
                        initializeTabBar();
+                       mAnsweredLogin = true;
                    }
                });
         mLoginDialog = builder.create();
-        
-        mLoginDialog.show();
-        
-        
-
-        
+        mLoginDialog.setCanceledOnTouchOutside(false);
+        mLoginDialog.setOnCancelListener(new OnCancelListener() {
+			
+			@Override
+			public void onCancel(DialogInterface dialog) {
+				destroy();
+			}
+		});
+        mLoginDialog.show();  
     }
     
     
