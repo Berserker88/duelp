@@ -42,6 +42,7 @@ public class Orte_Alle extends MapActivity {
 	private LatLng mNortheast;
 	private LatLng mSouthwest;
 	private LatLng mActPosition;
+	List <Polyline> mAirlines = new ArrayList<Polyline>();
 	Marker mIndicator;
 	List <LatLng> mAdresses = new ArrayList<LatLng>();
 	Polygon mAccuracy;
@@ -85,6 +86,10 @@ public class Orte_Alle extends MapActivity {
 				if (mIndicator != null) {
 					mIndicator.remove();
 					mAccuracy.remove();
+					for(int i=0;i<mAirlines.size();i++){
+						mAirlines.get(i).remove();
+					}
+					
 				}
 				mIndicator = mMap
 						.addMarker(new MarkerOptions()
@@ -124,6 +129,7 @@ public class Orte_Alle extends MapActivity {
 				    .add((mActPosition), mAdresses.get(i))
 				    .width(5)
 				    .color(Color.BLUE));
+					mAirlines.add(line);
 					
 				}
 				
