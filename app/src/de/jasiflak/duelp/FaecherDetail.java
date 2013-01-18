@@ -117,17 +117,14 @@ public class FaecherDetail extends Activity
 						httpAction.execute();
 						if(httpAction.waitForAnswer().equals("timeout"))
 						Log.i("Debug","Timeout");
-						//mTimeout = true;
 						//Pop back view
-						//finish();
-						
+						finish();						
 					}
 					
 					catch (Exception e) 
 					{
 					}
 					
- 
              }
          });
 		 
