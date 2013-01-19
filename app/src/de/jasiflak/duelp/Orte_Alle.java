@@ -53,7 +53,6 @@ public class Orte_Alle extends MapActivity {
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Automatisch generierter Methodenstub
 		return false;
 	}
 
@@ -86,8 +85,9 @@ public class Orte_Alle extends MapActivity {
 				// provider.
 				mActPosition = new LatLng(location.getLatitude(),
 						location.getLongitude());
-
+				Boolean infowindow = false;
 				if (mIndicator != null) {
+					infowindow = mIndicator.isInfoWindowShown();
 					mIndicator.remove();
 					mAccuracy.remove();
 					for(int i=0;i<mAirlines.size();i++){
@@ -103,7 +103,9 @@ public class Orte_Alle extends MapActivity {
 								.snippet("Genauigkeit: "+location.getAccuracy()+"m")
 								.icon(BitmapDescriptorFactory
 										.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+				if(infowindow){
 				mIndicator.showInfoWindow();
+				}
 
 				Log.i("debug", "Accuracy: " + (location.getAccuracy()));
 				
@@ -115,7 +117,7 @@ public class Orte_Alle extends MapActivity {
 										new LatLng(
 												mActPosition.latitude,
 												mActPosition.longitude
-														+ (location
+														- (location
 																.getAccuracy() / 11111)),
 										new LatLng(
 												mActPosition.latitude
@@ -125,9 +127,9 @@ public class Orte_Alle extends MapActivity {
 										new LatLng(
 												mActPosition.latitude,
 												mActPosition.longitude
-														- (location
+														+ (location
 																.getAccuracy() / 11111)))
-								.strokeColor(Color.GREEN).fillColor(Color.CYAN));
+								.strokeColor(0xff1919B3).strokeWidth(3).fillColor(0x601919B3));
 				Log.i("debug",
 						"Farbe des Genauigkeitskreises: "
 								+ mAccuracy.getFillColor());
@@ -231,11 +233,13 @@ public class Orte_Alle extends MapActivity {
 				Double dy = 111.3 * (arg0.getPosition().latitude - mActPosition.latitude);
 			mDistance = Math.sqrt(dx * dx + dy * dy);
 			DecimalFormat df = new DecimalFormat("##0.0");
+			if(!arg0.getTitle().equalsIgnoreCase("Ihre Position")){
 			if(mDistance > 1.0){				
 				arg0.setSnippet("Entfernung: "+df.format(mDistance)+"km");
 			}else{
 				mDistance = mDistance*1000;
 				arg0.setSnippet("Entfernung: "+df.format(mDistance)+"m");
+				}
 				}
 				}
 				return false;

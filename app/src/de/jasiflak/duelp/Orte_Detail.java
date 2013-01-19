@@ -48,7 +48,7 @@ public class Orte_Detail extends MapActivity {
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Automatisch generierter Methodenstub
+		
 		return false;
 	}
 

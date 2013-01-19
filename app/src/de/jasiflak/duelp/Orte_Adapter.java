@@ -61,8 +61,6 @@ public class Orte_Adapter extends BaseAdapter {
 		Log.i("debug", "Parse Json from Orte_Map");
 		adresses = (List<String>) gson.fromJson(json, adresses.getClass());
 
-		Log.i("debug", adresses.toString());
-
 		for (int i = 0; i < adresses.size(); i++) {
 			String tmp[] = adresses.get(i).split(";");
 			String tmpval[] = new String[4];
@@ -72,10 +70,7 @@ public class Orte_Adapter extends BaseAdapter {
 			tmpval[3] = tmp[5];
 			map.put(tmp[0] + " " + tmp[1], tmpval);
 			keys.add(tmp[0] + " " + tmp[1]);
-			for (Map.Entry<String, String[]> entry : map.entrySet()) {
-				Log.i("debug", "Schlüssel eingetragen: " + entry.getKey());
-				Log.i("debug", "Value in Map dazu: " + entry.getValue());
-			}
+
 		}
 
 	}

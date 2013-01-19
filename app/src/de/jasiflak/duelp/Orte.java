@@ -53,7 +53,7 @@ public class Orte extends Activity{
 					long arg3) {
 				 Intent intent = new Intent().setClass(arg0.getContext(), Orte_Alle.class);
 				 startActivity(intent);
-				// TODO Automatisch generierter Methodenstub
+				
 				
 			}
 		});
