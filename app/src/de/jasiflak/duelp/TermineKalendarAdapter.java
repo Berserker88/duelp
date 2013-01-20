@@ -87,6 +87,8 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	
 	private void httpRequest(GregorianCalendar date, String mode) {
 		// Create a new HttpClient and Post Header
+		
+		// TODO usernamen mitschicken
 		Log.i("debug", "http-request");
 		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		String param = "";
@@ -106,7 +108,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 			if(httpAction.waitForAnswer().equals("timeout"))
 				mTimeout = true;
 		} catch (HttpActionException e) {
-			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
     }

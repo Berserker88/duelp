@@ -145,6 +145,7 @@ public class TermineListeAdapter extends BaseAdapter {
 						dateToDel = entry.getKey();
 						String key = dateToDel.get(Calendar.YEAR) +"-"+ (dateToDel.get(Calendar.MONTH)+1) +"-"+ dateToDel.get(Calendar.DAY_OF_MONTH);
 						try {
+							// TODO usernamen mitschicken
 							HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
 							httpAction.execute();
 							httpAction.waitForAnswer();

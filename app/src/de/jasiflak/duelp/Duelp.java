@@ -100,6 +100,7 @@ public class Duelp extends TabActivity {
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					final View layoutRegister = inflater.inflate(R.layout.register_layout, null);
 					
+					// TODO registrierungsmaske anpassen -> Felder hinzufuegen: Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort
 					builder.setView(layoutRegister)
 					
 						.setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
