@@ -96,6 +96,7 @@ public class Orte_Alle extends MapActivity {
 					}
 					
 				}
+				
 				mIndicator = mMap
 						.addMarker(new MarkerOptions()
 								.position(mActPosition)
@@ -112,7 +113,7 @@ public class Orte_Alle extends MapActivity {
 				mAccuracy = mMap
 						.addPolygon(new PolygonOptions()
 								.add(new LatLng(mActPosition.latitude
-										+ (location.getAccuracy() / 11111),
+										+ (location.getAccuracy() / 14111),
 										mActPosition.longitude),
 										new LatLng(
 												mActPosition.latitude,
@@ -122,7 +123,7 @@ public class Orte_Alle extends MapActivity {
 										new LatLng(
 												mActPosition.latitude
 														- (location
-																.getAccuracy() / 11111),
+																.getAccuracy() / 14111),
 												mActPosition.longitude),
 										new LatLng(
 												mActPosition.latitude,
