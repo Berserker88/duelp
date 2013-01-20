@@ -29,7 +29,7 @@ public class Duelp extends TabActivity {
 
 
 
-	public static String URL = "duelp.dyndns-server.com:8080";
+	public static String URL = "192.168.178.25:8080";
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
