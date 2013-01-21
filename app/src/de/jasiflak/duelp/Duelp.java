@@ -29,7 +29,8 @@ public class Duelp extends TabActivity {
 
 
 
-	public static String URL = "192.168.178.25:8080";
+	public static String URL = "duelp.dyndns-server.com:8080";
+
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
@@ -100,6 +101,7 @@ public class Duelp extends TabActivity {
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					final View layoutRegister = inflater.inflate(R.layout.register_layout, null);
 					
+					// TODO registrierungsmaske anpassen -> Felder hinzufuegen: Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort
 					builder.setView(layoutRegister)
 					
 						.setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
