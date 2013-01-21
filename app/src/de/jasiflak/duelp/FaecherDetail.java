@@ -141,7 +141,7 @@ public class FaecherDetail extends Activity
 						{
 							case FachModeNew:
 								Log.i("Debug","Connecting to /add...");
-								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/add", true, postString);
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/add/"+Duelp.mUser, true, postString);
 							break;
 							
 							case FachModeEdit:
@@ -184,18 +184,17 @@ public class FaecherDetail extends Activity
 /*----------Date Picker Methods--------------------------*/	
 	public void setCurrentDateOnView() {
 
-
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-
-		// set current date into textview
 		
-		mdatumEditText.setText(new StringBuilder()
-				// Month is 0 based, just add 1
-		.append(day).append(".").append(month + 1).append(".").append(year)
-				.append(" "));
+		
+		Date today = c.getTime();
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		// set current date into textview	
+		mdatumEditText.setText(dateFormatter.format(today));
 
 	}
 	
