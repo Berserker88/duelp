@@ -31,10 +31,7 @@ import android.widget.Toast;
 
 public class Duelp extends TabActivity {
 
-
-
 	public static String URL = "10.12.41.43:8080";
-
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
@@ -86,7 +83,6 @@ public class Duelp extends TabActivity {
 					AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
 					final View layoutRegister = inflater.inflate(R.layout.register_layout, null);
 					
-					// TODO registrierungsmaske anpassen -> Felder hinzufuegen: Vorname, Nachname, Strasse, Hausnummer, PLZ, Ort
 					builder.setView(layoutRegister)
 					
 						.setPositiveButton(R.string.register, new DialogInterface.OnClickListener() {
@@ -117,7 +113,6 @@ public class Duelp extends TabActivity {
 						})
 						
 							.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-								
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									destroy();
@@ -152,7 +147,6 @@ public class Duelp extends TabActivity {
         mLoginDialog = builder.create();
         mLoginDialog.setCanceledOnTouchOutside(false);
         mLoginDialog.setOnCancelListener(new OnCancelListener() {
-			
 			@Override
 			public void onCancel(DialogInterface dialog) {
 				destroy();
@@ -188,10 +182,8 @@ public class Duelp extends TabActivity {
         {
         	final int tabNr = i;
             getTabWidget().getChildAt(i).setOnClickListener(new OnClickListener() { 
-
                 @Override 
                 public void onClick(View v) { 
-
                     if (mOfflineMode)
                     	Toast.makeText(mContext, "Sie müssen eingeloggt sein um diese Funktion nutzen zu können", Toast.LENGTH_SHORT).show();
                     else
@@ -199,8 +191,6 @@ public class Duelp extends TabActivity {
                 } 
             });
         }
-        
-        
         
         mTabhost.setCurrentTab(0);
     }
@@ -230,25 +220,9 @@ public class Duelp extends TabActivity {
     
     
     private void checkLogin(ArrayList<String> loginInfos) {
-    	Gson gson = new Gson();
-    	try {
-			HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/login", true, gson.toJson(loginInfos));
-			httpLogin.execute();
-			String answer = httpLogin.waitForAnswer();
-			Log.i("debug", "Antwort: " + answer);
-			if(answer.equals("yes")) {
-				mUser = loginInfos.get(0);
-				mOfflineMode = false;
-				Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
-			}
-			else {
-				mUser = null;
-				mOfflineMode = true;
-				Toast.makeText(mContext, "Username existiert bereits", Toast.LENGTH_SHORT).show();
-			}
-		} catch(Exception ex) {
-		   	Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
-		}
+    	
+    	httpRequest("login", loginInfos);
+    	
     }
     
     private void register(ArrayList<String> regInfos) {
@@ -272,20 +246,29 @@ public class Duelp extends TabActivity {
     			lng = address.get(0).getLongitude();
     			regInfos.add(""+lat);
     			regInfos.add(""+lng);
+    		} else {
+    			regInfos.add("51.3");
+        		regInfos.add("6.2");
     		}
     	} catch(Exception ex) {
     		regInfos.add("51.3");
     		regInfos.add("6.2");
     	}
     	
+    	httpRequest("register", regInfos);
+    	
+    }
+    
+    
+    private void httpRequest(String registerLogin, ArrayList<String> param) {
     	Gson gson = new Gson();
 		try {
-			HttpAction httpLogin = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/register", true, gson.toJson(regInfos));
-			httpLogin.execute();
-			String answer = httpLogin.waitForAnswer();
+			HttpAction httpReq = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/"+registerLogin, true, gson.toJson(param));
+			httpReq.execute();
+			String answer = httpReq.waitForAnswer();
 			Log.i("debug", "Antwort: " + answer);
 			if(answer.equals("yes")) {
-				mUser = regInfos.get(0);
+				mUser = param.get(0);
 				mOfflineMode = false;
 				Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
 			}
@@ -298,8 +281,5 @@ public class Duelp extends TabActivity {
 		   	Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
 		}
     }
-    
-    
-    
     
 }
