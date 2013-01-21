@@ -113,7 +113,8 @@ public class Faecher extends ListActivity
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)),false);
+			//TODO BEWERTUNG RICHTIG AUSLESEN!!!!
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),/*Integer.parseInt(list.get(3))*/3 ,false);
 			Log.i("Debug","BAUM:" + fach.toString());
 			this.mFaecher.add(fach);	
 		}
