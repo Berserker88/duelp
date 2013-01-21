@@ -27,6 +27,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 
+
+
 public class FaecherDetail extends Activity
 {
 
@@ -35,44 +37,67 @@ public class FaecherDetail extends Activity
 	private int year;
 	private int month;
 	private int day;
+	
 	private Intent mIntent;
 	private Bundle mBundle;
+	private FachMode mMode;
 	
+	private EditText mfachEditText;
+	private EditText mdatumEditText;
+	
+	private Button mBtnSave;
+	private Button mBtnDel;
+
+	
+	public enum FachMode 
+	{
+	    FachModeNew,FachModeEdit
+	}
+
 	
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.faecher_detail_layout);
 		
-		//Fachname
-		 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
 		
-			//DateEditText...
-		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum);
+		 this.mfachEditText = (EditText) findViewById(R.id.txtFach);
+		 this.mdatumEditText = (EditText) findViewById(R.id.txtDatum);
+		 
+		 this.mBtnDel = (Button) findViewById(R.id.btnDel);
+		 this.mBtnSave = (Button) findViewById(R.id.btnSave);
+
 		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
 		
-		
+		/*-------CHANGE ENTRY------------*/
+
 		if(!mBundle.getCharSequence("name").equals("+"))
 		{
-			fachEditText.setText(mBundle.getCharSequence("name"));
+			mMode = FachMode.FachModeEdit;
+			
+			mfachEditText.setText(mBundle.getCharSequence("name"));
 			try {
 				setBundleDateOnView();
 			} catch (ParseException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		
+		
+		/*-------NEW ENTRY!!!!------------*/
 		else
-		{
-			setCurrentDateOnView(); 
+		{	
+			mMode = FachMode.FachModeNew;
 			
+			//Hide delete button
+			mBtnDel.setVisibility(View.INVISIBLE);	
+			setCurrentDateOnView(); 
 		}
 		
 			
-		 dateEditText.setOnClickListener(new View.OnClickListener() {
+		 mdatumEditText.setOnClickListener(new View.OnClickListener() {
          public void onClick(View v) {
          	 showDialog(DATE_DIALOG_ID);
          }
@@ -80,23 +105,19 @@ public class FaecherDetail extends Activity
 	
 
 		 //Save Button
-		 final Button button = (Button) findViewById(R.id.btnSave);
-		 button.setOnClickListener(new View.OnClickListener() {
+		 mBtnSave.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) 
              {
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
 					
 					//CREATE JSON REPRESENTATION OF CURRENT FACH
-					
-					 EditText fachEditText = (EditText) findViewById(R.id.txtFach);
-					 EditText datumEditText = (EditText) findViewById(R.id.txtDatum);
+	
 
-					
 					ArrayList<String> arrList = new ArrayList<String>();
 					arrList.add((String) mBundle.get("id"));
-					arrList.add((String) fachEditText.getText().toString());
-					arrList.add((String) datumEditText.getText().toString());
+					arrList.add((String) mfachEditText.getText().toString());
+					arrList.add((String) mdatumEditText.getText().toString());
 					arrList.add((String) mBundle.get("rating").toString());
 					arrList.add("false");
 
@@ -114,7 +135,27 @@ public class FaecherDetail extends Activity
 					{
 						
 						Log.i("Debug", "http-request");
-						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+						HttpAction httpAction;
+						
+						switch(mMode)
+						{
+							case FachModeNew:
+								Log.i("Debug","Connecting to /add...");
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/add/"+Duelp.mUser, true, postString);
+							break;
+							
+							case FachModeEdit:
+								Log.i("Debug","Connecting to /edit...");
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+							break;
+							
+							default:
+								Log.i("Debug","Connecting to /edit...(default)");
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+							break;
+						
+						}
+											
 						httpAction.execute();
 						if(httpAction.waitForAnswer().equals("timeout"))
 						Log.i("Debug","Timeout");
@@ -130,8 +171,7 @@ public class FaecherDetail extends Activity
          });
 		 
 		 //Delete Button
-		 final Button button2 = (Button) findViewById(R.id.btnDel);
-		 button2.setOnClickListener(new View.OnClickListener() {
+		 mBtnDel.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  // Perform action on click
 					Log.i("Debug","Delete button clicked!");	
@@ -144,19 +184,17 @@ public class FaecherDetail extends Activity
 /*----------Date Picker Methods--------------------------*/	
 	public void setCurrentDateOnView() {
 
-
 		final Calendar c = Calendar.getInstance();
 		year = c.get(Calendar.YEAR);
 		month = c.get(Calendar.MONTH);
 		day = c.get(Calendar.DAY_OF_MONTH);
-
-		// set current date into textview
-		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum); 
-
-		dateEditText.setText(new StringBuilder()
-				// Month is 0 based, just add 1
-		.append(day).append(".").append(month + 1).append(".").append(year)
-				.append(" "));
+		
+		
+		Date today = c.getTime();
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		// set current date into textview	
+		mdatumEditText.setText(dateFormatter.format(today));
 
 	}
 	
@@ -171,9 +209,8 @@ public class FaecherDetail extends Activity
 		year = date.getYear();
 		
 		// set current date into textview
-		 EditText dateEditText = (EditText) findViewById(R.id.txtDatum); 
 
-		dateEditText.setText(mBundle.getString("date"));
+		mdatumEditText.setText(mBundle.getString("date"));
 
 	}
 	
@@ -198,8 +235,7 @@ public class FaecherDetail extends Activity
 			day = selectedDay;
 
 			// set current date into textview
-			EditText dateEditText = (EditText) findViewById(R.id.txtDatum); 
-			dateEditText.setText(new StringBuilder()
+			mdatumEditText.setText(new StringBuilder()
 					// Month is 0 based, just add 1
 			.append(day).append(".").append(month + 1).append(".").append(year)
 					.append(" "));
