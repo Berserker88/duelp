@@ -111,19 +111,7 @@ public class FaecherDetail extends Activity
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
 					
-					//CREATE JSON REPRESENTATION OF CURRENT FACH
-	
-
-					ArrayList<String> arrList = new ArrayList<String>();
-					arrList.add((String) mBundle.get("id"));
-					arrList.add((String) mfachEditText.getText().toString());
-					arrList.add((String) mdatumEditText.getText().toString());
-					arrList.add((String) mBundle.get("rating").toString());
-					arrList.add("false");
-
-					//TO JSON
-					Gson gson = new Gson();
-					String postString = gson.toJson(arrList);
+					String postString = buildJsonObject();
 					
 					Log.i("Debug","POSTJSON:" + postString);
 					
@@ -174,10 +162,48 @@ public class FaecherDetail extends Activity
 		 mBtnDel.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  // Perform action on click
-					Log.i("Debug","Delete button clicked!");	
+					Log.i("Debug","Delete button clicked!");
+	
+					try
+					{
+						Log.i("Debug", "http-request");
+						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/del", true, buildJsonObject());								
+						httpAction.execute();
+						if(httpAction.waitForAnswer().equals("timeout"))
+						Log.i("Debug","Timeout");
+						//Pop back view
+						finish();						
+					}
+					
+					catch (Exception e) 
+					{
+						Log.i("Debug","Fail: "+e.getLocalizedMessage());
+					}
+					
 
              }
          });
+	}
+	
+	
+	public String buildJsonObject()
+	{
+		//CREATE JSON REPRESENTATION OF CURRENT FACH
+		
+
+		ArrayList<String> arrList = new ArrayList<String>();
+		arrList.add((String) mBundle.get("id"));
+		arrList.add((String) mfachEditText.getText().toString());
+		arrList.add((String) mdatumEditText.getText().toString());
+		arrList.add((String) mBundle.get("rating").toString());
+		arrList.add("false");
+
+		//TO JSON
+		Gson gson = new Gson();
+		String postString = gson.toJson(arrList);
+		
+		return postString;
+		
 	}
 	
 	
