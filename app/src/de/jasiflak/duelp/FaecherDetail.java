@@ -235,16 +235,25 @@ public class FaecherDetail extends Activity
 	@SuppressWarnings("deprecation")
 	public void setBundleDateOnView() throws ParseException {
 		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		
+		Log.i("Debug","setBundleDateOnView...");
+		Log.i("Debug","mBundleDate: " + mBundle.getString("date"));
+
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 		Date date = dateFormatter.parse(mBundle.getString("date"));
 		
 		day = date.getDay();
 		month = date.getMonth();
 		year = date.getYear();
 		
-		// set current date into textview
+		dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		
+		mdatumEditText.setText(dateFormatter.format(date));
 
-		mdatumEditText.setText(mBundle.getString("date"));
+		
+		// set current date into textview
+		//mdatumEditText.setText(mBundle.getString("date"));
 
 	}
 	
