@@ -15,7 +15,8 @@
     <string name="password">Passwort</string>
     <string name="login">Login</string>
     <string name="offline">Offline</string>
-    <string name="exit_menu">Beenden</string>
+    <string name="exit_app">Beenden</string>
+    <string name="unregister_user">Account loeschen</string>
     <string name="register">Registrieren</string>
     <string name="cancel">Abbrechen</string>
     <string name="strasse">Strasse</string>

@@ -215,6 +215,7 @@ containing a value of this type.
         public static final int tv_tagNummer=0x7f040024;
         public static final int txtDatum=0x7f040005;
         public static final int txtFach=0x7f040004;
+        public static final int unregister_user=0x7f040033;
         public static final int username=0x7f040010;
         public static final int usernameReg=0x7f04001e;
         public static final int zipcode=0x7f040017;
@@ -236,12 +237,13 @@ containing a value of this type.
         public static final int termine_liste_layout=0x7f03000d;
     }
     public static final class menu {
-        public static final int activity_main=0x7f090000;
+        public static final int offline_menu=0x7f090000;
+        public static final int online_menu=0x7f090001;
     }
     public static final class string {
         public static final int app_name=0x7f05000b;
         public static final int back=0x7f050015;
-        public static final int cancel=0x7f05001c;
+        public static final int cancel=0x7f05001d;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
@@ -289,26 +291,27 @@ containing a value of this type.
         public static final int content_home=0x7f050011;
         public static final int content_termine_list=0x7f050014;
         public static final int content_trash=0x7f050013;
-        public static final int exit_menu=0x7f05001a;
-        public static final int hdLogin=0x7f050022;
-        public static final int hdRegister=0x7f050021;
+        public static final int exit_app=0x7f05001a;
+        public static final int hdLogin=0x7f050023;
+        public static final int hdRegister=0x7f050022;
         public static final int hello_world=0x7f05000c;
-        public static final int hnr=0x7f05001e;
+        public static final int hnr=0x7f05001f;
         public static final int login=0x7f050018;
         public static final int menu_settings=0x7f05000d;
-        public static final int nachname=0x7f050024;
+        public static final int nachname=0x7f050025;
         public static final int next_month=0x7f050010;
         public static final int offline=0x7f050019;
-        public static final int open=0x7f050025;
-        public static final int ort=0x7f050020;
+        public static final int open=0x7f050026;
+        public static final int ort=0x7f050021;
         public static final int password=0x7f050017;
-        public static final int plz=0x7f05001f;
+        public static final int plz=0x7f050020;
         public static final int prev_month=0x7f05000f;
-        public static final int register=0x7f05001b;
-        public static final int strasse=0x7f05001d;
+        public static final int register=0x7f05001c;
+        public static final int strasse=0x7f05001e;
         public static final int title_activity_main=0x7f05000e;
+        public static final int unregister_user=0x7f05001b;
         public static final int username=0x7f050016;
-        public static final int vorname=0x7f050023;
+        public static final int vorname=0x7f050024;
     }
     public static final class style {
         public static final int AppTheme=0x7f080000;
