@@ -143,9 +143,15 @@ public class TermineListeAdapter extends BaseAdapter {
 					strToCompare = entry.getKey().get(Calendar.DAY_OF_MONTH) + ". " + entry.getKey().getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + entry.getKey().get(Calendar.YEAR);
 					if (strDate.equals(strToCompare)) {
 						dateToDel = entry.getKey();
+						ArrayList<String> paramList = new ArrayList<String>();
+						paramList.add(Duelp.mUser);
 						String key = dateToDel.get(Calendar.YEAR) +"-"+ (dateToDel.get(Calendar.MONTH)+1) +"-"+ dateToDel.get(Calendar.DAY_OF_MONTH);
+						paramList.add(key);
+						Gson gson = new Gson();
+						String param = "";
+						param = gson.toJson(paramList);
 						try {
-							HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, key);
+							HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete", true, param);
 							httpAction.execute();
 							httpAction.waitForAnswer();
 							TermineKalendarAdapter.mDateItems.remove(entry.getKey());

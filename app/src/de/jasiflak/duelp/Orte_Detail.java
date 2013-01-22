@@ -48,7 +48,7 @@ public class Orte_Detail extends MapActivity {
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Automatisch generierter Methodenstub
+		
 		return false;
 	}
 
@@ -61,6 +61,10 @@ public class Orte_Detail extends MapActivity {
 		Intent intent = getIntent();
 		String name = intent.getStringExtra("name");
 		String[] values = intent.getStringArrayExtra("values");
+		Double[] latlng = new Double[2];
+		latlng[0] = Double.parseDouble(values[4]);
+		latlng[1] = Double.parseDouble(values[5]);
+		
 
 		TextView text_detail_name = (TextView) findViewById(R.id.name);
 		text_detail_name.setText(name);
@@ -74,34 +78,21 @@ public class Orte_Detail extends MapActivity {
 		// MapController to let the mapview move to a specific position
 		mc = mapView.getController();
 
-		// Geocoder for reverse-geocode the location(adress) to latitude -
-		// longitude
-		Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-		try {
-			List<Address> addresses = geoCoder.getFromLocationName(values[0]
-					+ " " + values[1] + " ," + values[2], 1);
+		p = new GeoPoint((int) (latlng[0] * 1E6),
+				(int) (latlng[1] * 1E6));
 
-			if (addresses.size() > 0) {
-				p = new GeoPoint((int) (addresses.get(0).getLatitude() * 1E6),
-						(int) (addresses.get(0).getLongitude() * 1E6));
+		// let the mapview move to the specific GeoPoint
+		mc.animateTo(p);
+		// setting zoomlevel of the mapview
+		mc.setZoom(17);
+		// adding the mapoverlay with the marker to the mapview
+		MapOverlay mapOverlay = new MapOverlay();
+		List<Overlay> listOfOverlays = mapView.getOverlays();
+		listOfOverlays.clear();
+		listOfOverlays.add(mapOverlay);
 
-				// let the mapview move to the specific GeoPoint
-				mc.animateTo(p);
-				// setting zoomlevel of the mapview
-				mc.setZoom(17);
-				// adding the mapoverlay with the marker to the mapview
-				MapOverlay mapOverlay = new MapOverlay();
-				List<Overlay> listOfOverlays = mapView.getOverlays();
-				listOfOverlays.clear();
-				listOfOverlays.add(mapOverlay);
-
-				mapView.invalidate();
-			}
-			// if google can't reverse-geocode the adress, throw an exception
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
+		mapView.invalidate();
+			
 	}
 
 }

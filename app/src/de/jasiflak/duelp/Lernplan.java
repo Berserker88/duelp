@@ -26,42 +26,48 @@ public class Lernplan extends Activity
 		  Lernplan_DatabaseHandler db = new Lernplan_DatabaseHandler(this); //Datenbank instanziiert
 		  List<LearnEntry> lernplan_strings = new ArrayList<LearnEntry>();
 		  
-		  try
+		  if(Duelp.mOfflineMode)
 		  {
-			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
-			httpRequest.execute();
-			httpRequest.waitForAnswer();
-			Log.i("debug", "httpRequest");
-			db.deleteAllRows();		//löscht den inhalt aller tabellen
-			lernplan_strings = parseJson(httpRequest.waitForAnswer());
-			for(LearnEntry temp : lernplan_strings)
-			{
-				db.addLearnEntry(temp);
-			}
-			
-			List<String> valueList = new ArrayList<String>();
-			List<LearnEntry> ety = db.getAllLearnEntrys();
-			  for(LearnEntry le : ety)
+			  readDatabase();  
+		  }
+		  else
+		  {
+			  try
 			  {
-				  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
+				httpRequest.execute();
+				httpRequest.waitForAnswer();
+				Log.i("debug", "httpRequest");
+				db.deleteAllRows();		//löscht den inhalt aller tabellen
+				lernplan_strings = parseJson(httpRequest.waitForAnswer());
+				for(LearnEntry temp : lernplan_strings)
+				{
+					db.addLearnEntry(temp);
+				}
+				
+				List<String> valueList = new ArrayList<String>();
+				List<LearnEntry> ety = db.getAllLearnEntrys();
+				  for(LearnEntry le : ety)
+				  {
+					  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+				  }
+				  
+				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
+				  final ListView lv = (ListView)findViewById(R.id.listView1);
+				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
+				  lv.setAdapter(adapter);
+				  
+				  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
 			  }
-			  
-			  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
-			  final ListView lv = (ListView)findViewById(R.id.listView1);
-			  lv.setAdapter(null);//inhalt vom ListAdapter löschen
-			  lv.setAdapter(adapter);
-			  
-			  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
+			  catch(Exception e)
+			  {
+	
+				Log.i("debug", "KEINE SERVERVERBINDUNG");
+				readDatabase();
+				
+				//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
+			  }
 		  }
-		  catch(Exception e)
-		  {
-
-			Log.i("debug", "KEINE SERVERVERBINDUNG");
-			readDatabase();
-			
-			//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
-		  }
-		  
 		  
 		  //#############################
 		  

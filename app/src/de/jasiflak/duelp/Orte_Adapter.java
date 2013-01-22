@@ -61,21 +61,19 @@ public class Orte_Adapter extends BaseAdapter {
 		Log.i("debug", "Parse Json from Orte_Map");
 		adresses = (List<String>) gson.fromJson(json, adresses.getClass());
 
-		Log.i("debug", adresses.toString());
-
 		for (int i = 0; i < adresses.size(); i++) {
 			String tmp[] = adresses.get(i).split(";");
-			String tmpval[] = new String[4];
-			tmpval[0] = tmp[2];
-			tmpval[1] = tmp[3];
-			tmpval[2] = tmp[4];
-			tmpval[3] = tmp[5];
-			map.put(tmp[0] + " " + tmp[1], tmpval);
-			keys.add(tmp[0] + " " + tmp[1]);
-			for (Map.Entry<String, String[]> entry : map.entrySet()) {
-				Log.i("debug", "Schlüssel eingetragen: " + entry.getKey());
-				Log.i("debug", "Value in Map dazu: " + entry.getValue());
-			}
+			String tmpval[] = new String[6];
+			
+			tmpval[0] = tmp[1];
+			tmpval[1] = tmp[2];
+			tmpval[2] = tmp[3];
+			tmpval[3] = tmp[4];
+			tmpval[4] = tmp[5];
+			tmpval[5] = tmp[6];
+			map.put(tmp[0], tmpval);
+			keys.add(tmp[0]);
+
 		}
 
 	}
@@ -112,7 +110,7 @@ public class Orte_Adapter extends BaseAdapter {
 		TextView row2 = (TextView) listlayout.findViewById(R.id.row2);
 		String[] value_arr = map.get(keys.get(position));
 		row2.setText(value_arr[0] + " " + value_arr[1] + ", " + value_arr[2]
-				+ ", " + value_arr[3]);
+				+ " " + value_arr[3]);
 
 		TextView hiddentext = (TextView) listlayout
 				.findViewById(R.id.hiddentext);

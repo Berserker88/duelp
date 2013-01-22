@@ -9,7 +9,7 @@
         android:background="#FFFFBB33"
         android:contentDescription="@string/app_name"
         android:gravity="center"
-        android:text="DUELP Login"
+        android:text="@string/hdLogin"
 	    android:textSize="8pt"
 	    android:textStyle="bold"
 	    android:textColor="@color/white" />

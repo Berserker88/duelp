@@ -1,5 +1,6 @@
 package de.jasiflak.duelp;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,7 +50,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		
 		HttpAction httpRequest;
 		try {
-			httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine", false, null);
+			httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + Duelp.mUser, false, null);
 			httpRequest.execute();
 			String answer = httpRequest.waitForAnswer();
 			parseJSON(answer);
@@ -65,6 +66,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		Log.i("debug", "Hallo hier bin ich!!!!");
 		map = (HashMap<String, String>) gson.fromJson(json, map.getClass());
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		mDateItems.clear();
 		for(String date : map.keySet()) {
 			Date parsed = null;
 			try {
@@ -87,17 +89,21 @@ public class TermineKalendarAdapter extends BaseAdapter {
 	
 	private void httpRequest(GregorianCalendar date, String mode) {
 		// Create a new HttpClient and Post Header
+		
 		Log.i("debug", "http-request");
 		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
 		String param = "";
+		
+		ArrayList<String> paramList = new ArrayList<String>();
+		paramList.add(Duelp.mUser);
+		paramList.add(key);
 		if (!mode.equals("delete")) {
 			String value = "" + mDateItems.get(date);
-			HashMap<String, String> map = new HashMap<String, String>();
-			map.put(key, value);
+			paramList.add(value);
 			Gson gson = new Gson();
-			param = gson.toJson(map);
-		} else
-			param = key;
+			param = gson.toJson(paramList);
+		}
+			
 		
 		HttpAction httpAction;
 		try {
@@ -106,7 +112,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 			if(httpAction.waitForAnswer().equals("timeout"))
 				mTimeout = true;
 		} catch (HttpActionException e) {
-			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
     }

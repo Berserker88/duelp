@@ -1,6 +1,7 @@
 package de.jasiflak.duelp;
 
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -23,6 +24,7 @@ import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -35,6 +37,7 @@ import com.google.android.gms.maps.model.PolygonOptions;
 import com.google.android.gms.maps.model.PolygonOptionsCreator;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.android.gms.maps.model.TileOverlayOptions;
 import com.google.android.maps.MapActivity;
 
 public class Orte_Alle extends MapActivity {
@@ -43,13 +46,13 @@ public class Orte_Alle extends MapActivity {
 	private LatLng mSouthwest;
 	private LatLng mActPosition;
 	List <Polyline> mAirlines = new ArrayList<Polyline>();
+	Double mDistance = 0.0;
 	Marker mIndicator;
 	List <LatLng> mAdresses = new ArrayList<LatLng>();
 	Polygon mAccuracy;
 
 	@Override
 	protected boolean isRouteDisplayed() {
-		// TODO Automatisch generierter Methodenstub
 		return false;
 	}
 
@@ -82,45 +85,52 @@ public class Orte_Alle extends MapActivity {
 				// provider.
 				mActPosition = new LatLng(location.getLatitude(),
 						location.getLongitude());
-
+				Boolean infowindow = false;
 				if (mIndicator != null) {
+					infowindow = mIndicator.isInfoWindowShown();
 					mIndicator.remove();
 					mAccuracy.remove();
 					for(int i=0;i<mAirlines.size();i++){
 						mAirlines.get(i).remove();
+									
 					}
 					
 				}
+				
 				mIndicator = mMap
 						.addMarker(new MarkerOptions()
 								.position(mActPosition)
 								.title("Ihre Position")
+								.snippet("Genauigkeit: "+location.getAccuracy()+"m")
 								.icon(BitmapDescriptorFactory
 										.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
+				if(infowindow){
 				mIndicator.showInfoWindow();
+				}
 
-				Log.i("debug", " " + (location.getAccuracy()));
+				Log.i("debug", "Accuracy: " + (location.getAccuracy()));
+				
 				mAccuracy = mMap
 						.addPolygon(new PolygonOptions()
 								.add(new LatLng(mActPosition.latitude
-										+ (location.getAccuracy() / 11111),
+										+ (location.getAccuracy() / 14111),
 										mActPosition.longitude),
 										new LatLng(
 												mActPosition.latitude,
 												mActPosition.longitude
-														+ (location
+														- (location
 																.getAccuracy() / 11111)),
 										new LatLng(
 												mActPosition.latitude
 														- (location
-																.getAccuracy() / 11111),
+																.getAccuracy() / 14111),
 												mActPosition.longitude),
 										new LatLng(
 												mActPosition.latitude,
 												mActPosition.longitude
-														- (location
+														+ (location
 																.getAccuracy() / 11111)))
-								.strokeColor(Color.GREEN).fillColor(Color.CYAN));
+								.strokeColor(0xff1919B3).strokeWidth(3).fillColor(0x601919B3));
 				Log.i("debug",
 						"Farbe des Genauigkeitskreises: "
 								+ mAccuracy.getFillColor());
@@ -130,8 +140,8 @@ public class Orte_Alle extends MapActivity {
 				    .width(5)
 				    .color(Color.BLUE));
 					mAirlines.add(line);
-					
 				}
+				
 				
 
 				// mMap.moveCamera(CameraUpdateFactory.newLatLng(mActPosition));
@@ -151,7 +161,7 @@ public class Orte_Alle extends MapActivity {
 		// Register the listener with the Location Manager to receive location
 		// updates
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0,
-				0, locationListener);
+				20, locationListener);
 		locationManager.requestLocationUpdates(
 				LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 
@@ -179,9 +189,9 @@ public class Orte_Alle extends MapActivity {
 									new LatLng(
 											(addresses.get(0).getLatitude()),
 											(addresses.get(0).getLongitude())))
-							.title(key + "\n" + values[0] + " " + values[1]
-									+ "\n" + values[2] + " " + values[3])
-							.visible(true));
+							.title(key)
+							.snippet(values[0] + " " + values[1]+"\n"+values[2] + " " + values[3])
+									.visible(true));
 					lats.add(addresses.get(0).getLatitude());
 					longs.add(addresses.get(0).getLongitude());
 					Log.i("Debug:", "Marker hinzugefuegt");
@@ -214,7 +224,31 @@ public class Orte_Alle extends MapActivity {
 				mMap.setOnCameraChangeListener(null);
 			}
 		});
-
+		
+		mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker arg0) {
+				if(mActPosition!=null){
+				Double dx = 71.5 * (arg0.getPosition().longitude - mActPosition.longitude);
+				Double dy = 111.3 * (arg0.getPosition().latitude - mActPosition.latitude);
+			mDistance = Math.sqrt(dx * dx + dy * dy);
+			DecimalFormat df = new DecimalFormat("##0.0");
+			if(!arg0.getTitle().equalsIgnoreCase("Ihre Position")){
+			if(mDistance > 1.0){				
+				arg0.setSnippet("Entfernung: "+df.format(mDistance)+"km");
+			}else{
+				mDistance = mDistance*1000;
+				arg0.setSnippet("Entfernung: "+df.format(mDistance)+"m");
+				}
+				}
+				}
+				return false;
+				
+					}});
+		
 	}
-
 }
+	
+
+
