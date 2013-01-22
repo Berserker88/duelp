@@ -100,7 +100,9 @@ public class FaecherDetail extends Activity
 			
 			//Hide delete button
 			mBtnDel.setVisibility(View.INVISIBLE);	
-			mRating.setRating(3);
+			
+			//init with 0
+			mRating.setRating(0);
 			setCurrentDateOnView(); 
 		}
 		
@@ -224,11 +226,12 @@ public class FaecherDetail extends Activity
 		day = c.get(Calendar.DAY_OF_MONTH);
 		
 		
-		Date today = c.getTime();
+		//Leaving date textfield empty at adding new fach..
+		/*Date today = c.getTime();
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		// set current date into textview	
-		mdatumEditText.setText(dateFormatter.format(today));
+		mdatumEditText.setText(dateFormatter.format(today));*/
 
 	}
 	
@@ -243,17 +246,38 @@ public class FaecherDetail extends Activity
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 		Date date = dateFormatter.parse(mBundle.getString("date"));
 		
-		day = date.getDay();
-		month = date.getMonth();
-		year = date.getYear();
-		
 		dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		
 		mdatumEditText.setText(dateFormatter.format(date));
-
 		
-		// set current date into textview
-		//mdatumEditText.setText(mBundle.getString("date"));
+		
+		try
+		{
+			String splitString = dateFormatter.format(date);
+			
+			
+			//In regular expression, the "." is a metacharacter with special meaning 
+			//http://www.xyzws.com/Javafaq/how-to-use-java-stringsplit-method-to-split-a-string-by-dot/214
+			String[]components =  splitString.split("\\.");
+			
+			day = Integer.parseInt(components[0]);
+			month = Integer.parseInt(components[1]);
+			year = Integer.parseInt(components[2]);
+
+			Log.i("Date","Day: "+day);
+			Log.i("Date","Month: "+month);
+			Log.i("Date","Year: "+year);
+
+			
+			// set current date into textview
+			//mdatumEditText.setText(mBundle.getString("date"));
+		}
+		catch (Exception e)
+		{
+			Log.i("Date","exception...: "+e.getLocalizedMessage());
+			
+		}
+		
 
 	}
 	
@@ -277,13 +301,30 @@ public class FaecherDetail extends Activity
 			month = selectedMonth;
 			day = selectedDay;
 
+			String dateString = new String();
+			if (day < 10)
+				dateString +="0";
+			dateString+=day;
+			
+			dateString+=".";
+					
+			if ((month+1) < 10)
+				dateString +="0";
+			dateString+=month+1;
+			
+			dateString+=".";
+			dateString+=year;
+			
+			mdatumEditText.setText(dateString);
+
+			/*
 			// set current date into textview
 			mdatumEditText.setText(new StringBuilder()
 					// Month is 0 based, just add 1
 			.append(day).append(".").append(month + 1).append(".").append(year)
 					.append(" "));
 
-			// set current date into datepicker
+			// set current date into datepicker*/
 
 		}
 	};
