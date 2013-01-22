@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 
 
@@ -47,6 +48,8 @@ public class FaecherDetail extends Activity
 	
 	private Button mBtnSave;
 	private Button mBtnDel;
+	
+	private RatingBar mRating;
 
 	
 	public enum FachMode 
@@ -66,6 +69,8 @@ public class FaecherDetail extends Activity
 		 
 		 this.mBtnDel = (Button) findViewById(R.id.btnDel);
 		 this.mBtnSave = (Button) findViewById(R.id.btnSave);
+		 
+		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
 
 		 
 		mIntent = getIntent();
@@ -78,6 +83,8 @@ public class FaecherDetail extends Activity
 			mMode = FachMode.FachModeEdit;
 			
 			mfachEditText.setText(mBundle.getCharSequence("name"));
+			mRating.setRating(mBundle.getFloat("rating"));
+	
 			try {
 				setBundleDateOnView();
 			} catch (ParseException e) {
@@ -93,6 +100,7 @@ public class FaecherDetail extends Activity
 			
 			//Hide delete button
 			mBtnDel.setVisibility(View.INVISIBLE);	
+			mRating.setRating(3);
 			setCurrentDateOnView(); 
 		}
 		
@@ -195,7 +203,7 @@ public class FaecherDetail extends Activity
 		arrList.add((String) mBundle.get("id"));
 		arrList.add((String) mfachEditText.getText().toString());
 		arrList.add((String) mdatumEditText.getText().toString());
-		arrList.add((String) mBundle.get("rating").toString());
+		arrList.add(""+ (int)mRating.getRating());
 		arrList.add("false");
 
 		//TO JSON
