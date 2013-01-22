@@ -142,12 +142,12 @@ public class FaecherDetail extends Activity
 							
 							case FachModeEdit:
 								Log.i("Debug","Connecting to /edit...");
-								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit/"+Duelp.mUser, true, postString);
 							break;
 							
 							default:
 								Log.i("Debug","Connecting to /edit...(default)");
-								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit"+Duelp.mUser, true, postString);
 							break;
 						
 						}
