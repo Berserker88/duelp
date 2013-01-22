@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -216,7 +217,9 @@ public class Duelp extends TabActivity {
             	boolean success = unregister();
             	if(success) {
             		Toast.makeText(mContext, "Ihr Account wurde erfolgreich geloescht!", Toast.LENGTH_SHORT).show();
-            		destroy();
+            		Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            		startActivity(i);
             	} else
             		Toast.makeText(mContext, "Ihr Account konte NICHT geloescht werden!", Toast.LENGTH_SHORT).show();
             	
