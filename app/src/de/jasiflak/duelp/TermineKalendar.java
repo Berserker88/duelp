@@ -159,6 +159,14 @@ public class TermineKalendar extends Activity {
 	}
 	
 	
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    Log.i("debug", "onResume called");
+	    mAdapter.synchronizeData();
+	}
+	
+	
 	/**
 	 * the Handler that notifies the adapter to reload
 	 */
