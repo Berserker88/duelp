@@ -117,7 +117,7 @@ public class Duelp extends TabActivity {
 							.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									destroy();
+									finish();
 								}
 							});
 					
@@ -130,7 +130,7 @@ public class Duelp extends TabActivity {
 						
 						@Override
 						public void onCancel(DialogInterface dialog) {
-							destroy();
+							finish();
 						}
 					});
 			        mLoginDialog.dismiss();
@@ -151,7 +151,7 @@ public class Duelp extends TabActivity {
         mLoginDialog.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				destroy();
+				finish();
 			}
 		});
         mLoginDialog.show();  
@@ -211,7 +211,7 @@ public class Duelp extends TabActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit_app:
-                destroy();
+                finish();
                 return true;
             case R.id.unregister_user:
             	boolean success = unregister();
@@ -312,3 +312,6 @@ public class Duelp extends TabActivity {
     }
     
 }
+
+
+

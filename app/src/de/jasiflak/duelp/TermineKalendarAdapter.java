@@ -47,8 +47,6 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
-		
-//		synchronizeData();
 
 	}
 	
