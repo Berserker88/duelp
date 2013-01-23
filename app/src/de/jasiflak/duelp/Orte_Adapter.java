@@ -59,7 +59,7 @@ public class Orte_Adapter extends BaseAdapter {
 	public void synchronizeBackend(){
 		try {
 			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL
-					+ "/duelp-backend/rest/orte", false, null);
+					+ "/duelp-backend/rest/orte/getOrte", false, null);
 			httpRequest.execute();
 			String answer = httpRequest.waitForAnswer();
 			parseJSON(answer);
