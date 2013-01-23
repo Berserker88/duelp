@@ -265,6 +265,8 @@ public class FaecherDetail extends Activity
 			
 			day = Integer.parseInt(components[0]);
 			month = Integer.parseInt(components[1]);
+			//Decrement, because month in 0 indexed ???
+			month--;
 			year = Integer.parseInt(components[2]);
 
 			Log.i("Date","Day: "+day);
