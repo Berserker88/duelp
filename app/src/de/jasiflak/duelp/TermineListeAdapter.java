@@ -71,26 +71,6 @@ public class TermineListeAdapter extends BaseAdapter {
 	}
 	
 	
-//	private void httpRequest(GregorianCalendar date) {
-//		// Create a new HttpClient and Post Header
-//		HttpClient httpclient = new DefaultHttpClient();
-//		HttpPost httppost = new HttpPost("http://" + Duelp.URL + "/duelp-backend/rest/termine/delete");
-//		String key = date.get(Calendar.YEAR) +"-"+ (date.get(Calendar.MONTH)+1) +"-"+ date.get(Calendar.DAY_OF_MONTH);
-//		try {
-//		    // Add your data
-//		    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
-//		    nameValuePairs.add(new BasicNameValuePair("json", key));
-//		    httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-//
-//		    // Execute HTTP Post Request
-//		    httpclient.execute(httppost);
-//		} catch (Exception e) {
-//		    System.out.println("Error in posting: " + e.getMessage());
-//		}
-//    }
-	
-	
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View listViewItem = convertView;
@@ -102,7 +82,6 @@ public class TermineListeAdapter extends BaseAdapter {
 		}
 		
 		GregorianCalendar date = mDateKeys.get(position);
-		Log.i("debug", date.get(Calendar.DAY_OF_MONTH) + ". " + date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + date.get(Calendar.YEAR));
 		
 		TextView tv_date = (TextView) listViewItem.findViewById(R.id.tv_list_item_date);
 		tv_date.setText(date.get(Calendar.DAY_OF_MONTH) + ". " + date.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.GERMANY) + " " + date.get(Calendar.YEAR));

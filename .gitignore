@@ -9,14 +9,21 @@
 # Binary Files #
 *.bin
 
-# binary folder #
+# Jar Files #
+*.jar
+
+# binary folders #
 app/bin/
+app/google-play-services_lib/bin/
+
+# gen folders #
+app/gen
+app/google-play-services_lib/gen
 
 # Temporary Files #
 *~
 
-# binary play-services folder #
-app/bin/google-play-services_lib/bin/R.txt
+
 
 
 

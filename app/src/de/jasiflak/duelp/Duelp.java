@@ -12,6 +12,7 @@ import com.google.gson.Gson;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -116,7 +117,7 @@ public class Duelp extends TabActivity {
 							.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
-									destroy();
+									finish();
 								}
 							});
 					
@@ -129,7 +130,7 @@ public class Duelp extends TabActivity {
 						
 						@Override
 						public void onCancel(DialogInterface dialog) {
-							destroy();
+							finish();
 						}
 					});
 			        mLoginDialog.dismiss();
@@ -150,7 +151,7 @@ public class Duelp extends TabActivity {
         mLoginDialog.setOnCancelListener(new OnCancelListener() {
 			@Override
 			public void onCancel(DialogInterface dialog) {
-				destroy();
+				finish();
 			}
 		});
         mLoginDialog.show();  
@@ -198,7 +199,10 @@ public class Duelp extends TabActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.activity_main, menu);
+    	if(mOfflineMode)
+    		getMenuInflater().inflate(R.menu.offline_menu, menu);
+    	else
+    		getMenuInflater().inflate(R.menu.online_menu, menu);
         return true;
     }
     
@@ -207,8 +211,18 @@ public class Duelp extends TabActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.exit_app:
-                destroy();
+                finish();
                 return true;
+            case R.id.unregister_user:
+            	boolean success = unregister();
+            	if(success) {
+            		Toast.makeText(mContext, "Ihr Account wurde erfolgreich geloescht!", Toast.LENGTH_SHORT).show();
+            		Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            		startActivity(i);
+            	} else
+            		Toast.makeText(mContext, "Ihr Account konte NICHT geloescht werden!", Toast.LENGTH_SHORT).show();
+            	
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -257,30 +271,47 @@ public class Duelp extends TabActivity {
     	}
     	
     	httpRequest("register", regInfos);
-    	
     }
     
     
-    private void httpRequest(String registerLogin, ArrayList<String> param) {
+    private boolean unregister() {
+    	ArrayList<String> user = new ArrayList<String>();
+    	user.add(mUser);
+    	if(httpRequest("unregister", user))
+    		return true;
+    	return false;
+    }
+    
+    
+    private boolean httpRequest(String urlMethod, ArrayList<String> param) {
     	Gson gson = new Gson();
 		try {
-			HttpAction httpReq = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/"+registerLogin, true, gson.toJson(param));
+			HttpAction httpReq = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/"+urlMethod, true, gson.toJson(param));
 			httpReq.execute();
 			String answer = httpReq.waitForAnswer();
 			Log.i("debug", "Antwort: " + answer);
 			if(answer.equals("yes")) {
 				mUser = param.get(0);
 				mOfflineMode = false;
-				Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
+				if(!urlMethod.equals("unregister"))
+					Toast.makeText(mContext, "Willkommen " + mUser, Toast.LENGTH_LONG).show();
+				return true;
 			}
 			else {
 				mUser = null;
 				mOfflineMode = true;
-				Toast.makeText(mContext, "Username existiert bereits", Toast.LENGTH_SHORT).show();
+				if(urlMethod.equals("login"))
+					Toast.makeText(mContext, "Username/Passwort Kombination nicht gefunden", Toast.LENGTH_SHORT).show();
+				else
+					Toast.makeText(mContext, "Username existiert bereits", Toast.LENGTH_SHORT).show();
 			}
 		} catch(Exception ex) {
-		   	Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie gelangen nun in den Offline-Modus", Toast.LENGTH_SHORT).show();
+		   	Toast.makeText(mContext, "DUELP-Server nicht erreichbar. Sie sind nun im Offline-Modus", Toast.LENGTH_SHORT).show();
 		}
+		return false;
     }
     
 }
+
+
+

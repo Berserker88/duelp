@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RatingBar;
 
 
 
@@ -47,6 +48,8 @@ public class FaecherDetail extends Activity
 	
 	private Button mBtnSave;
 	private Button mBtnDel;
+	
+	private RatingBar mRating;
 
 	
 	public enum FachMode 
@@ -66,10 +69,15 @@ public class FaecherDetail extends Activity
 		 
 		 this.mBtnDel = (Button) findViewById(R.id.btnDel);
 		 this.mBtnSave = (Button) findViewById(R.id.btnSave);
+		 
+		 
+		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
 
 		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
+		
+
 		
 		/*-------CHANGE ENTRY------------*/
 
@@ -78,6 +86,8 @@ public class FaecherDetail extends Activity
 			mMode = FachMode.FachModeEdit;
 			
 			mfachEditText.setText(mBundle.getCharSequence("name"));
+			mRating.setRating(mBundle.getInt("rating"));
+	
 			try {
 				setBundleDateOnView();
 			} catch (ParseException e) {
@@ -93,6 +103,9 @@ public class FaecherDetail extends Activity
 			
 			//Hide delete button
 			mBtnDel.setVisibility(View.INVISIBLE);	
+			
+			//init with 0
+			mRating.setRating(0);
 			setCurrentDateOnView(); 
 		}
 		
@@ -111,19 +124,7 @@ public class FaecherDetail extends Activity
                  // Perform action on click
 					Log.i("Debug","Save button clicked!");	
 					
-					//CREATE JSON REPRESENTATION OF CURRENT FACH
-	
-
-					ArrayList<String> arrList = new ArrayList<String>();
-					arrList.add((String) mBundle.get("id"));
-					arrList.add((String) mfachEditText.getText().toString());
-					arrList.add((String) mdatumEditText.getText().toString());
-					arrList.add((String) mBundle.get("rating").toString());
-					arrList.add("false");
-
-					//TO JSON
-					Gson gson = new Gson();
-					String postString = gson.toJson(arrList);
+					String postString = buildJsonObject();
 					
 					Log.i("Debug","POSTJSON:" + postString);
 					
@@ -146,12 +147,12 @@ public class FaecherDetail extends Activity
 							
 							case FachModeEdit:
 								Log.i("Debug","Connecting to /edit...");
-								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit/"+Duelp.mUser, true, postString);
 							break;
 							
 							default:
 								Log.i("Debug","Connecting to /edit...(default)");
-								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit", true, postString);
+								httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/edit"+Duelp.mUser, true, postString);
 							break;
 						
 						}
@@ -174,10 +175,48 @@ public class FaecherDetail extends Activity
 		 mBtnDel.setOnClickListener(new View.OnClickListener() {
              public void onClick(View v) {
                  // Perform action on click
-					Log.i("Debug","Delete button clicked!");	
+					Log.i("Debug","Delete button clicked!");
+	
+					try
+					{
+						Log.i("Debug", "http-request");
+						HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/del", true, buildJsonObject());								
+						httpAction.execute();
+						if(httpAction.waitForAnswer().equals("timeout"))
+						Log.i("Debug","Timeout");
+						//Pop back view
+						finish();						
+					}
+					
+					catch (Exception e) 
+					{
+						Log.i("Debug","Fail: "+e.getLocalizedMessage());
+					}
+					
 
              }
          });
+	}
+	
+	
+	public String buildJsonObject()
+	{
+		//CREATE JSON REPRESENTATION OF CURRENT FACH
+		
+
+		ArrayList<String> arrList = new ArrayList<String>();
+		arrList.add((String) mBundle.get("id"));
+		arrList.add((String) mfachEditText.getText().toString());
+		arrList.add((String) mdatumEditText.getText().toString());
+		arrList.add(""+ (int)mRating.getRating());
+		arrList.add("false");
+
+		//TO JSON
+		Gson gson = new Gson();
+		String postString = gson.toJson(arrList);
+		
+		return postString;
+		
 	}
 	
 	
@@ -190,6 +229,7 @@ public class FaecherDetail extends Activity
 		day = c.get(Calendar.DAY_OF_MONTH);
 		
 		
+		//Leaving date textfield empty at adding new fach..
 		Date today = c.getTime();
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
@@ -201,16 +241,46 @@ public class FaecherDetail extends Activity
 	@SuppressWarnings("deprecation")
 	public void setBundleDateOnView() throws ParseException {
 		
-		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+		
+		Log.i("Debug","setBundleDateOnView...");
+		Log.i("Debug","mBundleDate: " + mBundle.getString("date"));
+
+		
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
 		Date date = dateFormatter.parse(mBundle.getString("date"));
 		
-		day = date.getDay();
-		month = date.getMonth();
-		year = date.getYear();
+		dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		
-		// set current date into textview
+		mdatumEditText.setText(dateFormatter.format(date));
+		
+		
+		try
+		{
+			String splitString = dateFormatter.format(date);
+			
+			
+			//In regular expression, the "." is a metacharacter with special meaning 
+			//http://www.xyzws.com/Javafaq/how-to-use-java-stringsplit-method-to-split-a-string-by-dot/214
+			String[]components =  splitString.split("\\.");
+			
+			day = Integer.parseInt(components[0]);
+			month = Integer.parseInt(components[1]);
+			year = Integer.parseInt(components[2]);
 
-		mdatumEditText.setText(mBundle.getString("date"));
+			Log.i("Date","Day: "+day);
+			Log.i("Date","Month: "+month);
+			Log.i("Date","Year: "+year);
+
+			
+			// set current date into textview
+			//mdatumEditText.setText(mBundle.getString("date"));
+		}
+		catch (Exception e)
+		{
+			Log.i("Date","exception...: "+e.getLocalizedMessage());
+			
+		}
+		
 
 	}
 	
@@ -234,13 +304,30 @@ public class FaecherDetail extends Activity
 			month = selectedMonth;
 			day = selectedDay;
 
+			String dateString = new String();
+			if (day < 10)
+				dateString +="0";
+			dateString+=day;
+			
+			dateString+=".";
+					
+			if ((month+1) < 10)
+				dateString +="0";
+			dateString+=month+1;
+			
+			dateString+=".";
+			dateString+=year;
+			
+			mdatumEditText.setText(dateString);
+
+			/*
 			// set current date into textview
 			mdatumEditText.setText(new StringBuilder()
 					// Month is 0 based, just add 1
 			.append(day).append(".").append(month + 1).append(".").append(year)
 					.append(" "));
 
-			// set current date into datepicker
+			// set current date into datepicker*/
 
 		}
 	};

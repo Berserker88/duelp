@@ -19,12 +19,19 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Orte_Detail extends MapActivity {
-
+	
+	Boolean map_type = false;
 	MapController mc;
 	GeoPoint p;
+	MapOverlay mMapOverlay = new MapOverlay();
+	List<Overlay> mListOfOverlays;
+	MapView mMapView;
 
 	// Mapoverlay to draw a marker for the Mapview
 	class MapOverlay extends com.google.android.maps.Overlay {
@@ -42,6 +49,8 @@ public class Orte_Detail extends MapActivity {
 					R.drawable.map_ic_pushpin);
 
 			canvas.drawBitmap(bmp, screenPts.x - 15, screenPts.y - 50, null);
+			
+			
 			return true;
 		}
 	}
@@ -55,8 +64,9 @@ public class Orte_Detail extends MapActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.orte_layout_detail);
-		MapView mapView = (MapView) findViewById(R.id.mapview);
-		mapView.setBuiltInZoomControls(true);
+		mMapView = (MapView) findViewById(R.id.mapview);
+		mMapView.setBuiltInZoomControls(true);
+		
 		Log.i("Debug:", "Start: Klasse Orte Detail");
 		Intent intent = getIntent();
 		String name = intent.getStringExtra("name");
@@ -76,7 +86,7 @@ public class Orte_Detail extends MapActivity {
 		text_detail_city.setText(values[3]);
 
 		// MapController to let the mapview move to a specific position
-		mc = mapView.getController();
+		mc = mMapView.getController();
 
 		p = new GeoPoint((int) (latlng[0] * 1E6),
 				(int) (latlng[1] * 1E6));
@@ -86,13 +96,38 @@ public class Orte_Detail extends MapActivity {
 		// setting zoomlevel of the mapview
 		mc.setZoom(17);
 		// adding the mapoverlay with the marker to the mapview
-		MapOverlay mapOverlay = new MapOverlay();
-		List<Overlay> listOfOverlays = mapView.getOverlays();
-		listOfOverlays.clear();
-		listOfOverlays.add(mapOverlay);
-
-		mapView.invalidate();
+		
+		mListOfOverlays = mMapView.getOverlays();
+		mListOfOverlays.clear();
+		
+		mListOfOverlays.add(mMapOverlay);		
+		mMapView.invalidate();
+		ImageView typetoggle = (ImageView) findViewById(R.id.map_ic_type_toggle);
+		typetoggle.setOnClickListener(new OnClickListener() {
 			
+			
+			@Override
+			public void onClick(View v) {	
+				Log.i("debug","map_toggle_clicked");
+				
+				mListOfOverlays.clear();
+				if(map_type){
+					mMapView.setSatellite(false);
+					map_type = false;
+				}else
+				{
+					mMapView.setSatellite(true);
+					map_type = true;
+				}
+				
+				mListOfOverlays.add(mMapOverlay);		
+				mMapView.invalidate();
+			}
+		});
+				
+		
 	}
+	
+	
 
 }

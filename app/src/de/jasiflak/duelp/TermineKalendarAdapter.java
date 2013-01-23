@@ -47,7 +47,11 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mContext = c;
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
-		
+
+	}
+	
+	
+	public void synchronizeData() {
 		HttpAction httpRequest;
 		try {
 			httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + Duelp.mUser, false, null);
@@ -56,7 +60,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 			parseJSON(answer);
 		} catch (HttpActionException e) {
 			Toast.makeText(mContext, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
-		}
+		}		
 	}
 
 	
@@ -152,6 +156,17 @@ public class TermineKalendarAdapter extends BaseAdapter {
 				}
 			}
 			else {
+				
+				Log.i("debug", "newState: " + newState);
+				
+				if(newState == BUSY_HOME && state == BUSY)
+					newState = BUSY;
+				else
+					newState = HOME;
+				
+				Log.i("debug", "newState: " + newState);
+				
+				
 				mDateItems.put(date, newState);
 				chosenDate = date;
 				httpRequest(chosenDate, "edit");

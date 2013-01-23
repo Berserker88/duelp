@@ -3,6 +3,8 @@ package de.jasiflak.duelp;
 
 import java.util.Calendar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +29,16 @@ public class TermineKalendar extends Activity {
 	private Handler handler;
 	private OnSwipeTouchListener mSwipeListener;
 	private Intent mTermineListeIntent;
+	
+	/**
+	 * the Handler that notifies the adapter to reload
+	 */
+	public Runnable calendarUpdater = new Runnable() {
+		@Override
+		public void run() {
+			mAdapter.notifyDataSetChanged();
+		}
+	};
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -159,14 +171,28 @@ public class TermineKalendar extends Activity {
 	}
 	
 	
-	/**
-	 * the Handler that notifies the adapter to reload
-	 */
-	public Runnable calendarUpdater = new Runnable() {
-		@Override
-		public void run() {
-			mAdapter.notifyDataSetChanged();
-		}
-	};
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    Log.i("debug", "onResume called");
+	    mAdapter.synchronizeData();
+	    mAdapter.notifyDataSetChanged();
+	}
+	
+	
+	@Override
+    public void onBackPressed() {
+		new AlertDialog.Builder(this)
+			.setTitle("Beenden?")
+			.setMessage("Wollen Sie die App beenden?")
+        	.setCancelable(false)
+        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        		public void onClick(DialogInterface dialog, int id) {
+        			finish();
+        		}
+        	})
+        	.setNegativeButton("Abbrechen", null)
+        	.show();
+    }
 
 }
