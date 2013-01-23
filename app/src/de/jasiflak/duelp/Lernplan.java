@@ -35,7 +35,7 @@ public class Lernplan extends Activity
 				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
 				httpRequest.execute();
 				httpRequest.waitForAnswer();
-				db.deleteAllRows();		//löscht den inhalt aller tabellen
+				db.deleteAllRows();		//lÃ¶scht den inhalt aller tabellen
 				lernplan_strings = parseJson(httpRequest.waitForAnswer());
 				for(LearnEntry temp : lernplan_strings)
 				{
@@ -46,12 +46,12 @@ public class Lernplan extends Activity
 				List<LearnEntry> ety = db.getAllLearnEntrys();
 				  for(LearnEntry le : ety)
 				  {
-					  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+					  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "FrÃ¼hstÃ¼ck: " + le.getFruehstueck()+"\n");
 				  }
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 				  final ListView lv = (ListView)findViewById(R.id.listView1);
-				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
+				  lv.setAdapter(null);//inhalt vom ListAdapter lÃ¶schen
 				  lv.setAdapter(adapter);
 				  
 				  //Toast.makeText(getBaseContext(), "Datenbank synchronisiert!", Toast.LENGTH_LONG).show();
@@ -82,13 +82,13 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "FrÃ¼hstÃ¼ck: " + le.getFruehstueck()+"\n");
 	  	  }
 		  
-		  //generieren eines „ListAdapter“ für die „ListView“
+		  //generieren eines ï¿½ListAdapterï¿½ fï¿½r die ï¿½ListViewï¿½
 		  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 		  final ListView lv = (ListView)findViewById(R.id.listView1);
-		  lv.setAdapter(null); //inhalt vom ListAdapter löschen
+		  lv.setAdapter(null); //inhalt vom ListAdapter lï¿½schen
 		  Log.i("debug", "refresh");
 		  lv.setAdapter(adapter);
 		  //Toast.makeText(getBaseContext(), "Liste aktualisiert!", Toast.LENGTH_LONG).show();
