@@ -48,7 +48,7 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		mDaysOfMonth = new ArrayList<String>();
 		refreshDaysOfMonth();
 		
-		synchronizeData();
+//		synchronizeData();
 
 	}
 	
@@ -158,6 +158,17 @@ public class TermineKalendarAdapter extends BaseAdapter {
 				}
 			}
 			else {
+				
+				Log.i("debug", "newState: " + newState);
+				
+				if(newState == BUSY_HOME && state == BUSY)
+					newState = BUSY;
+				else
+					newState = HOME;
+				
+				Log.i("debug", "newState: " + newState);
+				
+				
 				mDateItems.put(date, newState);
 				chosenDate = date;
 				httpRequest(chosenDate, "edit");
