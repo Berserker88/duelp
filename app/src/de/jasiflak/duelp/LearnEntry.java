@@ -97,7 +97,6 @@ public class LearnEntry
 		} 
 		catch (ParseException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -109,7 +108,6 @@ public class LearnEntry
 		} 
 		catch (ParseException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -119,7 +117,6 @@ public class LearnEntry
 		} 
 		catch (ParseException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
