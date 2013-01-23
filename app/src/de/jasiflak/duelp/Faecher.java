@@ -35,8 +35,6 @@ public class Faecher extends ListActivity
 	private List<Fach> mFaecher;
 	//private Context mContext;
 	
-	
-
 	public void onCreate(Bundle savedInstanceState)
 	{
 		
@@ -54,7 +52,6 @@ public class Faecher extends ListActivity
 			Log.i("Debug",e.getLocalizedMessage());
 		}
 	}
-	
 	
 	public void onResume(Bundle savedInstanceState)
 	{
@@ -81,7 +78,7 @@ public class Faecher extends ListActivity
 	{
 		
 		try {
-			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/get", false,null);
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/get/"+Duelp.mUser, false,null);
 			httpAction.execute();
 			String response = httpAction.waitForAnswer();
 			Log.i("Debug","Response: " +  response);
@@ -113,9 +110,8 @@ public class Faecher extends ListActivity
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			//TODO BEWERTUNG RICHTIG AUSLESEN!!!!
-			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),/*Integer.parseInt(list.get(3))*/3 ,false);
-			//Log.i("Debug","BAUM:" + fach.toString());
+			//TODO Checkin auslesen...
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,false);
 			this.mFaecher.add(fach);	
 		}
 		
@@ -127,6 +123,8 @@ public class Faecher extends ListActivity
 	protected void onListItemClick(ListView l, View v, int position, long id)
 	{
 		Log.i("Debug","item select....");
+		Log.i("Debug","Rating:"+mFaecher.get(position).getmRating());
+
 		Intent intent = new Intent();
 
 		intent.putExtra("id",""+mFaecher.get(position).getmId());

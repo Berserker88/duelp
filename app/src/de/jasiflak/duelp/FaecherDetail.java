@@ -70,11 +70,14 @@ public class FaecherDetail extends Activity
 		 this.mBtnDel = (Button) findViewById(R.id.btnDel);
 		 this.mBtnSave = (Button) findViewById(R.id.btnSave);
 		 
+		 
 		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
 
 		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
+		
+
 		
 		/*-------CHANGE ENTRY------------*/
 
@@ -83,7 +86,7 @@ public class FaecherDetail extends Activity
 			mMode = FachMode.FachModeEdit;
 			
 			mfachEditText.setText(mBundle.getCharSequence("name"));
-			mRating.setRating(mBundle.getFloat("rating"));
+			mRating.setRating(mBundle.getInt("rating"));
 	
 			try {
 				setBundleDateOnView();
