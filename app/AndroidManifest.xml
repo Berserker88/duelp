@@ -25,18 +25,19 @@
         <activity
             android:name=".Duelp"
             android:label="Duelp"
-            android:theme="@android:style/Theme.NoTitleBar" >
+            android:theme="@android:style/Theme.NoTitleBar"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Lernplan" android:label="@string/title_activity_main" ></activity>
-        <activity android:name=".TermineKalendar" android:label="@string/title_activity_main" ></activity>
-        <activity android:name=".TermineListe" android:theme="@android:style/Theme.NoTitleBar" ></activity>
-        <activity android:name=".Faecher" android:label="@string/title_activity_main" ></activity>
-        <activity android:name=".FaecherDetail" android:theme="@android:style/Theme.NoTitleBar" ></activity> 
-        <activity android:name=".Orte" android:label="@string/title_activity_main" ></activity>
+        <activity android:name=".Lernplan" android:label="@string/title_activity_main" android:screenOrientation="portrait"></activity>
+        <activity android:name=".TermineKalendar" android:label="@string/title_activity_main" android:screenOrientation="portrait"></activity>
+        <activity android:name=".TermineListe" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"></activity>
+        <activity android:name=".Faecher" android:label="@string/title_activity_main" android:screenOrientation="portrait"></activity>
+        <activity android:name=".FaecherDetail" android:theme="@android:style/Theme.NoTitleBar" android:screenOrientation="portrait"></activity> 
+        <activity android:name=".Orte" android:label="@string/title_activity_main" android:screenOrientation="portrait"></activity>
         <activity android:name=".Orte_Detail" android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".Orte_Alle" android:theme="@android:style/Theme.NoTitleBar" />
         <meta-data
