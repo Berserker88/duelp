@@ -37,4 +37,17 @@
     android:layout_marginTop="120dp"
     android:clickable="true"
     android:apiKey="0A6SU1mL25MCATdHlOo5LIGfa80SHdFlAYWdJNw" />
+   
+    <ImageView 
+        android:src="@drawable/map_ic_type_toggle"
+        android:id="@+id/map_ic_type_toggle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:clickable="true"
+        android:maxHeight="35pt"
+        android:adjustViewBounds="true"
+        />
+
 </RelativeLayout>
