@@ -230,11 +230,11 @@ public class FaecherDetail extends Activity
 		
 		
 		//Leaving date textfield empty at adding new fach..
-		/*Date today = c.getTime();
+		Date today = c.getTime();
 		
 		SimpleDateFormat dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
 		// set current date into textview	
-		mdatumEditText.setText(dateFormatter.format(today));*/
+		mdatumEditText.setText(dateFormatter.format(today));
 
 	}
 	

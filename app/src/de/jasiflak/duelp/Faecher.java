@@ -96,6 +96,12 @@ public class Faecher extends ListActivity
 	
 	public void parseJSON(String json) {
 		Log.i("Debug","Parse");
+		
+		
+		//Replace "null" with 0 in json...
+		json = json.replace("null", "\"0\"");
+		
+		
 		ArrayList <ArrayList<String>> faecherArray = new ArrayList <ArrayList<String>>();
 		Gson gson = new Gson();
 		
@@ -111,6 +117,7 @@ public class Faecher extends ListActivity
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
 			//TODO Checkin auslesen...
+			
 			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,false);
 			this.mFaecher.add(fach);	
 		}
