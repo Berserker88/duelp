@@ -182,16 +182,17 @@ public class TermineKalendar extends Activity {
 	
 	@Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-               .setMessage("Wollen Sie die App beenden?")
-               .setCancelable(false)
-               .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                   public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                   }
-               })
-               .setNegativeButton("Abbrechen", null)
-               .show();
+		new AlertDialog.Builder(this)
+			.setTitle("Beenden?")
+			.setMessage("Wollen Sie die App beenden?")
+        	.setCancelable(false)
+        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        		public void onClick(DialogInterface dialog, int id) {
+        			finish();
+        		}
+        	})
+        	.setNegativeButton("Abbrechen", null)
+        	.show();
     }
 
 }
