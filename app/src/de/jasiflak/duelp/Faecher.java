@@ -71,7 +71,7 @@ public class Faecher extends ListActivity
 		refreshData();
 		
 		//Refresh List
-		this.setListAdapter(null); //inhalt vom ListAdapter löschen
+		this.setListAdapter(null); //inhalt vom ListAdapter lÃ¶schen
 		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
 		
 	}

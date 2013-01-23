@@ -39,7 +39,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
         	if (e1 == null || e2 == null)
         		return false;
 
-        	// berechne zurückgelegte Strecken
+        	// berechne zurï¿½ckgelegte Strecken
         	float diffY = e2.getY() - e1.getY();
             float diffX = e2.getX() - e1.getX();
             
@@ -86,7 +86,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
     }
 //######################################  END INNER CLASS  ###################################
 
-    // Methoden die bei Referenz implementiert werden müssen
+    // Methoden die bei Referenz implementiert werden mÃ¼ssen
     public void onSwipeRight() {
     }
 

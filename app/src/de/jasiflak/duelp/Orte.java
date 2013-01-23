@@ -41,7 +41,7 @@ public class Orte extends Activity{
 		ListView ort_liste = (ListView) findViewById(R.id.ort_liste);
 		ort_liste.setAdapter(adapter);
 		
-		// Header-List view String Resource übergeben
+		// Header-List view String Resource Ã¼bergeben
 		List<String> header = new ArrayList<String>();
 		header.add("Alle Orte anzeigen");
 		ListAdapter adapter_header = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, header);
