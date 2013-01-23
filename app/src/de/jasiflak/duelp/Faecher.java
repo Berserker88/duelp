@@ -13,8 +13,10 @@ import com.google.gson.Gson;
 import de.jasiflak.duelp.HttpAction.HttpActionException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -142,6 +144,21 @@ public class Faecher extends ListActivity
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
 		startActivity(intent);
 	}
+	
+	@Override
+    public void onBackPressed() {
+		new AlertDialog.Builder(this)
+			.setTitle("Beenden?")
+			.setMessage("Wollen Sie die App beenden?")
+        	.setCancelable(false)
+        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        		public void onClick(DialogInterface dialog, int id) {
+        			finish();
+        		}
+        	})
+        	.setNegativeButton("Abbrechen", null)
+        	.show();
+    }
 	
 
   
