@@ -19,12 +19,16 @@ import android.location.LocationManager;
 import android.location.LocationProvider;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -45,11 +49,12 @@ public class Orte_Alle extends MapActivity {
 	private LatLng mNortheast;
 	private LatLng mSouthwest;
 	private LatLng mActPosition;
-	List <Polyline> mAirlines = new ArrayList<Polyline>();
-	Double mDistance = 0.0;
-	Marker mIndicator;
-	List <LatLng> mAdresses = new ArrayList<LatLng>();
-	Polygon mAccuracy;
+	private List <Polyline> mAirlines = new ArrayList<Polyline>();
+	private Double mDistance = 0.0;
+	private Marker mIndicator;
+	private List <LatLng> mAdresses = new ArrayList<LatLng>();
+	private Polygon mAccuracy;
+	private Integer map_type = 0;
 
 	@Override
 	protected boolean isRouteDisplayed() {
@@ -67,7 +72,7 @@ public class Orte_Alle extends MapActivity {
 				.getProvider(LocationManager.GPS_PROVIDER);
 		final boolean gpsEnabled = locationManager
 				.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
+		
 		if (!gpsEnabled) {
 			// Build an alert dialog here that requests that the user enable
 			// the location services, then when the user clicks the "OK" button,
@@ -224,7 +229,6 @@ public class Orte_Alle extends MapActivity {
 				mMap.setOnCameraChangeListener(null);
 			}
 		});
-		
 		mMap.setOnMarkerClickListener(new OnMarkerClickListener() {
 			
 			@Override
@@ -246,6 +250,33 @@ public class Orte_Alle extends MapActivity {
 				return false;
 				
 					}});
+		ImageView typetoggle = (ImageView) findViewById(R.id.map_ic_type_toggle_all);
+		map_type = mMap.getMapType();
+		typetoggle.setOnClickListener(new OnClickListener() {
+		
+			
+			@Override
+			public void onClick(View v) {	
+				Log.i("debug","map_toggle_clicked");
+				
+				switch(map_type){
+					case 1:
+						map_type = map_type +3;
+						mMap.setMapType(mMap.MAP_TYPE_HYBRID);
+					
+					break;
+					
+					case 4:
+						map_type = map_type -3;
+					mMap.setMapType(mMap.MAP_TYPE_NORMAL);
+						
+						break;
+					default:
+						break;
+				}
+				
+		}
+	});
 		
 	}
 }
