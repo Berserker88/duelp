@@ -29,30 +29,6 @@ public class Orte_Adapter extends BaseAdapter {
 	public Orte_Adapter(Context c) {
 
 		context = c;
-		try {
-			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL
-					+ "/duelp-backend/rest/orte", false, null);
-			httpRequest.execute();
-			String answer = httpRequest.waitForAnswer();
-			parseJSON(answer);
-		} catch (Exception ex) {
-			Toast.makeText(c, "DUELP-Server nicht erreichbar",
-					Toast.LENGTH_SHORT).show();
-		}
-		// Test-Array bauen
-		// ############################################################
-		/*
-		 * map = new HashMap<String, String[]>(); String[] jannis = {
-		 * "Kölnerstraße", "229", "47805", "Krefeld" }; String[] simon = {
-		 * "Verdistrasse", "30", "47623", "Kevelaer" }; String[] aki = {
-		 * "Steegerstrasse", "75", "41334", "Viersen" }; String[] flo = {
-		 * "Buscher Weg", "31a", "41751", "Viersen" };
-		 * System.out.println(Arrays.toString(jannis)); map.put("Jannis Raiber",
-		 * jannis); map.put("Simon Schiller", simon);
-		 * map.put("Theodoros Georgiu", aki); map.put("Florian Reinsberg", flo);
-		 * keys.add("Jannis Raiber"); keys.add("Simon Schiller");
-		 * keys.add("Theodoros Georgiu"); keys.add("Florian Reinsberg");
-		 */
 	}
 
 	public void parseJSON(String json) {
@@ -60,7 +36,9 @@ public class Orte_Adapter extends BaseAdapter {
 		Gson gson = new Gson();
 		Log.i("debug", "Parse Json from Orte_Map");
 		adresses = (List<String>) gson.fromJson(json, adresses.getClass());
-
+		//Clear Data in static map and keys
+		map.clear();
+		keys.clear();
 		for (int i = 0; i < adresses.size(); i++) {
 			String tmp[] = adresses.get(i).split(";");
 			String tmpval[] = new String[6];
@@ -76,6 +54,19 @@ public class Orte_Adapter extends BaseAdapter {
 
 		}
 
+	}
+	
+	public void synchronizeBackend(){
+		try {
+			HttpAction httpRequest = new HttpAction("http://" + Duelp.URL
+					+ "/duelp-backend/rest/orte", false, null);
+			httpRequest.execute();
+			String answer = httpRequest.waitForAnswer();
+			parseJSON(answer);
+		} catch (Exception ex) {
+			Toast.makeText(context, "DUELP-Server nicht erreichbar",
+					Toast.LENGTH_SHORT).show();
+		}
 	}
 
 	@Override

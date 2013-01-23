@@ -90,9 +90,9 @@ public class Orte_Detail extends MapActivity {
 		List<Overlay> listOfOverlays = mapView.getOverlays();
 		listOfOverlays.clear();
 		listOfOverlays.add(mapOverlay);
-
+		
 		mapView.invalidate();
-			
+		
 	}
 
 }
