@@ -48,6 +48,11 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 		}
 		else
 		{
+			if(mFaecher.get(position).ismCheckedIn() != 0)
+			{
+				chkBox.setChecked(true);	
+			}
+			
 			OnClickListener checkBoxListener;
 			checkBoxListener = new OnClickListener()
 			{
