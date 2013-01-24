@@ -23,7 +23,10 @@
         android:id="@+id/listView1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnRefresh" >
+        android:layout_below="@+id/btnRefresh" 
+        android:divider="#FF808080"
+	    android:footerDividersEnabled="true"
+	    android:dividerHeight="1.5sp" >
 
     </ListView>
 

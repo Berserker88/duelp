@@ -46,7 +46,7 @@ public class Lernplan extends Activity
 				List<LearnEntry> ety = db.getAllLearnEntrys();
 				  for(LearnEntry le : ety)
 				  {
-					  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+					  valueList.add(le.getDate()  + "\nFach: " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + " Uhr\nOrt: "+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
 				  }
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
@@ -82,7 +82,7 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
 	  	  }
 		  
 
