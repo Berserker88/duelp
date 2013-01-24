@@ -27,6 +27,7 @@
     <string name="hdLogin">DUELP Login</string>
     <string name="vorname">Vorname</string>
     <string name="nachname">Nachname</string>
+    <string name="adress">Adresse</string>
 
     
 	<color name="white">#ffffff</color>
