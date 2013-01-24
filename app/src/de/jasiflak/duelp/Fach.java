@@ -5,9 +5,9 @@ public class Fach {
 	private String mName;
 	private String mDate;
 	private int mRating;
-	private boolean mCheckedIn;
+	private int mCheckedIn;
 	
-	public Fach (int id,String name, String date, int rat, boolean checked)
+	public Fach (int id,String name, String date, int rat, int checked)
 	{
 		this.mId = id;
 		this.mName = name;
@@ -16,10 +16,10 @@ public class Fach {
 		this.mCheckedIn = checked;
 	}
 	
-	public boolean ismCheckedIn() {
+	public int ismCheckedIn() {
 		return mCheckedIn;
 	}
-	public void setmCheckedIn(boolean mCheckedIn) {
+	public void setmCheckedIn(int mCheckedIn) {
 		this.mCheckedIn = mCheckedIn;
 	}
 	public int getmRating() {

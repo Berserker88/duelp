@@ -12,7 +12,6 @@ import com.google.gson.Gson;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.app.AlarmManager;
 import android.app.AlertDialog;
 import android.app.TabActivity;
 import android.content.Context;
@@ -216,7 +215,7 @@ public class Duelp extends TabActivity {
             case R.id.unregister_user:
             	boolean success = unregister();
             	if(success) {
-            		Toast.makeText(mContext, "Ihr Account wurde erfolgreich geloescht!", Toast.LENGTH_SHORT).show();
+            		Toast.makeText(mContext, "Ihr Account wurde erfolgreich gelöscht!", Toast.LENGTH_SHORT).show();
             		Intent i = getBaseContext().getPackageManager().getLaunchIntentForPackage( getBaseContext().getPackageName() );
             		i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             		startActivity(i);
@@ -246,7 +245,7 @@ public class Duelp extends TabActivity {
     		if(value.equals("")) {
     			mUser = null;
 				mOfflineMode = true;
-				Toast.makeText(mContext, "Bitte ALLE Felder ausfuellen!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mContext, "Bitte ALLE Felder ausfüllen!", Toast.LENGTH_SHORT).show();
 				return;
     		}
     	}

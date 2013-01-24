@@ -13,8 +13,10 @@ import com.google.gson.Gson;
 import de.jasiflak.duelp.HttpAction.HttpActionException;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.AdapterView;
@@ -57,7 +59,11 @@ public class Faecher extends ListActivity
 	{
 		
 		Log.i("Debug","Resume....!");
-
+		refreshData();
+		
+		//Refresh List
+		this.setListAdapter(null); //inhalt vom ListAdapter löschen
+		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
 	}
 	
 	public void onRestart()
@@ -71,6 +77,47 @@ public class Faecher extends ListActivity
 		this.setListAdapter(null); //inhalt vom ListAdapter löschen
 		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
 		
+	}
+	
+	public void updateCheckedStateOnServer(int pos)
+	{
+		ArrayList<String> arrList = new ArrayList<String>();
+		
+		Fach tmp = mFaecher.get(pos);
+		
+		arrList.add(""+tmp.getmId());
+		arrList.add(tmp.getmName());
+		arrList.add(tmp.getmDate());
+		arrList.add(""+tmp.getmRating());
+		//TOGGLE!!
+		if(tmp.ismCheckedIn() != 0)
+			arrList.add("0");	
+		else
+			arrList.add("1");
+
+		//TO JSON
+		Gson gson = new Gson();
+		String postString = gson.toJson(arrList);
+		
+				
+		Log.i("Debug","SEND JSON:"+postString);
+		
+		try {
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/editCheckState/"+Duelp.mUser, true,postString);
+			httpAction.execute();
+			String response = httpAction.waitForAnswer();
+			Log.i("Debug","Response: " +  response);
+			parseJSON(response);
+
+		} catch (Exception ex) {
+			try {
+				Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+			} catch(Exception e) 
+			{
+				Log.i("Debug","FAIL:"+e.getLocalizedMessage());
+			}
+		}
+			
 	}
 	
 	
@@ -109,16 +156,15 @@ public class Faecher extends ListActivity
 		
 		
 		this.mFaecher.clear();
-		Fach newFach = new Fach(-1,"+","01.01.2013",-1,false);
+		Fach newFach = new Fach(-1,"+","01.01.2013",-1,0);
 		mFaecher.add(newFach);
 				
 		// Fach (String name, String date, int rat, boolean checked)
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			//TODO Checkin auslesen...
 			
-			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,false);
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,Integer.parseInt(list.get(4)));
 			this.mFaecher.add(fach);	
 		}
 		
@@ -138,10 +184,26 @@ public class Faecher extends ListActivity
 		intent.putExtra("name",mFaecher.get(position).getmName());
 		intent.putExtra("date",mFaecher.get(position).getmDate());
 		intent.putExtra("rating",mFaecher.get(position).getmRating());	
-	
+		intent.putExtra("checked",mFaecher.get(position).ismCheckedIn());	
+
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
 		startActivity(intent);
 	}
+	
+	@Override
+    public void onBackPressed() {
+		new AlertDialog.Builder(this)
+			.setTitle("Beenden?")
+			.setMessage("Wollen Sie die App beenden?")
+        	.setCancelable(false)
+        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        		public void onClick(DialogInterface dialog, int id) {
+        			finish();
+        		}
+        	})
+        	.setNegativeButton("Abbrechen", null)
+        	.show();
+    }
 	
 
   

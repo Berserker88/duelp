@@ -22,13 +22,12 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
-
-
-
 
 public class FaecherDetail extends Activity
 {
@@ -38,7 +37,7 @@ public class FaecherDetail extends Activity
 	private int year;
 	private int month;
 	private int day;
-	
+		
 	private Intent mIntent;
 	private Bundle mBundle;
 	private FachMode mMode;
@@ -51,6 +50,7 @@ public class FaecherDetail extends Activity
 	
 	private RatingBar mRating;
 
+	private CheckBox mChkBox;
 	
 	public enum FachMode 
 	{
@@ -72,13 +72,14 @@ public class FaecherDetail extends Activity
 		 
 		 
 		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
-
 		 
+		 this.mChkBox= (CheckBox) findViewById(R.id.checkedIn);
+		
+
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
 		
 
-		
 		/*-------CHANGE ENTRY------------*/
 
 		if(!mBundle.getCharSequence("name").equals("+"))
@@ -87,7 +88,19 @@ public class FaecherDetail extends Activity
 			
 			mfachEditText.setText(mBundle.getCharSequence("name"));
 			mRating.setRating(mBundle.getInt("rating"));
-	
+			
+			
+			if(mBundle.getInt("checked") == 0)
+			{
+				mChkBox.setChecked(false);
+
+			}
+			else
+			{
+				mChkBox.setChecked(true);
+			}
+			
+
 			try {
 				setBundleDateOnView();
 			} catch (ParseException e) {
@@ -107,6 +120,7 @@ public class FaecherDetail extends Activity
 			//init with 0
 			mRating.setRating(0);
 			setCurrentDateOnView(); 
+			mChkBox.setChecked(false);
 		}
 		
 			
@@ -203,13 +217,25 @@ public class FaecherDetail extends Activity
 	{
 		//CREATE JSON REPRESENTATION OF CURRENT FACH
 		
-
 		ArrayList<String> arrList = new ArrayList<String>();
 		arrList.add((String) mBundle.get("id"));
 		arrList.add((String) mfachEditText.getText().toString());
 		arrList.add((String) mdatumEditText.getText().toString());
 		arrList.add(""+ (int)mRating.getRating());
-		arrList.add("false");
+		
+		
+	
+		
+		if(mChkBox.isChecked())
+		{
+			Log.i("Debug","mChkBox is checked!");
+			arrList.add("1");	
+		}
+		else
+		{
+			Log.i("Debug","mChkBox is  NOT checked!");
+			arrList.add("0");	
+		}
 
 		//TO JSON
 		Gson gson = new Gson();
@@ -265,6 +291,8 @@ public class FaecherDetail extends Activity
 			
 			day = Integer.parseInt(components[0]);
 			month = Integer.parseInt(components[1]);
+			//Decrement, because month in 0 indexed ???
+			month--;
 			year = Integer.parseInt(components[2]);
 
 			Log.i("Date","Day: "+day);
