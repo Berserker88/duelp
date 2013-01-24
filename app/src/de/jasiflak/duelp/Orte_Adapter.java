@@ -5,18 +5,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.zip.Inflater;
+
+import org.apache.http.cookie.SetCookie;
 
 import com.google.gson.Gson;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +73,7 @@ public class Orte_Adapter extends BaseAdapter {
 			String answer = httpRequest.waitForAnswer();
 			parseJSON(answer);
 		} catch (Exception ex) {
-			Toast.makeText(context, "DUELP-Server nicht erreichbar",
+			Toast.makeText(context, "DÜLP-Server nicht erreichbar",
 					Toast.LENGTH_SHORT).show();
 		}
 	}
@@ -95,7 +104,9 @@ public class Orte_Adapter extends BaseAdapter {
 					.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			listlayout = inflater.inflate(R.layout.orte_layout_listview_row,
 					null);
+			
 		}
+		
 		TextView row1 = (TextView) listlayout.findViewById(R.id.row1);
 		row1.setText(keys.get(position));
 		TextView row2 = (TextView) listlayout.findViewById(R.id.row2);
@@ -106,10 +117,28 @@ public class Orte_Adapter extends BaseAdapter {
 		TextView hiddentext = (TextView) listlayout
 				.findViewById(R.id.hiddentext);
 		hiddentext.setText("" + position);
+		
+        //set the onFocusChangedListener in the View item of the listView
+        listlayout.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+					Log.i("Debug on Touch"," "+event.getAction());
+				   if(event.getAction() == 0 || event.getAction() == 2) {
+	                   v.setBackgroundResource(R.drawable.termine_background_focused);
+	              }
+	              else {
+	                   v.setBackgroundColor(Color.BLACK);
+	              }
+				return false;
+			}
+		}); 
 
+          
 		listlayout.setOnClickListener(new OnClickListener() {
 			@Override
-			public void onClick(View v) {
+			public void onClick(View v) {				
+				
 				TextView position = (TextView) v.findViewById(R.id.hiddentext);
 				Intent intent = new Intent().setClass(v.getContext(),
 						Orte_Detail.class);
@@ -117,12 +146,12 @@ public class Orte_Adapter extends BaseAdapter {
 						.getText().toString())));
 				intent.putExtra("values", map.get(keys.get(Integer
 						.parseInt(position.getText().toString()))));
-				Log.i("Debug: ", "Hier nach dem Intent!");
+				
 				context.startActivity(intent);
-				Log.i("Debug: ", "Hier nach dem Start der Activity!");
+				
 			}
 		});
-
+		
 		return listlayout;
 	}
 
