@@ -111,16 +111,15 @@ public class Faecher extends ListActivity
 		
 		
 		this.mFaecher.clear();
-		Fach newFach = new Fach(-1,"+","01.01.2013",-1,false);
+		Fach newFach = new Fach(-1,"+","01.01.2013",-1,0);
 		mFaecher.add(newFach);
 				
 		// Fach (String name, String date, int rat, boolean checked)
 		for (ArrayList<String> list : faecherArray)
 		{
 			//Log.i("Debug", "List(0):" + list.get(0) + "List(1): " + list.get(1) + "List(2): " + list.get(2));	
-			//TODO Checkin auslesen...
 			
-			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,false);
+			Fach fach = new Fach(Integer.parseInt(list.get(0)),list.get(1),list.get(2),Integer.parseInt(list.get(3)) ,Integer.parseInt(list.get(4)));
 			this.mFaecher.add(fach);	
 		}
 		
@@ -140,7 +139,8 @@ public class Faecher extends ListActivity
 		intent.putExtra("name",mFaecher.get(position).getmName());
 		intent.putExtra("date",mFaecher.get(position).getmDate());
 		intent.putExtra("rating",mFaecher.get(position).getmRating());	
-	
+		intent.putExtra("checked",mFaecher.get(position).ismCheckedIn());	
+
 		intent.setClassName(getPackageName(), getPackageName()+".FaecherDetail");
 		startActivity(intent);
 	}

@@ -23,12 +23,10 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RatingBar;
-
-
-
 
 public class FaecherDetail extends Activity
 {
@@ -51,6 +49,7 @@ public class FaecherDetail extends Activity
 	
 	private RatingBar mRating;
 
+	private CheckBox mChkBox;
 	
 	public enum FachMode 
 	{
@@ -72,13 +71,15 @@ public class FaecherDetail extends Activity
 		 
 		 
 		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
+		 
+		 this.mChkBox= (CheckBox) findViewById(R.id.checkedIn);
+
 
 		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
 		
 
-		
 		/*-------CHANGE ENTRY------------*/
 
 		if(!mBundle.getCharSequence("name").equals("+"))
@@ -87,6 +88,18 @@ public class FaecherDetail extends Activity
 			
 			mfachEditText.setText(mBundle.getCharSequence("name"));
 			mRating.setRating(mBundle.getInt("rating"));
+			
+			
+			if(mBundle.getInt("checked") == 0)
+				mChkBox.setChecked(false);
+			else
+				mChkBox.setChecked(true);
+
+				
+			
+			
+				
+			
 	
 			try {
 				setBundleDateOnView();
@@ -107,6 +120,7 @@ public class FaecherDetail extends Activity
 			//init with 0
 			mRating.setRating(0);
 			setCurrentDateOnView(); 
+			mChkBox.setChecked(false);
 		}
 		
 			
@@ -209,7 +223,11 @@ public class FaecherDetail extends Activity
 		arrList.add((String) mfachEditText.getText().toString());
 		arrList.add((String) mdatumEditText.getText().toString());
 		arrList.add(""+ (int)mRating.getRating());
-		arrList.add("false");
+		
+		if(mChkBox.isChecked())
+			arrList.add("1");	
+		else
+			arrList.add("0");
 
 		//TO JSON
 		Gson gson = new Gson();
