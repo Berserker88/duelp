@@ -32,7 +32,7 @@ public class Lernplan extends Activity
 		  {
 			  try
 			  {
-				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
+				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan/"+Duelp.mUser, false, null);
 				httpRequest.execute();
 				httpRequest.waitForAnswer();
 				db.deleteAllRows();		//löscht den inhalt aller tabellen
@@ -46,11 +46,12 @@ public class Lernplan extends Activity
 				List<LearnEntry> ety = db.getAllLearnEntrys();
 				  for(LearnEntry le : ety)
 				  {
-					  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+					  valueList.add(le.getDate()  + "\nFach: " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + " Uhr\nOrt: "+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
 				  }
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 				  final ListView lv = (ListView)findViewById(R.id.listView1);
+
 				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 				  lv.setAdapter(adapter);
 				  
@@ -82,7 +83,7 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck()+"\n");
+			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
 	  	  }
 		  
 

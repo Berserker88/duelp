@@ -2,52 +2,81 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/orte_list_border" >
 
-    <TextView
-        android:id="@+id/name"
+        <TextView
+        android:text="@string/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"  
         android:layout_marginTop="0dp"      
         android:textAppearance="?android:attr/textAppearanceLarge" />
+        
     <TextView
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"  
+        android:layout_marginTop="0dp"  
+        android:layout_marginLeft="120dp"    
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+            <TextView
+        android:text="@string/adress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"  
+        android:layout_marginTop="30dp" 
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+            <TextView
         android:id="@+id/street"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"  
         android:layout_marginTop="30dp"        
+        android:layout_marginLeft="120dp" 
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
         android:id="@+id/zipcode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"  
-        android:layout_marginTop="60dp"        
+        android:layout_marginTop="60dp"  
+        android:layout_marginLeft="120dp"       
         android:textAppearance="?android:attr/textAppearanceLarge" />
     <TextView
         android:id="@+id/city"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"   
-        android:layout_marginTop="90dp"       
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="190dp"  
+        android:layout_marginTop="60dp"       
         android:textAppearance="?android:attr/textAppearanceLarge" />   
+    <ImageView
+        android:id="@+id/start_routing"
+        android:contentDescription="@string/start_routing"
+        android:src="@drawable/map_ic_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentRight="true"
+        android:maxHeight="60dp"
+        android:adjustViewBounds="true" />
         
     <com.google.android.maps.MapView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/mapview"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginTop="120dp"
+    android:layout_marginTop="90dp"
     android:clickable="true"
     android:apiKey="0A6SU1mL25MCATdHlOo5LIGfa80SHdFlAYWdJNw" />
    
-    <ImageView 
+    <ImageView
         android:src="@drawable/map_ic_type_toggle"
+         android:contentDescription="@string/toggle_map"
         android:id="@+id/map_ic_type_toggle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:clickable="true"
-        android:maxHeight="35pt"
-        android:adjustViewBounds="true"
-        />
+        android:maxHeight="60dp"
+        android:adjustViewBounds="true" />
 
 </RelativeLayout>

@@ -3,11 +3,15 @@ package de.jasiflak.duelp;
 import java.util.ArrayList;
 import java.util.List;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -59,6 +63,7 @@ public class Orte extends Activity{
 			}
 		});
 		
+		
 		}
 	@Override
 	public void onResume(){
@@ -68,4 +73,19 @@ public class Orte extends Activity{
 		Log.i("debug", "refresh table");
 		
 	}
+	
+	@Override
+    public void onBackPressed() {
+		new AlertDialog.Builder(this)
+			.setTitle("Beenden?")
+			.setMessage("Wollen Sie die App beenden?")
+        	.setCancelable(false)
+        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        		public void onClick(DialogInterface dialog, int id) {
+        			finish();
+        		}
+        	})
+        	.setNegativeButton("Abbrechen", null)
+        	.show();
+    }
 }
