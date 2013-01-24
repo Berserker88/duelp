@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -46,7 +48,7 @@ public class Lernplan extends Activity
 				List<LearnEntry> ety = db.getAllLearnEntrys();
 				  for(LearnEntry le : ety)
 				  {
-					  valueList.add(le.getDate()  + "\nFach: " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + " Uhr\nOrt: "+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
+					  valueList.add(le.getDate()  + "\nFach: " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + " Uhr\nOrt: "+ le.getOrt());
 				  }
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
@@ -83,7 +85,7 @@ public class Lernplan extends Activity
 		  
 		  for(LearnEntry le : ety)
 	      {
-			  valueList.add(le.getDate()  + " " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + "\n"+ le.getOrt() +"\n"+ "Frühstück: " + le.getFruehstueck());
+			  valueList.add(le.getDate()  + "\nFach: " +le.getFach() + "\n"+ le.getStart() + " - " +le.getEnde() + " Uhr\nOrt: "+ le.getOrt());
 	  	  }
 		  
 
@@ -97,8 +99,6 @@ public class Lernplan extends Activity
 		  //Toast.makeText(getBaseContext(), "Liste aktualisiert!", Toast.LENGTH_LONG).show();
 	  }
 	     
-	  public void syncDB()
-	  {}
 	  
 	  public List<LearnEntry> parseJson(String json)
 	  {
@@ -133,6 +133,28 @@ public class Lernplan extends Activity
 		  });
 		  if(Duelp.mOfflineMode)
 			  button.setEnabled(false);
-	}
+	  }
+	  
+		@Override
+		protected void onResume() {
+		    super.onResume();
+		    Log.i("debug", "onResume called");
+		    refresh();
+		}
+	  
+		@Override
+	    public void onBackPressed() {
+			new AlertDialog.Builder(this)
+				.setTitle("Beenden?")
+				.setMessage("Wollen Sie die App beenden?")
+	        	.setCancelable(false)
+	        	.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+	        		public void onClick(DialogInterface dialog, int id) {
+	        			finish();
+	        		}
+	        	})
+	        	.setNegativeButton("Abbrechen", null)
+	        	.show();
+	    }
 	
 }
