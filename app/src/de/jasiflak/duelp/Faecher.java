@@ -18,6 +18,10 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -46,7 +50,14 @@ public class Faecher extends ListActivity
 		this.mFaecher = new ArrayList<Fach>();
 		
 		refreshData();
-
+		
+		//Customize ListView
+		ListView lv = this.getListView();
+		lv.setDivider(new ColorDrawable(0xFF808080));
+		lv.setDividerHeight(2);
+		lv.setFooterDividersEnabled(true);
+		
+		
 		try {
 			
 			setListAdapter(new Faecher_Apdapter(this,mFaecher));
