@@ -32,7 +32,7 @@ public class Lernplan extends Activity
 		  {
 			  try
 			  {
-				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan", false, null);
+				HttpAction httpRequest = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/lernplan/"+Duelp.mUser, false, null);
 				httpRequest.execute();
 				httpRequest.waitForAnswer();
 				db.deleteAllRows();		//löscht den inhalt aller tabellen
