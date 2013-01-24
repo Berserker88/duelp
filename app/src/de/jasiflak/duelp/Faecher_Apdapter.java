@@ -1,7 +1,11 @@
 package de.jasiflak.duelp;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -79,8 +84,18 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 		{
 			Log.i("Debug","Fach: "+f.toString());
 		}*/
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd", Locale.GERMANY);
+		try {
+			Date date = dateFormatter.parse(mFaecher.get(position).getmDate());
+			dateFormatter = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMANY);
+			textView.setText(mFaecher.get(position).getmName()+" - "+dateFormatter.format(date));
+		} catch (ParseException e) {
+			e.printStackTrace();
+			Log.i("Debug","Parsing fail: " + e.getLocalizedMessage());
+			textView.setText(mFaecher.get(position).getmName());	
+		}
 		
-		textView.setText(mFaecher.get(position) .getmName());
+		
 
 		return rowView;
 	}
