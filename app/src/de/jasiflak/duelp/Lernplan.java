@@ -51,6 +51,7 @@ public class Lernplan extends Activity
 				  
 				  ListAdapter adapter = new ArrayAdapter<String> (getApplicationContext(), android.R.layout.simple_list_item_1, valueList);
 				  final ListView lv = (ListView)findViewById(R.id.listView1);
+
 				  lv.setAdapter(null);//inhalt vom ListAdapter löschen
 				  lv.setAdapter(adapter);
 				  

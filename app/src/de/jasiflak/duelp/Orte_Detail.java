@@ -14,13 +14,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Address;
 import android.location.Geocoder;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -70,8 +76,8 @@ public class Orte_Detail extends MapActivity {
 		Log.i("Debug:", "Start: Klasse Orte Detail");
 		Intent intent = getIntent();
 		String name = intent.getStringExtra("name");
-		String[] values = intent.getStringArrayExtra("values");
-		Double[] latlng = new Double[2];
+		final String[] values = intent.getStringArrayExtra("values");
+		final Double[] latlng = new Double[2];
 		latlng[0] = Double.parseDouble(values[4]);
 		latlng[1] = Double.parseDouble(values[5]);
 		
@@ -103,6 +109,19 @@ public class Orte_Detail extends MapActivity {
 		mListOfOverlays.add(mMapOverlay);		
 		mMapView.invalidate();
 		ImageView typetoggle = (ImageView) findViewById(R.id.map_ic_type_toggle);
+		
+		
+		ImageView button = (ImageView) findViewById(R.id.start_routing);
+		
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.i("debug","Start routing with: "+latlng[0].toString()+latlng[1].toString());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri
+                        .parse("google.navigation:q="+values[0]+" "+values[1]+","+values[2]+" "+values[3]));
+                startActivity(intent);
+            }
+        });
+		
 		typetoggle.setOnClickListener(new OnClickListener() {
 			
 			
