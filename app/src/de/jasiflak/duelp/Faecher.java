@@ -59,7 +59,11 @@ public class Faecher extends ListActivity
 	{
 		
 		Log.i("Debug","Resume....!");
-
+		refreshData();
+		
+		//Refresh List
+		this.setListAdapter(null); //inhalt vom ListAdapter löschen
+		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
 	}
 	
 	public void onRestart()
@@ -73,6 +77,47 @@ public class Faecher extends ListActivity
 		this.setListAdapter(null); //inhalt vom ListAdapter löschen
 		this.setListAdapter(new Faecher_Apdapter(this,mFaecher));
 		
+	}
+	
+	public void updateCheckedStateOnServer(int pos)
+	{
+		ArrayList<String> arrList = new ArrayList<String>();
+		
+		Fach tmp = mFaecher.get(pos);
+		
+		arrList.add(""+tmp.getmId());
+		arrList.add(tmp.getmName());
+		arrList.add(tmp.getmDate());
+		arrList.add(""+tmp.getmRating());
+		//TOGGLE!!
+		if(tmp.ismCheckedIn() != 0)
+			arrList.add("0");	
+		else
+			arrList.add("1");
+
+		//TO JSON
+		Gson gson = new Gson();
+		String postString = gson.toJson(arrList);
+		
+				
+		Log.i("Debug","SEND JSON:"+postString);
+		
+		try {
+			HttpAction httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/faecher/editCheckState/"+Duelp.mUser, true,postString);
+			httpAction.execute();
+			String response = httpAction.waitForAnswer();
+			Log.i("Debug","Response: " +  response);
+			parseJSON(response);
+
+		} catch (Exception ex) {
+			try {
+				Toast.makeText(null, "DUELP-Server nicht erreichbar", Toast.LENGTH_SHORT).show();
+			} catch(Exception e) 
+			{
+				Log.i("Debug","FAIL:"+e.getLocalizedMessage());
+			}
+		}
+			
 	}
 	
 	

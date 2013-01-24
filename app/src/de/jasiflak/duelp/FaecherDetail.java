@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
@@ -36,7 +37,7 @@ public class FaecherDetail extends Activity
 	private int year;
 	private int month;
 	private int day;
-	
+		
 	private Intent mIntent;
 	private Bundle mBundle;
 	private FachMode mMode;
@@ -73,9 +74,8 @@ public class FaecherDetail extends Activity
 		 this.mRating = (RatingBar) findViewById(R.id.ratingBar);
 		 
 		 this.mChkBox= (CheckBox) findViewById(R.id.checkedIn);
+		
 
-
-		 
 		mIntent = getIntent();
 		this.mBundle = mIntent.getExtras();
 		
@@ -91,16 +91,16 @@ public class FaecherDetail extends Activity
 			
 			
 			if(mBundle.getInt("checked") == 0)
+			{
 				mChkBox.setChecked(false);
-			else
-				mChkBox.setChecked(true);
 
-				
+			}
+			else
+			{
+				mChkBox.setChecked(true);
+			}
 			
-			
-				
-			
-	
+
 			try {
 				setBundleDateOnView();
 			} catch (ParseException e) {
@@ -217,17 +217,25 @@ public class FaecherDetail extends Activity
 	{
 		//CREATE JSON REPRESENTATION OF CURRENT FACH
 		
-
 		ArrayList<String> arrList = new ArrayList<String>();
 		arrList.add((String) mBundle.get("id"));
 		arrList.add((String) mfachEditText.getText().toString());
 		arrList.add((String) mdatumEditText.getText().toString());
 		arrList.add(""+ (int)mRating.getRating());
 		
+		
+	
+		
 		if(mChkBox.isChecked())
+		{
+			Log.i("Debug","mChkBox is checked!");
 			arrList.add("1");	
+		}
 		else
-			arrList.add("0");
+		{
+			Log.i("Debug","mChkBox is  NOT checked!");
+			arrList.add("0");	
+		}
 
 		//TO JSON
 		Gson gson = new Gson();

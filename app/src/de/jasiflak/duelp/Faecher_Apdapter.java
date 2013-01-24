@@ -13,23 +13,24 @@ import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach> 
 {
-	private final Context context;
+	private final Faecher context;
 	private List<Fach> mFaecher;
 
 	public Faecher_Apdapter (Context context, List<Fach> faecher)
 	{	
 		//super(context, R.layout.faecher_layout, faecher);
 
-		this.context = context;
+		this.context = (Faecher) context;
 		this.mFaecher = faecher;
 		
 	}
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 		//Log.i("Debug","Adapter:GetView..");
 
 		LayoutInflater inflater = (LayoutInflater) context
@@ -52,6 +53,11 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 			{
 				chkBox.setChecked(true);	
 			}
+			else
+			{
+				chkBox.setChecked(false);
+				
+			}
 			
 			OnClickListener checkBoxListener;
 			checkBoxListener = new OnClickListener()
@@ -59,14 +65,9 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 				@Override
 				public void onClick(View v) 
 				{
-					if(chkBox.isChecked())
-					{
-						Log.i("Debug","Checkbox is checked..");	
-					}	
-					else
-					{
-						Log.i("Debug","Checkbox is checked..");	
-					}
+					context.updateCheckedStateOnServer(position);
+					notifyDataSetChanged();
+						context.refreshData();
 				};
 			};
 			
@@ -83,6 +84,7 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 
 		return rowView;
 	}
+	
 
 	@Override
 	public int getCount() {
@@ -99,4 +101,5 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 		// TODO Auto-generated method stub
 		return position;
 	}
+		
 }
