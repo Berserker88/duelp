@@ -104,18 +104,20 @@ public class TermineKalendarAdapter extends BaseAdapter {
 		if (!mode.equals("delete")) {
 			String value = "" + mDateItems.get(date);
 			paramList.add(value);
-			Gson gson = new Gson();
-			param = gson.toJson(paramList);
 		}
+		
+		Gson gson = new Gson();
+		param = gson.toJson(paramList);
 			
 		
 		HttpAction httpAction;
 		try {
 			httpAction = new HttpAction("http://" + Duelp.URL + "/duelp-backend/rest/termine/" + mode, true, param);
 			httpAction.execute();
-			if(httpAction.waitForAnswer().equals("timeout"))
-				mTimeout = true;
+//			if(httpAction.waitForAnswer().equals("timeout"))
+				
 		} catch (HttpActionException e) {
+			mTimeout = true;
 			e.printStackTrace();
 		}
     }

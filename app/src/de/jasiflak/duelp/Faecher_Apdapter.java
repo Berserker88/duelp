@@ -54,7 +54,8 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 		//Set checkbox visibility
 		if (position == 0)
 		{
-			chkBox.setVisibility(View.INVISIBLE);	
+			chkBox.setVisibility(View.INVISIBLE);
+			textView.setText(mFaecher.get(position).getmName());	
 		}
 		else
 		{
@@ -113,12 +114,7 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 				margin+=20;
 				
 			}
-			
-			
-			
-			
-			
-			
+				
 		}
 
 		//DEBUG

@@ -32,7 +32,7 @@ import android.widget.Toast;
 public class Duelp extends TabActivity {
 
 
-	public static String URL = "duelp.dyndns-server.com:8080";//"duelp.dyndns-server.com:8080"; ////
+	public static String URL = "duelp.dyndns-server.com:8080";
 
 	private AlertDialog mLoginDialog;
 	private Context mContext;
