@@ -14,7 +14,7 @@
         android:layout_marginRight="36dp"
         android:paddingLeft="10dp"
         android:text="@+id/label"
-        android:textSize="30px" >
+        android:textSize="22px" >
     </TextView>
 
     <CheckBox
