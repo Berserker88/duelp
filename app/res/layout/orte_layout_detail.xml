@@ -62,13 +62,14 @@
  <ImageView
         android:id="@+id/start_routing"
         android:contentDescription="@string/start_routing"
-        android:src="@drawable/map_ic_navigation"
+        android:src="@drawable/map_ic_navigation_negative"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="93dp"
+        android:layout_marginRight="4dp"
         android:clickable="true"
-        android:maxHeight="60dp"
+        android:maxHeight="50dp"        
         android:adjustViewBounds="true" />
  
     <ImageView
@@ -78,9 +79,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
         android:layout_alignParentBottom="true"
         android:clickable="true"
-        android:maxHeight="60dp"
+        android:maxHeight="50dp"
         android:adjustViewBounds="true" />
 
 </RelativeLayout>
