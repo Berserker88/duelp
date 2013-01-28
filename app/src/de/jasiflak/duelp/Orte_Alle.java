@@ -79,7 +79,7 @@ public class Orte_Alle extends MapActivity {
 			// call enableLocationSettings()
 			Log.i("debug", "GPS OFF!?");
 			Toast.makeText(getBaseContext(),
-					"Fuer hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG)
+					"Für hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG)
 					.show();
 		}
 
