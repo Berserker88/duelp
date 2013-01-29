@@ -67,10 +67,8 @@ public class Lernplan extends Activity
 				//Toast.makeText(getBaseContext(), "Keine Verbindung zum Server!", Toast.LENGTH_LONG).show();
 			  }
 		  }
-		  
-		 
-					  
 	  }
+	  
 	  
 	  public void refresh()
 	  {
@@ -135,12 +133,6 @@ public class Lernplan extends Activity
 			  button.setEnabled(false);
 	  }
 	  
-		@Override
-		protected void onResume() {
-		    super.onResume();
-		    Log.i("debug", "onResume called");
-		    refresh();
-		}
 	  
 		@Override
 	    public void onBackPressed() {
