@@ -111,10 +111,11 @@ public class Orte_Detail extends MapActivity {
 		ImageView typetoggle = (ImageView) findViewById(R.id.map_ic_type_toggle);
 		
 		
-		ImageView button = (ImageView) findViewById(R.id.start_routing);
+		final ImageView button = (ImageView) findViewById(R.id.start_routing);
+		button.setImageAlpha((int) 150);
 		
         button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+            public void onClick(View v) {            	
                 Log.i("debug","Start routing with: "+latlng[0].toString()+latlng[1].toString());
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri
                         .parse("google.navigation:q="+values[0]+" "+values[1]+","+values[2]+" "+values[3]));

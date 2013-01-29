@@ -47,16 +47,8 @@
         android:layout_marginLeft="190dp"  
         android:layout_marginTop="60dp"       
         android:textAppearance="?android:attr/textAppearanceLarge" />   
-    <ImageView
-        android:id="@+id/start_routing"
-        android:contentDescription="@string/start_routing"
-        android:src="@drawable/map_ic_navigation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_alignParentRight="true"
-        android:maxHeight="60dp"
-        android:adjustViewBounds="true" />
+           
+
         
     <com.google.android.maps.MapView
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -67,6 +59,19 @@
     android:clickable="true"
     android:apiKey="0A6SU1mL25MCATdHlOo5LIGfa80SHdFlAYWdJNw" />
    
+ <ImageView
+        android:id="@+id/start_routing"
+        android:contentDescription="@string/start_routing"
+        android:src="@drawable/map_ic_navigation_negative"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="93dp"
+        android:layout_marginRight="4dp"
+        android:clickable="true"
+        android:maxHeight="50dp"        
+        android:adjustViewBounds="true" />
+ 
     <ImageView
         android:src="@drawable/map_ic_type_toggle"
          android:contentDescription="@string/toggle_map"
@@ -74,9 +79,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_marginRight="4dp"
         android:layout_alignParentBottom="true"
         android:clickable="true"
-        android:maxHeight="60dp"
+        android:maxHeight="50dp"
         android:adjustViewBounds="true" />
 
 </RelativeLayout>

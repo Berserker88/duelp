@@ -79,7 +79,7 @@ public class Orte_Alle extends MapActivity {
 			// call enableLocationSettings()
 			Log.i("debug", "GPS OFF!?");
 			Toast.makeText(getBaseContext(),
-					"Fuer hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG)
+					"Für hohe Genauigkeit GPS einschalten", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -172,43 +172,24 @@ public class Orte_Alle extends MapActivity {
 
 		mMap = ((MapFragment) getFragmentManager().findFragmentById(
 				R.id.mapview_alle_orte)).getMap();
-
-		// Geocoder for reverse-geocode the location(adress) to latitude -
-		// longitude
-		Geocoder geoCoder = new Geocoder(this, Locale.getDefault());
-		Log.i("Debug:", "Geocoder initialisiert");
 		List<Double> lats = new ArrayList<Double>();
 		List<Double> longs = new ArrayList<Double>();
-		for (String key : Orte_Adapter.map.keySet()) {
-			try {
-				String[] values = Orte_Adapter.map.get(key);
-				Log.i("debug", "Addresses: " + values[0] + " " + values[1]
-						+ " " + values[2]);
-				List<Address> addresses = geoCoder.getFromLocationName(
-						values[0] + " " + values[1] + " " + values[2], 1);
-				if (addresses.size() > 0) {
-					Log.i("Debug:", "Passende Lat,Lng gefunden");
-					mAdresses.add(new LatLng(addresses.get(0).getLatitude(),addresses.get(0).getLongitude()));
+		for (String key : Orte_Adapter.map.keySet()) {			
+     			String[] values = Orte_Adapter.map.get(key);
+
+					mAdresses.add(new LatLng(Double.parseDouble(values[4]),Double.parseDouble(values[5])));
 					mMap.addMarker(new MarkerOptions()
 							.position(
 									new LatLng(
-											(addresses.get(0).getLatitude()),
-											(addresses.get(0).getLongitude())))
+											Double.parseDouble(values[4]),Double.parseDouble(values[5])))
 							.title(key)
 							.snippet(values[0] + " " + values[1]+"\n"+values[2] + " " + values[3])
 									.visible(true));
-					lats.add(addresses.get(0).getLatitude());
-					longs.add(addresses.get(0).getLongitude());
+					lats.add(Double.parseDouble(values[4]));
+					longs.add(Double.parseDouble(values[5]));
 					Log.i("Debug:", "Marker hinzugefuegt");
-					
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
 
-		// lats.add(mActPosition.latitude);
-		// longs.add(mActPosition.longitude);
+		}
 		Log.i("debug", "Sortieren");
 		Collections.sort(lats);
 		Collections.sort(longs);
