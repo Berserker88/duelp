@@ -95,7 +95,7 @@ public class Faecher_Apdapter extends BaseAdapter//ArrayAdapter<Fach>
 			}
 			
 			
-			int margin = 50;
+			int margin = 60;
 			for (int i= 0; i<mFaecher.get(position).getmRating();i++ )
 			{
 				ImageView iv = new ImageView(context);
